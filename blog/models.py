@@ -1,19 +1,20 @@
-from django.db import models
-from django.db.models import Sum, Subquery, OuterRef, IntegerField
-from django.utils.dates import MONTHS_3
-from django.utils import timezone
-from django.db.models.functions import Coalesce
-from django.utils.safestring import mark_safe
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.db.models import JSONField, Count
-from django.utils.html import escape, strip_tags
-from pictures.models import PictureField
 from collections import Counter
 import re
-import arrow
-from markdown import markdown
 from xml.etree import ElementTree
+
+import arrow
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.db.models import IntegerField, OuterRef, Subquery, Sum
+from django.db.models import Count, JSONField
+from django.db.models.functions import Coalesce
+from django.utils import timezone
+from django.utils.dates import MONTHS_3
+from django.utils.html import escape, strip_tags
+from django.utils.safestring import mark_safe
+from markdown import markdown
+from pictures.models import PictureField
 
 tag_re = re.compile("^[a-z0-9]+$")
 
