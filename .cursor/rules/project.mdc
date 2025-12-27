@@ -1,0 +1,26 @@
+---
+description: "Core project context and patterns"
+alwaysApply: true
+---
+
+# Project Rules
+
+## Tech Stack
+- Frontend: Django templated SSR
+- Backend: Django, with a Sqlite3 DB
+- Styling: Fomantic/Semantic UI CSS
+- Static assets: placed in `/static`, and swept into the directory to be served by `uv run manage.py collectstatic`
+
+## Run notes, important
+
+- when running Python, always use `uv`.  e.g.: `uv run pytest` or `uv run manage.py runserver`
+
+## Code Standards
+
+- Use type hints where possible in Python code
+- Prefer built-in Django utilities where possible
+- Use standard Django file paths
+
+## Terminal usage
+
+When testing on a Windows machine, use Git Bash instead of Powershell. `C:\Program Files\Git\usr\bin\bash.exe`

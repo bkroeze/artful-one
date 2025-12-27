@@ -656,6 +656,18 @@ def photo_tag_detail(request, slug):
     )
 
 
+def photo_detail(request, slug):
+    """Display a single photo with its details."""
+    photo = get_object_or_404(Photo, slug=slug)
+    return render(
+        request,
+        "photo_detail.html",
+        {
+            "photo": photo,
+        },
+    )
+
+
 @never_cache
 @staff_member_required
 def write(request):

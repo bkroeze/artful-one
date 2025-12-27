@@ -7,3 +7,6 @@ static:
 test:
   uv run pytest
   
+check:
+  uv run manage.py check
+

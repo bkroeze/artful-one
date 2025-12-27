@@ -1,18 +1,18 @@
-from collections import Counter
 import re
+from collections import Counter
 from xml.etree import ElementTree
 
 import arrow
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import IntegerField, OuterRef, Subquery, Sum
-from django.db.models import Count, JSONField
+from django.db.models import Count, IntegerField, JSONField, OuterRef, Subquery, Sum
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.utils.dates import MONTHS_3
 from django.utils.html import escape, strip_tags
 from django.utils.safestring import mark_safe
+from django.utils.text import slugify
 from markdown import markdown
 from pictures.models import PictureField
 
@@ -432,6 +432,7 @@ class PhotoTag(models.Model):
 class Photo(models.Model):
     created = models.DateTimeField(default=timezone.now)
     title = models.CharField(max_length=255, blank=True, null=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     image = PictureField(
         upload_to="photos",
         width_field="width",
@@ -447,9 +448,27 @@ class Photo(models.Model):
     external_url = models.URLField(blank=True, null=True)
     external_title = models.CharField(max_length=255, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug and self.title:
+            # Generate slug from title
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            # Ensure uniqueness
+            while Photo.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+        super().save(*args, **kwargs)
+
     @property
     def html_id(self):
         return "picture_%d" % self.id
+
+    def get_absolute_url(self):
+        return f"/photos/{self.slug}/"
 
     def __str__(self):
         return self.title
@@ -466,6 +485,9 @@ class Photoset(models.Model):
         related_name="in_photoset",
     )
     primary = models.ForeignKey(Photo, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return f"/photosets/{self.slug}/"
 
     def get_randomized_photos(self):
         """Get a random selection of photos, including the primary photo"""

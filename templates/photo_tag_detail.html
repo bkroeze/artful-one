@@ -1,6 +1,7 @@
 {% extends "site_detail_page.html" %}{% load humanize %}
 
 {% load pictures %}
+{% load blog_tags %}
 
 {% block title %}Photos tagged "{{ photo_tag.name }}" - Bruce Kroeze{% endblock %}
 
@@ -57,7 +58,7 @@
 <h2 class="archive-h2">{{ photos.count|intcomma }} photo{{ photos.count|pluralize }} tagged "{{ photo_tag.name }}"</h2>
 
 {% if photo_tag.description %}
-    <div class="tag-description">{{ photo_tag.description|linebreaks }}</div>
+    <div class="tag-description">{{ photo_tag.description|markdownify }}</div>
 {% endif %}
 
 {% if photos %}
@@ -72,7 +73,7 @@
                     {% endif %}
                     <div class="content">
                         {% if photo.title %}
-                            <div class="header">{{ photo.title }}</div>
+                            <div class="header"><a href="{{ photo.get_absolute_url }}">{{ photo.title }}</a></div>
                         {% endif %}
                         {% if photo.description %}
                             <div class="description">

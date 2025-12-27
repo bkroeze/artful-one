@@ -1,0 +1,120 @@
+{% extends "site_detail_page.html" %}
+{% load pictures %}
+{% load blog_tags %}
+
+{% block title %}{{ photo.title|default:"Untitled Photo" }} - Bruce Kroeze{% endblock %}
+
+{% block extrahead %}
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{ photo.title|default:'Untitled Photo' }} - Bruce Kroeze" />
+{% if photo.description %}
+<meta property="og:description" content="{{ photo.description|truncatewords:30 }}" />
+{% endif %}
+<meta property="og:site_name" content="Bruce Kroeze's Weblog" />
+{% if photo.image %}
+<meta property="og:image" content="{{ photo.image.url }}" />
+{% endif %}
+<style>
+.photo-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.photo-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.external-info {
+    margin-top: 2rem;
+}
+
+.external-info .ui.table {
+    margin-top: 1rem;
+}
+</style>
+{% endblock %}
+
+{% block primary %}
+<div class="ui container">
+    <div class="ui segment">
+        <div class="photo-container">
+            {% if photo.image %}
+                {% picture photo.image picture_id=photo.html_id img_alt="{{ photo.title }}" img_loading="lazy" picture_class="ui fluid image" %}
+            {% else %}
+                <div class="ui placeholder">
+                    <div class="image header">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="ui header">
+            <h1>{{ photo.title|default:"Untitled Photo" }}</h1>
+        </div>
+        
+        {% if photo.description %}
+        <div class="ui segment">
+            <p>{{ photo.description|markdownify }}</p>
+        </div>
+        {% endif %}
+        
+        {% if photo.external_url or photo.external_title %}
+        <div class="external-info">
+            <h3 class="ui header">External Information</h3>
+            <table class="ui definition table">
+                <tbody>
+                    {% if photo.external_title %}
+                    <tr>
+                        <td class="two wide column">Title</td>
+                        <td>{{ photo.external_title }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if photo.external_url %}
+                    <tr>
+                        <td class="two wide column">URL</td>
+                        <td>
+                            <a href="{{ photo.external_url }}" target="_blank" rel="noopener noreferrer">
+                                {{ photo.external_url }}
+                                <i class="external alternate icon"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        
+        {% if photo.photo_tags.exists %}
+        <div class="ui segment">
+            <h4 class="ui header">Tags</h4>
+            <div class="ui labels">
+                {% for tag in photo.photo_tags.all %}
+                <a class="ui label" href="{{ tag.get_absolute_url }}">
+                    {{ tag.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="ui segment">
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <strong>Created:</strong> {{ photo.created|date:"F j, Y" }}
+                </div>
+                {% if photo.width and photo.height %}
+                <div class="eight wide column">
+                    <strong>Dimensions:</strong> {{ photo.width }} × {{ photo.height }} pixels
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

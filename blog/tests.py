@@ -1,16 +1,16 @@
-import pytest
-from blog.templatetags.entry_tags import do_typography_string
-from .factories import (
-    EntryFactory,
-    BlogmarkFactory,
-    QuotationFactory,
-    NoteFactory,
-)
-from blog.models import Tag, PreviousTagName
-from django.utils import timezone
 import datetime
 import json
+import uuid
 import xml.etree.ElementTree as ET
+
+import pytest
+from django.utils import timezone
+from django.utils.text import slugify
+
+from blog.models import PreviousTagName, Tag
+from blog.templatetags.entry_tags import do_typography_string
+
+from .factories import BlogmarkFactory, EntryFactory, NoteFactory, QuotationFactory
 
 
 @pytest.mark.django_db(transaction=True)
@@ -148,7 +148,8 @@ class TestBlog:
         draft_blogmark = BlogmarkFactory(is_draft=True, link_title="draftblogmark")
         draft_quotation = QuotationFactory(is_draft=True, source="draftquotation")
         draft_note = NoteFactory(is_draft=True, body="draftnote")
-        testing = Tag.objects.get_or_create(tag="testing")[0]
+        random_slug = slugify(f"testing-{uuid.uuid4()}")
+        testing = Tag.objects.get_or_create(tag=random_slug)[0]
 
         live_entry = EntryFactory(title="publishedentry", created=draft_entry.created)
         live_blogmark = BlogmarkFactory(
@@ -182,17 +183,17 @@ class TestBlog:
                 draft_entry.created.strftime("%b"),
                 draft_entry.created.day,
             ),
-            "/search/?q=testing",
-            "/tags/testing/",
+            f"/search/?q={random_slug}",
+            f"/tags/{random_slug}/",
             live_entry.get_absolute_url(),
         )
 
-        counts = json.loads(client.get("/tags-autocomplete/?q=testing").content)
+        counts = json.loads(client.get(f"/tags-autocomplete/?q={random_slug}").content)
         assert counts == {
             "tags": [
                 {
                     "id": 1,
-                    "tag": "testing",
+                    "tag": random_slug,
                     "description": "",
                     "total_entry": 1,
                     "total_blogmark": 1,
@@ -213,8 +214,9 @@ class TestBlog:
 
         for obj in (draft_entry, draft_blogmark, draft_quotation, draft_note):
             response2 = client.get(obj.get_absolute_url())
-            assert robots_fragment in response2.content.decode()
-            assert draft_warning_fragment in response2.content.decode()
+            content = response2.content.decode()
+            assert robots_fragment in content
+            assert draft_warning_fragment in content
             assert (
                 response2.headers["cache-control"]
                 == "private, no-cache, no-store, must-revalidate"
@@ -225,16 +227,17 @@ class TestBlog:
             obj.save()
 
             response3 = client.get(obj.get_absolute_url())
-            assert robots_fragment not in response3.content.decode()
-            assert draft_warning_fragment not in response3.content.decode()
+            content = response3.content.decode()
+            assert robots_fragment not in content
+            assert draft_warning_fragment not in content
             assert "cache-control" not in response3.headers
 
-        counts2 = json.loads(client.get("/tags-autocomplete/?q=testing").content)
+        counts2 = json.loads(client.get(f"/tags-autocomplete/?q={random_slug}").content)
         assert counts2 == {
             "tags": [
                 {
                     "id": 1,
-                    "tag": "testing",
+                    "tag": random_slug,
                     "description": "",
                     "total_entry": 2,
                     "total_blogmark": 2,
