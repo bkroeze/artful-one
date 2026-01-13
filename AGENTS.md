@@ -3,30 +3,49 @@
 
 This file provides guidance to AI Agents when working with code in this repository.
 
-## Task tracking
-
-- use the `beads-mcp` mcp server, or else the `bd` cli command to manage tasks.
-
 ## About This Project
 
 This is a Django-based personal blog site for Artful.One, inspired by Simon Willison's blog architecture. The project supports multiple content types (entries, blogmarks, quotations, notes) with tagging, search, and RSS feeds.
 
-## Development Environment Setup
+## Task tracking
 
-This project uses Nix with flakes for environment management:
+This project uses a CLI ticket system for task management. Run `tk help` when you need to use it.
 
-```bash
-nix develop
-```
+## Core Commands
 
-This provides Python 3.13, uv (package manager), just (task runner), and all project dependencies.
+Most commands are either already in the Justfile, and managed by "just", or else are standard python/django,
+accessed via `uv ...`
 
-## Common Commands
+- start server: `uv run manage.py runserver 0.0.0.0:8003` - may change port to avoid contention
+- create Django migration: `just makemigrations <django app, such as "blog">
+- test: `uv run pytest`
+
+## Integrating with Ticketing system (dependency-aware task planning)
+
+Typical flow (agents)
+1) **Pick ready work**
+   - `tk ready` → choose one item (highest priority, no blockers)
+2) **Work and update**
+   - `tk add-note jd-123 "progress notes, including sub-tickets opened"`
+3) **Complete and release**
+   - Add notes to AGENTS.md in the "Progress" section.
+   - `tk close jd-123`
+
+### Best Practices
+
+- Never directly run Python, always use `uv`
+- Check `tk ready` at session start to find available work
+- Update status as you work (in_progress → closed)
+- Create new issues with `tk create` when you discover tasks
+- Use descriptive titles and set appropriate priority/type
+
+# Progress
+
+Agent notes go here, regarding architectural patterns learned and explicit "remember this" requests during user interaction. Be extremely terse, optimized for AI token usage and ease of agent interpretation for future sessions.  Do not put "completed task x" here - put task notes in the task system.
 
 ### Running the Development Server
 ```bash
 just          # Default: runs development server
-uv run manage.py runserver
 ```
 
 ### Testing
@@ -73,7 +92,6 @@ uv run manage.py import_blog_xml --xmldir <path>
   - `urls.py` - URL routing (includes django-hosts for subdomain support)
   - `hosts.py` - Subdomain routing configuration
 - `blog/` - Core blog application
-  - Models: Entry, Blogmark, Quotation, Note, Tag, Series, Photo, PhotoTag, Photoset
   - All content types inherit from `BaseModel` (created, tags, slug, metadata, series, is_draft)
 - `monthly/` - Monthly archives functionality
 - `feedstats/` - Feed subscriber tracking
@@ -103,11 +121,6 @@ Content URLs follow the pattern: `/{YYYY}/{Mon}/{D}/{slug}/`
 - Example: `/2024/Oct/15/my-blog-post/`
 - Short URLs available: `/e/{id}/`, `/b/{id}/`, `/q/{id}/`, `/n/{id}/`
 
-### Django Hosts
-The project uses `django-hosts` for subdomain routing:
-- `www` - Main site (ROOT_URLCONF)
-- `2003` - Legacy URLs (config.urls_2003)
-
 ## Configuration
 
 Settings are in `config/settings.py` with environment variable support via `.env` file.
@@ -125,13 +138,12 @@ Settings are in `config/settings.py` with environment variable support via `.env
 ## Search Implementation
 
 Search is implemented in `blog/search.py`:
-- Searches across Entry, Blogmark, Quotation, and Note
 - Uses `index_components()` method on each model (returns dict with A/B/C weighted fields)
 - Search endpoint: `/search/?q=<query>`
 
 ## Testing
 
-Tests use pytest with pytest-django and factory-boy:
+Tests use pytest with pytest-django:
 - `conftest.py` configures Django for pytest
 - `pytest.ini` sets DJANGO_SETTINGS_MODULE and test discovery patterns
 - Factories defined in `blog/factories.py` for test data generation
@@ -197,41 +209,11 @@ Key environment variables (loaded via python-dotenv):
 - `DATABASE_URL` - PostgreSQL connection string (optional)
 - `CSRF_TRUSTED_ORIGINS` - Comma-separated list
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
-- `CLOUDFLARE_EMAIL`, `CLOUDFLARE_TOKEN`, `CLOUDFLARE_ZONE_ID` - Cloudflare integration
-- `SENTRY_DSN` - Sentry error tracking
-- `SCREENSHOT_SECRET` - Secret for screenshot card generation
 - `STAGING` - Staging environment flag
 - `PICTURES_LOG_LEVEL`, `BLOG_LOG_LEVEL`, `DJANGO_LOG_LEVEL` - Logging levels
 
 ## Database
 
 - Default: SQLite (`artful-one.db` in project root)
-- Production: PostgreSQL via `DATABASE_URL` environment variable
 - Migrations in `blog/migrations/`, `monthly/migrations/`, `feedstats/migrations/`
 - Use `--reuse-db` flag with pytest to speed up test runs
-
-## Landing the Plane (Session Completion)
-
-**When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
-
-**MANDATORY WORKFLOW:**
-
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **PUSH TO REMOTE** - This is MANDATORY:
-   ```bash
-   git pull --rebase
-   bd sync
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-5. **Clean up** - Clear stashes, prune remote branches
-6. **Verify** - All changes committed AND pushed
-7. **Hand off** - Provide context for next session
-
-**CRITICAL RULES:**
-- Work is NOT complete until `git push` succeeds
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
