@@ -5,55 +5,54 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0002_phototag_remove_photo_flickr_id_and_more'),
+        ("blog", "0002_phototag_remove_photo_flickr_id_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='blogmark',
-            name='created',
+            model_name="blogmark",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='created',
+            model_name="comment",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='entry',
-            name='created',
+            model_name="entry",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='liveupdate',
-            name='created',
+            model_name="liveupdate",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='note',
-            name='created',
+            model_name="note",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='photo',
-            name='created',
+            model_name="photo",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='photoset',
-            name='created',
+            model_name="photoset",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='quotation',
-            name='created',
+            model_name="quotation",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='series',
-            name='created',
+            model_name="series",
+            name="created",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]

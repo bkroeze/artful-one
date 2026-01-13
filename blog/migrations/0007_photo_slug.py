@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0006_remove_blogmark_blog_blogma_search__45eeb9_gin_and_more'),
+        ("blog", "0006_remove_blogmark_blog_blogma_search__45eeb9_gin_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='photo',
-            name='slug',
+            model_name="photo",
+            name="slug",
             field=models.SlugField(blank=True, null=True, unique=True),
         ),
     ]

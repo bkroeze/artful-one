@@ -1,5 +1,4 @@
 from blog.models import Entry, Blogmark, Quotation, Note
-from django.conf import settings
 from django.core.cache import cache
 
 

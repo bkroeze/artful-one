@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.db.models.functions import Length
 from django.db.models import F
 from django import forms
+from django.contrib.postgres.search import SearchQuery, SearchRank
 from xml.etree import ElementTree
 from .models import (
     Entry,

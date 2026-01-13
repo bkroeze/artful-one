@@ -6,99 +6,118 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0001_initial'),
+        ("blog", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PhotoTag',
+            name="PhotoTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.SlugField(unique=True)),
-                ('name', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slug", models.SlugField(unique=True)),
+                ("name", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True)),
             ],
         ),
         migrations.RemoveField(
-            model_name='photo',
-            name='flickr_id',
+            model_name="photo",
+            name="flickr_id",
         ),
         migrations.RemoveField(
-            model_name='photo',
-            name='latitude',
+            model_name="photo",
+            name="latitude",
         ),
         migrations.RemoveField(
-            model_name='photo',
-            name='longitude',
+            model_name="photo",
+            name="longitude",
         ),
         migrations.RemoveField(
-            model_name='photo',
-            name='secret',
+            model_name="photo",
+            name="secret",
         ),
         migrations.RemoveField(
-            model_name='photo',
-            name='server',
+            model_name="photo",
+            name="server",
         ),
         migrations.AddField(
-            model_name='photo',
-            name='height',
+            model_name="photo",
+            name="height",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='image',
-            field=pictures.models.PictureField(aspect_ratios=[None, '1/1', '3/2', '16/9'], blank=True, breakpoints={'l': 1200, 'm': 992, 's': 768, 'xl': 1400, 'xs': 576}, container_width=1200, file_types=['AVIF'], grid_columns=12, height_field='height', null=True, pixel_densities=[1, 2], upload_to='photos', width_field='width'),
+            model_name="photo",
+            name="image",
+            field=pictures.models.PictureField(
+                aspect_ratios=[None, "1/1", "3/2", "16/9"],
+                blank=True,
+                breakpoints={"l": 1200, "m": 992, "s": 768, "xl": 1400, "xs": 576},
+                container_width=1200,
+                file_types=["AVIF"],
+                grid_columns=12,
+                height_field="height",
+                null=True,
+                pixel_densities=[1, 2],
+                upload_to="photos",
+                width_field="width",
+            ),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='width',
+            model_name="photo",
+            name="width",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='photoset',
-            name='created',
+            model_name="photoset",
+            name="created",
             field=models.DateTimeField(default=datetime.datetime.utcnow),
         ),
         migrations.AlterField(
-            model_name='blogmark',
-            name='created',
+            model_name="blogmark",
+            name="created",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='created',
+            model_name="comment",
+            name="created",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='entry',
-            name='created',
+            model_name="entry",
+            name="created",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='note',
-            name='created',
+            model_name="note",
+            name="created",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='photo',
-            name='created',
+            model_name="photo",
+            name="created",
             field=models.DateTimeField(default=datetime.datetime.utcnow),
         ),
         migrations.AlterField(
-            model_name='quotation',
-            name='created',
+            model_name="quotation",
+            name="created",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='series',
-            name='created',
+            model_name="series",
+            name="created",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='photo_tags',
-            field=models.ManyToManyField(blank=True, to='blog.phototag'),
+            model_name="photo",
+            name="photo_tags",
+            field=models.ManyToManyField(blank=True, to="blog.phototag"),
         ),
     ]

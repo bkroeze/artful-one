@@ -1,9 +1,9 @@
+import datetime
+
+from blog.models import Blogmark, Entry, Note, Photo, Photoset, Quotation
 from django import template
 
 register = template.Library()
-
-from blog.models import Entry, Photo, Quotation, Blogmark, Photoset, Note
-import datetime, copy
 
 # This code used to use the following:
 #   import calendar

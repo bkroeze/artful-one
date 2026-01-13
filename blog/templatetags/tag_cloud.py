@@ -1,9 +1,9 @@
+import math
+
 from django import template
 from django.utils.safestring import mark_safe
 
 register = template.Library()
-
-from blog.models import Tag
 
 # Classes for different levels
 CLASSES = (
@@ -29,9 +29,6 @@ def make_css_rules(
             "%s%s { font-size: %.2f%s; }"
             % (selector_prefix, klass, min_size + (i * diff_each_time), units)
         )
-
-
-import math
 
 
 def log(f):
@@ -63,7 +60,6 @@ def _tag_cloud_helper(tags):
     tags = list(tag_counts.keys())
     tags.sort()
     html_tags = []
-    intervals = 10.0
     log_max = log(max_count)
     log_min = log(min_count)
     diff = log_max - log_min

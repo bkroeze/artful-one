@@ -4,25 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0004_remove_photoset_flickr_id_photoset_is_draft_and_more'),
+        ("blog", "0004_remove_photoset_flickr_id_photoset_is_draft_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='photo',
-            name='description',
+            model_name="photo",
+            name="description",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='external_title',
+            model_name="photo",
+            name="external_title",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
         migrations.AddField(
-            model_name='photo',
-            name='external_url',
+            model_name="photo",
+            name="external_url",
             field=models.URLField(blank=True, null=True),
         ),
     ]

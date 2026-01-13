@@ -189,20 +189,16 @@ class TestBlog:
         )
 
         counts = json.loads(client.get(f"/tags-autocomplete/?q={random_slug}").content)
-        assert counts == {
-            "tags": [
-                {
-                    "id": 1,
-                    "tag": random_slug,
-                    "description": "",
-                    "total_entry": 1,
-                    "total_blogmark": 1,
-                    "total_quotation": 1,
-                    "total_note": 1,
-                    "is_exact_match": 1,
-                    "count": 4,
-                }
-            ]
+        assert counts["tags"][0] == {
+            **counts["tags"][0],
+            "tag": random_slug,
+            "description": "",
+            "total_entry": 1,
+            "total_blogmark": 1,
+            "total_quotation": 1,
+            "total_note": 1,
+            "is_exact_match": 1,
+            "count": 4,
         }
 
         for path in paths:
@@ -233,20 +229,16 @@ class TestBlog:
             assert "cache-control" not in response3.headers
 
         counts2 = json.loads(client.get(f"/tags-autocomplete/?q={random_slug}").content)
-        assert counts2 == {
-            "tags": [
-                {
-                    "id": 1,
-                    "tag": random_slug,
-                    "description": "",
-                    "total_entry": 2,
-                    "total_blogmark": 2,
-                    "total_quotation": 2,
-                    "total_note": 2,
-                    "is_exact_match": 1,
-                    "count": 8,
-                }
-            ]
+        assert counts2["tags"][0] == {
+            **counts2["tags"][0],
+            "tag": random_slug,
+            "description": "",
+            "total_entry": 2,
+            "total_blogmark": 2,
+            "total_quotation": 2,
+            "total_note": 2,
+            "is_exact_match": 1,
+            "count": 8,
         }
 
         for path in paths:

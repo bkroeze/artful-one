@@ -2,7 +2,7 @@ import time
 import json
 import re
 import calendar
-from django.db import models, connection
+from django.db import models
 from django.db.models.functions import TruncYear, TruncMonth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, Http404
@@ -65,9 +65,6 @@ def search(request, q=None, return_context=False):
     search_q, from_date, to_date = parse_date_clauses(q)
     search_q = search_q.strip()
     start = time.time()
-
-    query = None
-    rank_annotation = None
 
     selected_tags = request.GET.getlist("tag")
 

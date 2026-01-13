@@ -4,42 +4,41 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0005_photo_description_photo_external_title_and_more'),
+        ("blog", "0005_photo_description_photo_external_title_and_more"),
     ]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='blogmark',
-            name='blog_blogma_search__45eeb9_gin',
+            model_name="blogmark",
+            name="blog_blogma_search__45eeb9_gin",
         ),
         migrations.RemoveIndex(
-            model_name='entry',
-            name='blog_entry_search__d62c3b_gin',
+            model_name="entry",
+            name="blog_entry_search__d62c3b_gin",
         ),
         migrations.RemoveIndex(
-            model_name='note',
-            name='blog_note_search__10f4f2_gin',
+            model_name="note",
+            name="blog_note_search__10f4f2_gin",
         ),
         migrations.RemoveIndex(
-            model_name='quotation',
-            name='blog_quotat_search__aa2d47_gin',
+            model_name="quotation",
+            name="blog_quotat_search__aa2d47_gin",
         ),
         migrations.RemoveField(
-            model_name='blogmark',
-            name='search_document',
+            model_name="blogmark",
+            name="search_document",
         ),
         migrations.RemoveField(
-            model_name='entry',
-            name='search_document',
+            model_name="entry",
+            name="search_document",
         ),
         migrations.RemoveField(
-            model_name='note',
-            name='search_document',
+            model_name="note",
+            name="search_document",
         ),
         migrations.RemoveField(
-            model_name='quotation',
-            name='search_document',
+            model_name="quotation",
+            name="search_document",
         ),
     ]

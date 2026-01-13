@@ -22,7 +22,6 @@ def make_photo_slugs(apps, _):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("blog", "0007_photo_slug"),
     ]

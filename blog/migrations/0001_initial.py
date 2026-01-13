@@ -8,211 +8,431 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('contenttypes', '0002_remove_content_type_name'),
+        ("contenttypes", "0002_remove_content_type_name"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Entry',
+            name="Entry",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(default=datetime.datetime.utcnow)),
-                ('slug', models.SlugField(max_length=64)),
-                ('metadata', models.JSONField(blank=True, default=dict)),
-                ('search_document', django.contrib.postgres.search.SearchVectorField(null=True)),
-                ('import_ref', models.TextField(max_length=64, null=True, unique=True)),
-                ('card_image', models.CharField(blank=True, max_length=128, null=True)),
-                ('is_draft', models.BooleanField(default=False)),
-                ('title', models.CharField(max_length=255)),
-                ('body', models.TextField()),
-                ('tweet_html', models.TextField(blank=True, help_text='Paste in the embed tweet HTML, minus the script tag,\n        to display a tweet in the sidebar next to this entry.', null=True)),
-                ('extra_head_html', models.TextField(blank=True, help_text='Extra HTML to be included in the &lt;head&gt; for this entry', null=True)),
-                ('custom_template', models.CharField(blank=True, max_length=100, null=True)),
-                ('live_timezone', models.CharField(blank=True, max_length=100, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(default=datetime.datetime.utcnow)),
+                ("slug", models.SlugField(max_length=64)),
+                ("metadata", models.JSONField(blank=True, default=dict)),
+                (
+                    "search_document",
+                    django.contrib.postgres.search.SearchVectorField(null=True),
+                ),
+                ("import_ref", models.TextField(max_length=64, null=True, unique=True)),
+                ("card_image", models.CharField(blank=True, max_length=128, null=True)),
+                ("is_draft", models.BooleanField(default=False)),
+                ("title", models.CharField(max_length=255)),
+                ("body", models.TextField()),
+                (
+                    "tweet_html",
+                    models.TextField(
+                        blank=True,
+                        help_text="Paste in the embed tweet HTML, minus the script tag,\n        to display a tweet in the sidebar next to this entry.",
+                        null=True,
+                    ),
+                ),
+                (
+                    "extra_head_html",
+                    models.TextField(
+                        blank=True,
+                        help_text="Extra HTML to be included in the &lt;head&gt; for this entry",
+                        null=True,
+                    ),
+                ),
+                (
+                    "custom_template",
+                    models.CharField(blank=True, max_length=100, null=True),
+                ),
+                (
+                    "live_timezone",
+                    models.CharField(blank=True, max_length=100, null=True),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Entries',
-                'ordering': ('-created',),
-                'abstract': False,
+                "verbose_name_plural": "Entries",
+                "ordering": ("-created",),
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Photo',
+            name="Photo",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('flickr_id', models.CharField(max_length=32)),
-                ('server', models.CharField(max_length=8)),
-                ('secret', models.CharField(max_length=32)),
-                ('title', models.CharField(blank=True, max_length=255, null=True)),
-                ('longitude', models.CharField(blank=True, max_length=32, null=True)),
-                ('latitude', models.CharField(blank=True, max_length=32, null=True)),
-                ('created', models.DateTimeField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("flickr_id", models.CharField(max_length=32)),
+                ("server", models.CharField(max_length=8)),
+                ("secret", models.CharField(max_length=32)),
+                ("title", models.CharField(blank=True, max_length=255, null=True)),
+                ("longitude", models.CharField(blank=True, max_length=32, null=True)),
+                ("latitude", models.CharField(blank=True, max_length=32, null=True)),
+                ("created", models.DateTimeField()),
             ],
         ),
         migrations.CreateModel(
-            name='Series',
+            name="Series",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(default=datetime.datetime.utcnow)),
-                ('slug', models.SlugField(max_length=64, unique=True)),
-                ('title', models.CharField(max_length=255)),
-                ('summary', models.TextField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(default=datetime.datetime.utcnow)),
+                ("slug", models.SlugField(max_length=64, unique=True)),
+                ("title", models.CharField(max_length=255)),
+                ("summary", models.TextField()),
             ],
             options={
-                'verbose_name_plural': 'Series',
+                "verbose_name_plural": "Series",
             },
         ),
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tag', models.SlugField(unique=True)),
-                ('description', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("tag", models.SlugField(unique=True)),
+                ("description", models.TextField(blank=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('object_id', models.PositiveIntegerField(db_index=True)),
-                ('body', models.TextField()),
-                ('created', models.DateTimeField()),
-                ('name', models.CharField(max_length=50)),
-                ('url', models.URLField(blank=True, max_length=255, null=True)),
-                ('email', models.CharField(blank=True, max_length=50, null=True)),
-                ('openid', models.CharField(blank=True, max_length=255, null=True)),
-                ('ip', models.GenericIPAddressField()),
-                ('spam_status', models.CharField(choices=[('normal', 'Not suspected'), ('approved', 'Approved'), ('suspected', 'Suspected'), ('spam', 'SPAM')], max_length=16)),
-                ('visible_on_site', models.BooleanField(db_index=True, default=True)),
-                ('spam_reason', models.TextField()),
-                ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.contenttype')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("object_id", models.PositiveIntegerField(db_index=True)),
+                ("body", models.TextField()),
+                ("created", models.DateTimeField()),
+                ("name", models.CharField(max_length=50)),
+                ("url", models.URLField(blank=True, max_length=255, null=True)),
+                ("email", models.CharField(blank=True, max_length=50, null=True)),
+                ("openid", models.CharField(blank=True, max_length=255, null=True)),
+                ("ip", models.GenericIPAddressField()),
+                (
+                    "spam_status",
+                    models.CharField(
+                        choices=[
+                            ("normal", "Not suspected"),
+                            ("approved", "Approved"),
+                            ("suspected", "Suspected"),
+                            ("spam", "SPAM"),
+                        ],
+                        max_length=16,
+                    ),
+                ),
+                ("visible_on_site", models.BooleanField(db_index=True, default=True)),
+                ("spam_reason", models.TextField()),
+                (
+                    "content_type",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="contenttypes.contenttype",
+                    ),
+                ),
             ],
             options={
-                'ordering': ('-created',),
-                'get_latest_by': 'created',
+                "ordering": ("-created",),
+                "get_latest_by": "created",
             },
         ),
         migrations.CreateModel(
-            name='LiveUpdate',
+            name="LiveUpdate",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('content', models.TextField()),
-                ('entry', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='updates', to='blog.entry')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("content", models.TextField()),
+                (
+                    "entry",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="updates",
+                        to="blog.entry",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Photoset',
+            name="Photoset",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('flickr_id', models.CharField(max_length=32)),
-                ('title', models.CharField(blank=True, max_length=255, null=True)),
-                ('description', models.TextField()),
-                ('photos', models.ManyToManyField(related_name='in_photoset', to='blog.photo')),
-                ('primary', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.photo')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("flickr_id", models.CharField(max_length=32)),
+                ("title", models.CharField(blank=True, max_length=255, null=True)),
+                ("description", models.TextField()),
+                (
+                    "photos",
+                    models.ManyToManyField(related_name="in_photoset", to="blog.photo"),
+                ),
+                (
+                    "primary",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="blog.photo"
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='entry',
-            name='series',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='blog.series'),
+            model_name="entry",
+            name="series",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="blog.series",
+            ),
         ),
         migrations.CreateModel(
-            name='PreviousTagName',
+            name="PreviousTagName",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('previous_name', models.SlugField()),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.tag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("previous_name", models.SlugField()),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="blog.tag"
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='entry',
-            name='tags',
-            field=models.ManyToManyField(blank=True, to='blog.tag'),
+            model_name="entry",
+            name="tags",
+            field=models.ManyToManyField(blank=True, to="blog.tag"),
         ),
         migrations.CreateModel(
-            name='Blogmark',
+            name="Blogmark",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(default=datetime.datetime.utcnow)),
-                ('slug', models.SlugField(max_length=64)),
-                ('metadata', models.JSONField(blank=True, default=dict)),
-                ('search_document', django.contrib.postgres.search.SearchVectorField(null=True)),
-                ('import_ref', models.TextField(max_length=64, null=True, unique=True)),
-                ('card_image', models.CharField(blank=True, max_length=128, null=True)),
-                ('is_draft', models.BooleanField(default=False)),
-                ('link_url', models.URLField(max_length=512)),
-                ('link_title', models.CharField(max_length=255)),
-                ('title', models.CharField(blank=True, default='', help_text='Optional page title', max_length=255)),
-                ('via_url', models.URLField(blank=True, max_length=512, null=True)),
-                ('via_title', models.CharField(blank=True, max_length=255, null=True)),
-                ('commentary', models.TextField()),
-                ('use_markdown', models.BooleanField(default=False, help_text='Images can use the img element - set width="..." for a specific width and use class="blogmark-image" to center and add a drop shadow.')),
-                ('series', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='blog.series')),
-                ('tags', models.ManyToManyField(blank=True, to='blog.tag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(default=datetime.datetime.utcnow)),
+                ("slug", models.SlugField(max_length=64)),
+                ("metadata", models.JSONField(blank=True, default=dict)),
+                (
+                    "search_document",
+                    django.contrib.postgres.search.SearchVectorField(null=True),
+                ),
+                ("import_ref", models.TextField(max_length=64, null=True, unique=True)),
+                ("card_image", models.CharField(blank=True, max_length=128, null=True)),
+                ("is_draft", models.BooleanField(default=False)),
+                ("link_url", models.URLField(max_length=512)),
+                ("link_title", models.CharField(max_length=255)),
+                (
+                    "title",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        help_text="Optional page title",
+                        max_length=255,
+                    ),
+                ),
+                ("via_url", models.URLField(blank=True, max_length=512, null=True)),
+                ("via_title", models.CharField(blank=True, max_length=255, null=True)),
+                ("commentary", models.TextField()),
+                (
+                    "use_markdown",
+                    models.BooleanField(
+                        default=False,
+                        help_text='Images can use the img element - set width="..." for a specific width and use class="blogmark-image" to center and add a drop shadow.',
+                    ),
+                ),
+                (
+                    "series",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="blog.series",
+                    ),
+                ),
+                ("tags", models.ManyToManyField(blank=True, to="blog.tag")),
             ],
             options={
-                'ordering': ('-created',),
-                'abstract': False,
+                "ordering": ("-created",),
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Quotation',
+            name="Quotation",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(default=datetime.datetime.utcnow)),
-                ('slug', models.SlugField(max_length=64)),
-                ('metadata', models.JSONField(blank=True, default=dict)),
-                ('search_document', django.contrib.postgres.search.SearchVectorField(null=True)),
-                ('import_ref', models.TextField(max_length=64, null=True, unique=True)),
-                ('card_image', models.CharField(blank=True, max_length=128, null=True)),
-                ('is_draft', models.BooleanField(default=False)),
-                ('quotation', models.TextField()),
-                ('source', models.CharField(max_length=255)),
-                ('source_url', models.URLField(blank=True, null=True)),
-                ('context', models.CharField(blank=True, max_length=255, null=True)),
-                ('series', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='blog.series')),
-                ('tags', models.ManyToManyField(blank=True, to='blog.tag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(default=datetime.datetime.utcnow)),
+                ("slug", models.SlugField(max_length=64)),
+                ("metadata", models.JSONField(blank=True, default=dict)),
+                (
+                    "search_document",
+                    django.contrib.postgres.search.SearchVectorField(null=True),
+                ),
+                ("import_ref", models.TextField(max_length=64, null=True, unique=True)),
+                ("card_image", models.CharField(blank=True, max_length=128, null=True)),
+                ("is_draft", models.BooleanField(default=False)),
+                ("quotation", models.TextField()),
+                ("source", models.CharField(max_length=255)),
+                ("source_url", models.URLField(blank=True, null=True)),
+                ("context", models.CharField(blank=True, max_length=255, null=True)),
+                (
+                    "series",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="blog.series",
+                    ),
+                ),
+                ("tags", models.ManyToManyField(blank=True, to="blog.tag")),
             ],
             options={
-                'ordering': ('-created',),
-                'abstract': False,
-                'indexes': [django.contrib.postgres.indexes.GinIndex(fields=['search_document'], name='blog_quotat_search__aa2d47_gin')],
+                "ordering": ("-created",),
+                "abstract": False,
+                "indexes": [
+                    django.contrib.postgres.indexes.GinIndex(
+                        fields=["search_document"],
+                        name="blog_quotat_search__aa2d47_gin",
+                    )
+                ],
             },
         ),
         migrations.CreateModel(
-            name='Note',
+            name="Note",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(default=datetime.datetime.utcnow)),
-                ('slug', models.SlugField(max_length=64)),
-                ('metadata', models.JSONField(blank=True, default=dict)),
-                ('search_document', django.contrib.postgres.search.SearchVectorField(null=True)),
-                ('import_ref', models.TextField(max_length=64, null=True, unique=True)),
-                ('card_image', models.CharField(blank=True, max_length=128, null=True)),
-                ('is_draft', models.BooleanField(default=False)),
-                ('body', models.TextField()),
-                ('title', models.CharField(blank=True, default='', help_text='Optional page title', max_length=255)),
-                ('series', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='blog.series')),
-                ('tags', models.ManyToManyField(blank=True, to='blog.tag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(default=datetime.datetime.utcnow)),
+                ("slug", models.SlugField(max_length=64)),
+                ("metadata", models.JSONField(blank=True, default=dict)),
+                (
+                    "search_document",
+                    django.contrib.postgres.search.SearchVectorField(null=True),
+                ),
+                ("import_ref", models.TextField(max_length=64, null=True, unique=True)),
+                ("card_image", models.CharField(blank=True, max_length=128, null=True)),
+                ("is_draft", models.BooleanField(default=False)),
+                ("body", models.TextField()),
+                (
+                    "title",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        help_text="Optional page title",
+                        max_length=255,
+                    ),
+                ),
+                (
+                    "series",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="blog.series",
+                    ),
+                ),
+                ("tags", models.ManyToManyField(blank=True, to="blog.tag")),
             ],
             options={
-                'verbose_name_plural': 'Notes',
-                'ordering': ('-created',),
-                'abstract': False,
-                'indexes': [django.contrib.postgres.indexes.GinIndex(fields=['search_document'], name='blog_note_search__10f4f2_gin')],
+                "verbose_name_plural": "Notes",
+                "ordering": ("-created",),
+                "abstract": False,
+                "indexes": [
+                    django.contrib.postgres.indexes.GinIndex(
+                        fields=["search_document"], name="blog_note_search__10f4f2_gin"
+                    )
+                ],
             },
         ),
         migrations.AddIndex(
-            model_name='entry',
-            index=django.contrib.postgres.indexes.GinIndex(fields=['search_document'], name='blog_entry_search__d62c3b_gin'),
+            model_name="entry",
+            index=django.contrib.postgres.indexes.GinIndex(
+                fields=["search_document"], name="blog_entry_search__d62c3b_gin"
+            ),
         ),
         migrations.AddIndex(
-            model_name='blogmark',
-            index=django.contrib.postgres.indexes.GinIndex(fields=['search_document'], name='blog_blogma_search__45eeb9_gin'),
+            model_name="blogmark",
+            index=django.contrib.postgres.indexes.GinIndex(
+                fields=["search_document"], name="blog_blogma_search__45eeb9_gin"
+            ),
         ),
     ]

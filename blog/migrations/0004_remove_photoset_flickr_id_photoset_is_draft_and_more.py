@@ -4,24 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0003_alter_blogmark_created_alter_comment_created_and_more'),
+        ("blog", "0003_alter_blogmark_created_alter_comment_created_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='photoset',
-            name='flickr_id',
+            model_name="photoset",
+            name="flickr_id",
         ),
         migrations.AddField(
-            model_name='photoset',
-            name='is_draft',
+            model_name="photoset",
+            name="is_draft",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='photoset',
-            name='slug',
+            model_name="photoset",
+            name="slug",
             field=models.SlugField(blank=True, null=True, unique=True),
         ),
     ]
