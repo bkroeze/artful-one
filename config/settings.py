@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "monthly",
     "feedstats",
     "pictures",
+    "rpg",
     "django_http_debug",
 ]
 

@@ -1,0 +1,45 @@
+{% load static %}
+{% if favorites %}
+<table class="ui celled table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Table</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for fav in favorites %}
+    <tr>
+      <td>{{ fav.name }}</td>
+      <td>{{ fav.table }}</td>
+      <td class="center aligned">
+        <form
+          hx-post="{% url 'rpg:htmx_toggle_favorite' %}"
+          hx-target="#favorites-container"
+          hx-swap="innerHTML"
+          style="display: inline;"
+        >
+          <input type="hidden" name="name" value="{{ fav.name }}" />
+          <input type="hidden" name="table" value="{{ fav.table }}" />
+          <input
+            type="hidden"
+            name="addon"
+            value="{{ fav.addon|default:'' }}"
+          />
+          <button
+            type="submit"
+            class="ui icon button red"
+            title="Remove from favorites"
+          >
+            <i class="trash icon"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">No favorites yet.</p>
+{% endif %}

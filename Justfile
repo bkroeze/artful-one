@@ -1,5 +1,5 @@
 default: 
-  uv run manage.py runserver
+  uv run manage.py runserver 0.0.0.0:8003
 
 static: 
   uv run manage.py collectstatic

@@ -1,0 +1,5152 @@
+[
+  {
+    "slug": "ad/ad1.1a",
+    "aliases": [
+      "ad1.1a",
+      "Locations (Overview)"
+    ],
+    "description": "Adventure Design Locations (Overview)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Adamantine",
+        "Abbey of the",
+        "Ant-",
+        "Abbot"
+      ],
+      [
+        "Aerial",
+        "Aerie of the",
+        "Ape-",
+        "Actor"
+      ],
+      [
+        "Amphibious",
+        "Asylum of the",
+        "Baboon-",
+        "Alchemist"
+      ],
+      [
+        "Ancient",
+        "Aviary of the",
+        "Bat-",
+        "Altar"
+      ],
+      [
+        "Arachnid",
+        "Barracks of the",
+        "Beetle-",
+        "Apparition"
+      ],
+      [
+        "Astrological",
+        "Bastion of the",
+        "Bitter",
+        "Apprentice"
+      ],
+      [
+        "Asymmetrical",
+        "Bazaar of the",
+        "Blood",
+        "Assassin"
+      ],
+      [
+        "Bizarre",
+        "Bluffs of the",
+        "Bone-",
+        "Beast"
+      ],
+      [
+        "Black",
+        "Brewery of the",
+        "Brain",
+        "Behemoth"
+      ],
+      [
+        "Bleak",
+        "Bridge of the",
+        "Broken",
+        "Binder"
+      ],
+      [
+        "Blue",
+        "Cairn of the",
+        "Bronze",
+        "Bishop"
+      ],
+      [
+        "Bronze",
+        "Canyon of the",
+        "Burned",
+        "Breeder"
+      ],
+      [
+        "Buried",
+        "Carnival of the",
+        "Cabalistic",
+        "Brood"
+      ],
+      [
+        "Celestial",
+        "Castle of the",
+        "Carnal",
+        "Brotherhood"
+      ],
+      [
+        "Circuitous",
+        "Cathedral of the",
+        "Caterpillar-",
+        "Burrower"
+      ],
+      [
+        "Circular",
+        "Cellars of the",
+        "Centipede-",
+        "Caller"
+      ],
+      [
+        "Clay",
+        "Chapel of the",
+        "Changing",
+        "Captive"
+      ],
+      [
+        "Coiled",
+        "Chapterhouse of the",
+        "Chaos-",
+        "Ceremony"
+      ],
+      [
+        "Collapsing",
+        "Church of the",
+        "Cloud-",
+        "Chalice"
+      ],
+      [
+        "Concealed",
+        "City of the",
+        "Cockroach-",
+        "Changeling"
+      ],
+      [
+        "Contaminated",
+        "Cliffs of the",
+        "Crimson",
+        "Chanter"
+      ],
+      [
+        "Convoluted",
+        "Cloister of the",
+        "Crippled",
+        "Circlet"
+      ],
+      [
+        "Corroded",
+        "Cocoon of the",
+        "Crocodile-",
+        "Clan"
+      ],
+      [
+        "Criminal",
+        "Coliseum of the",
+        "Dark",
+        "Collector"
+      ],
+      [
+        "Crimson",
+        "Contrivance of the",
+        "Death-",
+        "Combiner"
+      ],
+      [
+        "Crooked",
+        "Cottage of the",
+        "Decayed",
+        "Congregation"
+      ],
+      [
+        "Crude",
+        "Court of the",
+        "Deceitful",
+        "Coronet"
+      ],
+      [
+        "Crumbling",
+        "Crags of the",
+        "Deluded",
+        "Crafter"
+      ],
+      [
+        "Crystalline",
+        "Craters of the",
+        "Dinosaur-",
+        "Crawler"
+      ],
+      [
+        "Curious",
+        "Crypt of the",
+        "Diseased",
+        "Creator"
+      ],
+      [
+        "Cursed",
+        "Demi-plane of the",
+        "Dragonfly-",
+        "Creature"
+      ],
+      [
+        "Cyclopean",
+        "Dens of the",
+        "Dread",
+        "Crown"
+      ],
+      [
+        "Decaying",
+        "Dimension of the",
+        "Elemental",
+        "Cult"
+      ],
+      [
+        "Deceptive",
+        "Domain of the",
+        "Elephant-",
+        "Cultists"
+      ],
+      [
+        "Decomposing",
+        "Dome of the",
+        "Feathered",
+        "Daughter"
+      ],
+      [
+        "Defiled",
+        "Dungeons of the",
+        "Fiery",
+        "Demon"
+      ],
+      [
+        "Demolished",
+        "Dwelling of the",
+        "Flame",
+        "Device"
+      ],
+      [
+        "Demonic",
+        "Edifice of the",
+        "Flying",
+        "Dreamer"
+      ],
+      [
+        "Desolate",
+        "Fane of the",
+        "Ghostly",
+        "Druid"
+      ],
+      [
+        "Destroyed",
+        "Farm of the",
+        "Gluttonous",
+        "Egg"
+      ],
+      [
+        "Devious",
+        "Forest of the",
+        "Gnarled",
+        "Emissary"
+      ],
+      [
+        "Diamond",
+        "Forge of the",
+        "Half-breed",
+        "Emperor"
+      ],
+      [
+        "Dilapidated",
+        "Fortress of the",
+        "Heart-",
+        "Executioner"
+      ],
+      [
+        "Disorienting",
+        "Foundry of the",
+        "Hive",
+        "Exile"
+      ],
+      [
+        "Divided",
+        "Galleon of the",
+        "Hollow",
+        "Experimenter"
+      ],
+      [
+        "Dormant",
+        "Galleries of the",
+        "Horned",
+        "Eye"
+      ],
+      [
+        "Double",
+        "Garden of the",
+        "Howling",
+        "Father"
+      ],
+      [
+        "Dream-",
+        "Garrison of the",
+        "Hunchback",
+        "Gatherer"
+      ],
+      [
+        "Earthen",
+        "Generator of the",
+        "Hyena-",
+        "God"
+      ],
+      [
+        "Ebony",
+        "Glade of the",
+        "Ice",
+        "Goddess"
+      ],
+      [
+        "Eldritch",
+        "Globe of the",
+        "Immoral",
+        "Golem"
+      ],
+      [
+        "Elliptical",
+        "Grotto of the",
+        "Immortal",
+        "Grail"
+      ],
+      [
+        "Enchanted",
+        "Hall of the",
+        "Imprisoned",
+        "Guardian"
+      ],
+      [
+        "Enclosed",
+        "Halls of the",
+        "Insane",
+        "Head"
+      ],
+      [
+        "Entombed",
+        "Harbor of the",
+        "Insatiable",
+        "Horde"
+      ],
+      [
+        "Eroding",
+        "Hatcheries of the",
+        "Insect",
+        "Hunter"
+      ],
+      [
+        "Ethereal",
+        "Haven of the",
+        "Iron",
+        "Hunters"
+      ],
+      [
+        "Fertile",
+        "Hill of the",
+        "Jackal-",
+        "Hybrid"
+      ],
+      [
+        "Fortified",
+        "Hive of the",
+        "Jade",
+        "Idol"
+      ],
+      [
+        "Fortress-",
+        "Holt of the",
+        "Jewel",
+        "Jailer"
+      ],
+      [
+        "Glittering",
+        "House of the",
+        "Leech-",
+        "Keeper"
+      ],
+      [
+        "Grey",
+        "Hut of the",
+        "Legendary",
+        "Killer"
+      ],
+      [
+        "Hidden",
+        "Island of the",
+        "Leopard-",
+        "King"
+      ],
+      [
+        "High",
+        "Isles of the",
+        "Lesser",
+        "Knight"
+      ],
+      [
+        "Invulnerable",
+        "Jungle of the",
+        "Lion-",
+        "Lich"
+      ],
+      [
+        "Isolated",
+        "Keep of the",
+        "Loathsome",
+        "Lord"
+      ],
+      [
+        "Labyrinthine",
+        "Kennels of the",
+        "Lunar",
+        "Mage"
+      ],
+      [
+        "Living",
+        "Labyrinth of the",
+        "Mad",
+        "Magician"
+      ],
+      [
+        "Moaning",
+        "Lair of the",
+        "Mammoth-",
+        "Maker"
+      ],
+      [
+        "Mud-",
+        "Lighthouse of the",
+        "Man-eating",
+        "Master"
+      ],
+      [
+        "Octagonal",
+        "Lodgings of the",
+        "Mantis-",
+        "Monks"
+      ],
+      [
+        "Painted",
+        "Manse of the",
+        "Many-legged",
+        "Mother"
+      ],
+      [
+        "Pearly",
+        "Mansion of the",
+        "Mist-",
+        "People"
+      ],
+      [
+        "Pod-",
+        "Marsh of the",
+        "Monkey-",
+        "Priest"
+      ],
+      [
+        "Poisoned",
+        "Maze of the",
+        "Moth-",
+        "Priesthood"
+      ],
+      [
+        "Quaking",
+        "Megalith of the",
+        "Mutant",
+        "Prince"
+      ],
+      [
+        "Remade",
+        "Mill of the",
+        "Ooze",
+        "Princess"
+      ],
+      [
+        "Ruined",
+        "Mines of the",
+        "Outlawed",
+        "Puppet"
+      ],
+      [
+        "Rune-",
+        "Monastery of the",
+        "Polluted",
+        "Reaver"
+      ],
+      [
+        "Sea-swept",
+        "Monolith of the",
+        "Rat-",
+        "Resurrectionist"
+      ],
+      [
+        "Silent",
+        "Mounds of the",
+        "Reawakened",
+        "Scholar"
+      ],
+      [
+        "Spiraling",
+        "Necropolis of the",
+        "Resurrected",
+        "Seed"
+      ],
+      [
+        "Star-",
+        "Nest of the",
+        "Sabertooth",
+        "Shaper"
+      ],
+      [
+        "Storm-tossed",
+        "Obelisk of the",
+        "Scarlet",
+        "Sisterhood"
+      ],
+      [
+        "Sub-",
+        "Outpost of the",
+        "Scorched",
+        "Slitherer"
+      ],
+      [
+        "Sunken",
+        "Pagoda of the",
+        "Secret",
+        "Society"
+      ],
+      [
+        "Tall",
+        "Palace of the",
+        "Shadow",
+        "Son"
+      ],
+      [
+        "Temporal",
+        "Pavilion of the",
+        "Shattered",
+        "Sorcerer"
+      ],
+      [
+        "Three-Part",
+        "Pits of the",
+        "Skeletal",
+        "Sorceress"
+      ],
+      [
+        "Titanic",
+        "Prison of the",
+        "Slime-",
+        "Spawn"
+      ],
+      [
+        "Towering",
+        "Pyramid of the",
+        "Slug-",
+        "Star"
+      ],
+      [
+        "Toxic",
+        "Rift of the",
+        "Snail-",
+        "Statue"
+      ],
+      [
+        "Treasure-",
+        "Sanctuary of the",
+        "Snake-",
+        "Surgeon"
+      ],
+      [
+        "Triangular",
+        "Sanctum of the",
+        "Twisted",
+        "Tree"
+      ],
+      [
+        "Unearthed",
+        "Shrine of the",
+        "Undead",
+        "Tribe"
+      ],
+      [
+        "Unfinished",
+        "Spire of the",
+        "Unholy",
+        "Walker"
+      ],
+      [
+        "Unnatural",
+        "Stockades of the",
+        "Unseen",
+        "Warlord"
+      ],
+      [
+        "Urban",
+        "Stronghold of the",
+        "Wasp-",
+        "Weaver"
+      ],
+      [
+        "Watery",
+        "Tower of the",
+        "Worm-",
+        "Whisperer"
+      ],
+      [
+        "Wooden",
+        "Zeppelin of the",
+        "Zombie",
+        "Wizard"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.1b",
+    "aliases": [
+      "ad1.1b",
+      "Locations (Description)"
+    ],
+    "description": "Adventure Design Locations (Description)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Airborne",
+        "Abbey of the",
+        "Ant-",
+        "Artifact"
+      ],
+      [
+        "Aromatic",
+        "Aerie of the",
+        "Armored",
+        "Assassin"
+      ],
+      [
+        "Azure",
+        "Asylum of the",
+        "Army of the",
+        "Automaton"
+      ],
+      [
+        "Belowground",
+        "Aviary of the",
+        "Artificial",
+        "Basilisk"
+      ],
+      [
+        "Black",
+        "Barracks of the",
+        "Bandit",
+        "Bat(s)"
+      ],
+      [
+        "Blue",
+        "Bastion of the",
+        "Bear",
+        "Beast"
+      ],
+      [
+        "Bone-",
+        "Bazaar of the",
+        "Bone-",
+        "Behemoth"
+      ],
+      [
+        "Breathing",
+        "Bluffs of the",
+        "Brain-",
+        "Berserker(s)"
+      ],
+      [
+        "Brooding",
+        "Bridge of the",
+        "Breeding",
+        "Cannibal"
+      ],
+      [
+        "Bubbling",
+        "Cairn of the",
+        "Bronze",
+        "Centaur"
+      ],
+      [
+        "Calcified",
+        "Canyon of the",
+        "Centipede-",
+        "Chieftain of Goblins"
+      ],
+      [
+        "Cliff-",
+        "Carnival of the",
+        "Clan of the",
+        "Chimera"
+      ],
+      [
+        "Coastal",
+        "Castle of the",
+        "Cloned",
+        "Cleric"
+      ],
+      [
+        "Concealed",
+        "Cathedral of the",
+        "Cloud-",
+        "Cockatrice"
+      ],
+      [
+        "Conquered",
+        "Cellars of the",
+        "Conjoined",
+        "Colossus"
+      ],
+      [
+        "Contemplation-",
+        "Chapel of the",
+        "Crocodile-",
+        "Creature"
+      ],
+      [
+        "Crimson",
+        "Church of the",
+        "Cursed",
+        "Cyclops"
+      ],
+      [
+        "Cruel",
+        "City of the",
+        "Dark",
+        "Demigod"
+      ],
+      [
+        "Cryptic",
+        "Cliffs of the",
+        "Decayed",
+        "Demon"
+      ],
+      [
+        "Cunning",
+        "Cloister of the",
+        "Deceitful",
+        "Displacer"
+      ],
+      [
+        "Dank",
+        "Cocoon of the",
+        "Demonic",
+        "Djinni"
+      ],
+      [
+        "Dark",
+        "Coliseum of the",
+        "Deranged",
+        "Doppelganger"
+      ],
+      [
+        "Deadly",
+        "Contrivance of the",
+        "Diseased",
+        "Dragon"
+      ],
+      [
+        "Deadly-",
+        "Cottage of the",
+        "Elemental",
+        "Druid"
+      ],
+      [
+        "Death-",
+        "Court of the",
+        "Enchanted",
+        "Efreet"
+      ],
+      [
+        "Dimensional",
+        "Cradle of the",
+        "Enraptured",
+        "Eyeball"
+      ],
+      [
+        "Diseased",
+        "Crags of the",
+        "Feral",
+        "Frog"
+      ],
+      [
+        "Drilling",
+        "Craters of the",
+        "Flame-",
+        "Fungus"
+      ],
+      [
+        "Emerald",
+        "Crypt of the",
+        "Flying",
+        "Gargoyle(s)"
+      ],
+      [
+        "Erratic",
+        "Dens of the",
+        "Forest",
+        "Genie"
+      ],
+      [
+        "Fabrication-",
+        "Dimension of the",
+        "Frost",
+        "Ghost(s)"
+      ],
+      [
+        "Factory-",
+        "Domains of the",
+        "Genius",
+        "Ghouls"
+      ],
+      [
+        "Fear-",
+        "Dome of the",
+        "Giant",
+        "Giant(s)"
+      ],
+      [
+        "Feeding",
+        "Dungeons of the",
+        "Grotesque",
+        "God"
+      ],
+      [
+        "Flesh-",
+        "Dwelling of the",
+        "Guardian",
+        "Golem"
+      ],
+      [
+        "Fossilized",
+        "Edifice of the",
+        "Half-breed",
+        "Griffon"
+      ],
+      [
+        "Frightful",
+        "Fane of the",
+        "Hallucinogenic",
+        "Hag"
+      ],
+      [
+        "Gas-",
+        "Farm of the",
+        "Hellish",
+        "Harpies"
+      ],
+      [
+        "Granite",
+        "Forest of the",
+        "Horde of the",
+        "Hornet(s)"
+      ],
+      [
+        "Green",
+        "Forge of the",
+        "Horned",
+        "Horror"
+      ],
+      [
+        "Grey",
+        "Fortress of the",
+        "Horrific",
+        "Hound(s)"
+      ],
+      [
+        "Harvest-",
+        "Foundry of the",
+        "Howling",
+        "Hydra"
+      ],
+      [
+        "Heliotropic",
+        "Galleon of the",
+        "Hybrid",
+        "Idol"
+      ],
+      [
+        "Hidden",
+        "Galleries of the",
+        "Ice",
+        "Infiltrator"
+      ],
+      [
+        "Horned",
+        "Garden of the",
+        "Imprisoned",
+        "Insect"
+      ],
+      [
+        "Horrid",
+        "Garrison of the",
+        "Insane",
+        "Larva"
+      ],
+      [
+        "Hunting",
+        "Generator of the",
+        "Insidious",
+        "Lich"
+      ],
+      [
+        "Hydroponic",
+        "Glade of the",
+        "Iron",
+        "Lycanthrope"
+      ],
+      [
+        "Industrial",
+        "Globe of the",
+        "Iron",
+        "Mage"
+      ],
+      [
+        "Intermittent",
+        "Grotto of the",
+        "Jade",
+        "Magician"
+      ],
+      [
+        "Intriguing",
+        "Hall of the",
+        "Lava",
+        "Manticore"
+      ],
+      [
+        "Inverted",
+        "Halls of the",
+        "Leeching",
+        "Master"
+      ],
+      [
+        "Lethargy-",
+        "Harbor of the",
+        "Leopard-",
+        "Medusa"
+      ],
+      [
+        "Levitating",
+        "Hatcheries of the",
+        "Lunar",
+        "Minotaur(s)"
+      ],
+      [
+        "Limestone",
+        "Haven of the",
+        "Mad",
+        "Monster"
+      ],
+      [
+        "Midnight",
+        "Hill of the",
+        "Mammoth",
+        "Mummy"
+      ],
+      [
+        "Monastic",
+        "Hive of the",
+        "Many-legged",
+        "Mushroom"
+      ],
+      [
+        "Mosaic",
+        "Holt of the",
+        "Massive",
+        "Naga"
+      ],
+      [
+        "Mountain",
+        "House of the",
+        "Master",
+        "Nomads"
+      ],
+      [
+        "Murder-",
+        "Hut of the",
+        "Mastermind",
+        "Octopus"
+      ],
+      [
+        "Nest-",
+        "Island of the",
+        "Mechanical",
+        "Ogre(s)"
+      ],
+      [
+        "Obsidian",
+        "Isles of the",
+        "Mental",
+        "Ooze(s)"
+      ],
+      [
+        "Offshore",
+        "Jungle of the",
+        "Mind",
+        "Pirate(s)"
+      ],
+      [
+        "Orb-",
+        "Keep of the",
+        "Minions of the",
+        "Priest(s)"
+      ],
+      [
+        "Perilous",
+        "Kennels of the",
+        "Mist-",
+        "Princess"
+      ],
+      [
+        "Philosophical",
+        "Labyrinth of the",
+        "Monkey-",
+        "Pudding(s)"
+      ],
+      [
+        "Platform",
+        "Lair of the",
+        "Moon-",
+        "Puppet"
+      ],
+      [
+        "Poorly-built",
+        "Lighthouse of the",
+        "Moth-",
+        "Rakshasa"
+      ],
+      [
+        "Procreation-",
+        "Mounds of the",
+        "Sand-",
+        "Spawn"
+      ],
+      [
+        "Pulsing",
+        "Lodgings of the",
+        "Mutant",
+        "Rat(s)"
+      ],
+      [
+        "Putrid",
+        "Manse of the",
+        "Narcotic",
+        "Salamander"
+      ],
+      [
+        "Ramshackle",
+        "Mansion of the",
+        "Poisonous",
+        "Satyr"
+      ],
+      [
+        "Red",
+        "Marsh of the",
+        "Polluted",
+        "Scorpion"
+      ],
+      [
+        "Reversible",
+        "Maze of the",
+        "Predatory",
+        "Serpent"
+      ],
+      [
+        "Sacrificial",
+        "Megalith of the",
+        "Raider-",
+        "Shaman"
+      ],
+      [
+        "Sapphire",
+        "Mill of the",
+        "Reaver",
+        "Shaman of the Orcs"
+      ],
+      [
+        "Scarlet",
+        "Mines of the",
+        "Reawakened",
+        "Simulacrum"
+      ],
+      [
+        "Seaweed-",
+        "Monastery of the",
+        "Resurrected",
+        "Skeletons"
+      ],
+      [
+        "Sentient",
+        "Monolith of the",
+        "Sabertoothed",
+        "Slime(s)"
+      ],
+      [
+        "Shadow-",
+        "Necropolis of the",
+        "Scarlet",
+        "Sphinx"
+      ],
+      [
+        "Ship-",
+        "Nest of the",
+        "Scheming",
+        "Spider(s)"
+      ],
+      [
+        "Shunned",
+        "Obelisk of the",
+        "Sea-",
+        "Spirits"
+      ],
+      [
+        "Singular",
+        "Outpost of the",
+        "Shadow",
+        "Statue"
+      ],
+      [
+        "Sinister",
+        "Pagoda of the",
+        "Skeletal",
+        "Titan"
+      ],
+      [
+        "Slaying-",
+        "Palace of the",
+        "Slime-",
+        "Toad"
+      ],
+      [
+        "Star-",
+        "Pavilion of the",
+        "Slug-",
+        "Tree"
+      ],
+      [
+        "Temporary",
+        "Pits of the",
+        "Smoke",
+        "Troglodytes"
+      ],
+      [
+        "Treasure-",
+        "Plane of the",
+        "Snail-",
+        "Troll(s)"
+      ],
+      [
+        "Tumbled",
+        "Prison of the",
+        "Snake-",
+        "Tyrant"
+      ],
+      [
+        "Twilight",
+        "Pyramid of the",
+        "Spell-",
+        "Warlord of the Orcs"
+      ],
+      [
+        "Unsealed",
+        "Rift of the",
+        "Summoned",
+        "Wasp(s)"
+      ],
+      [
+        "Unstable",
+        "Sanctuary of the",
+        "Tribe of the",
+        "Witch"
+      ],
+      [
+        "Unthinkable",
+        "Sanctum of the",
+        "Undead",
+        "Wizard"
+      ],
+      [
+        "Vertical",
+        "Shrine of the",
+        "Unholy",
+        "Wolves"
+      ],
+      [
+        "Vile",
+        "Spire of the",
+        "Vampiric",
+        "Worg(s)"
+      ],
+      [
+        "Wailing",
+        "Stockades of the",
+        "Villainous",
+        "Worm"
+      ],
+      [
+        "Walled",
+        "Stronghold of the",
+        "Water",
+        "Wyrm"
+      ],
+      [
+        "Waterborne",
+        "Tower of the",
+        "Winged",
+        "Wyvern"
+      ],
+      [
+        "Weird",
+        "Webs of the",
+        "Wounded",
+        "Yeti"
+      ],
+      [
+        "White",
+        "Zeppelin of the",
+        "Wraith-",
+        "Zombies"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.2",
+    "aliases": [
+      "ad1.2",
+      "Locations (Purpose)"
+    ],
+    "description": "Adventure Design Locations (Purpose)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Ancestral",
+        "Altar"
+      ],
+      [
+        "Awakening-",
+        "Barge"
+      ],
+      [
+        "Battle-",
+        "Beacon"
+      ],
+      [
+        "Betrayal-",
+        "Bowl"
+      ],
+      [
+        "Binding-",
+        "Boxes"
+      ],
+      [
+        "Black",
+        "Cages"
+      ],
+      [
+        "Bone-",
+        "Cairn"
+      ],
+      [
+        "Brain-",
+        "Camp"
+      ],
+      [
+        "Breeding-",
+        "Catalyst"
+      ],
+      [
+        "Bridal",
+        "Caverns"
+      ],
+      [
+        "Burial",
+        "Cells"
+      ],
+      [
+        "Cannibal",
+        "Channel"
+      ],
+      [
+        "Confessional",
+        "Chasm"
+      ],
+      [
+        "Confluent",
+        "Chimney"
+      ],
+      [
+        "Crypt-",
+        "Circle"
+      ],
+      [
+        "Curse-",
+        "Cocoons"
+      ],
+      [
+        "Dark",
+        "Compactor"
+      ],
+      [
+        "Death",
+        "Compass"
+      ],
+      [
+        "Demon-",
+        "Connector"
+      ],
+      [
+        "Dimensional",
+        "Coops"
+      ],
+      [
+        "Discord-",
+        "Crown"
+      ],
+      [
+        "Dissection",
+        "Dancer"
+      ],
+      [
+        "Draining-",
+        "Device"
+      ],
+      [
+        "Dream-",
+        "Disk"
+      ],
+      [
+        "Earth-",
+        "Docks"
+      ],
+      [
+        "Ectoplasmic",
+        "Dome"
+      ],
+      [
+        "Egg",
+        "Factory"
+      ],
+      [
+        "Entropy",
+        "Farm"
+      ],
+      [
+        "Entry-",
+        "Flowers"
+      ],
+      [
+        "Eye-",
+        "Forge"
+      ],
+      [
+        "Feeding",
+        "Fountain"
+      ],
+      [
+        "Fever-",
+        "Frame"
+      ],
+      [
+        "Filth-",
+        "Gallery"
+      ],
+      [
+        "Fire-",
+        "Game"
+      ],
+      [
+        "Flesh-",
+        "Garden"
+      ],
+      [
+        "Focus-",
+        "Globe"
+      ],
+      [
+        "Fossil-",
+        "Grounds"
+      ],
+      [
+        "Furnace-",
+        "Harbor"
+      ],
+      [
+        "Gate-",
+        "Harvester"
+      ],
+      [
+        "Ghoul-",
+        "Hatchery"
+      ],
+      [
+        "Growth-",
+        "Hive"
+      ],
+      [
+        "Guard-",
+        "Houses"
+      ],
+      [
+        "Harmonic",
+        "Incubator"
+      ],
+      [
+        "Ice-",
+        "Jars"
+      ],
+      [
+        "Illusion-",
+        "Kennels"
+      ],
+      [
+        "Infesting-",
+        "Keys"
+      ],
+      [
+        "Killing-",
+        "Kiln"
+      ],
+      [
+        "Lifting-",
+        "Laboratories"
+      ],
+      [
+        "Lightning-",
+        "Lantern"
+      ],
+      [
+        "Madness-",
+        "Lens"
+      ],
+      [
+        "Malformation-",
+        "Machine"
+      ],
+      [
+        "Materialization",
+        "Mandala"
+      ],
+      [
+        "Meat",
+        "Mirror"
+      ],
+      [
+        "Memory-",
+        "Moat"
+      ],
+      [
+        "Mind-",
+        "Nets"
+      ],
+      [
+        "Minion-",
+        "Orb"
+      ],
+      [
+        "Mist-",
+        "Organs"
+      ],
+      [
+        "Moon-",
+        "Ovens"
+      ],
+      [
+        "Mummification",
+        "Pendulum"
+      ],
+      [
+        "Murder-",
+        "Pens"
+      ],
+      [
+        "Mutation",
+        "Perches"
+      ],
+      [
+        "Mutation-",
+        "Pillars"
+      ],
+      [
+        "Necromantic",
+        "Pipes"
+      ],
+      [
+        "Obedience-",
+        "Pits"
+      ],
+      [
+        "Oracle-",
+        "Pools"
+      ],
+      [
+        "Outer",
+        "Portal"
+      ],
+      [
+        "Paradoxical",
+        "Preserver"
+      ],
+      [
+        "Pattern",
+        "Priests"
+      ],
+      [
+        "Perfume-",
+        "Prism"
+      ],
+      [
+        "Plague-",
+        "Quarters"
+      ],
+      [
+        "Pleasure",
+        "Rafts"
+      ],
+      [
+        "Prayer-",
+        "Rods"
+      ],
+      [
+        "Prison-",
+        "Rooms"
+      ],
+      [
+        "Puzzle-",
+        "Rune"
+      ],
+      [
+        "Reaction-",
+        "Sanctum"
+      ],
+      [
+        "Rearrangement",
+        "Separator"
+      ],
+      [
+        "Sacrificial",
+        "Ship"
+      ],
+      [
+        "Sand-",
+        "Sphere"
+      ],
+      [
+        "Screaming-",
+        "Spiral"
+      ],
+      [
+        "Shadow-",
+        "Spire"
+      ],
+      [
+        "Shaping-",
+        "Spouts"
+      ],
+      [
+        "Simulacrum",
+        "Stage"
+      ],
+      [
+        "Skeleton",
+        "Statue"
+      ],
+      [
+        "Skin",
+        "Steps"
+      ],
+      [
+        "Slime-",
+        "Swamp"
+      ],
+      [
+        "Spell-",
+        "Theater"
+      ],
+      [
+        "Spider",
+        "Throne"
+      ],
+      [
+        "Storm-",
+        "Token"
+      ],
+      [
+        "Teleportation",
+        "Tomb"
+      ],
+      [
+        "Tentacle-",
+        "Tower"
+      ],
+      [
+        "Time-",
+        "Traps"
+      ],
+      [
+        "Transformational",
+        "Trees"
+      ],
+      [
+        "Tuning-",
+        "Tubes"
+      ],
+      [
+        "Unreality-",
+        "Vats"
+      ],
+      [
+        "Vision-",
+        "Vines"
+      ],
+      [
+        "War-",
+        "Vortex"
+      ],
+      [
+        "Winter",
+        "Wards"
+      ],
+      [
+        "Witch-",
+        "Webs"
+      ],
+      [
+        "Witching-",
+        "Well"
+      ],
+      [
+        "Witching-",
+        "Wheel"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.3",
+    "aliases": [
+      "ad1.3",
+      "Mission (Random Type)"
+    ],
+    "description": "Adventure Design Mission (Random Type)",
+    "variant": "random-table",
+    "delimiter": "",
+    "table": [
+      [
+        "ad1.4",
+        "ad1.5",
+        "ad1.6",
+        "ad1.7"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.4",
+    "aliases": [
+      "ad1.4",
+      "Mission (Individual)"
+    ],
+    "description": "Adventure Design Mission (Individual)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Bribe or negotiate with",
+        "Adventurer(s)"
+      ],
+      [
+        "Bring message to location of",
+        "Agent or diplomat"
+      ],
+      [
+        "Capture or arrest",
+        "Cleric or religious leader"
+      ],
+      [
+        "Conceal/smuggle",
+        "Criminal/outlaw"
+      ],
+      [
+        "Deliver/transport",
+        "Intelligent monster"
+      ],
+      [
+        "Discover identity of",
+        "Local noble"
+      ],
+      [
+        "Distract, decoy or deceive",
+        "Magic-user"
+      ],
+      [
+        "Entrap or sting",
+        "Messenger"
+      ],
+      [
+        "Extort from",
+        "Saboteur"
+      ],
+      [
+        "Find missing",
+        "Secret agent or spy"
+      ],
+      [
+        "Get help from",
+        "[ad1.8]"
+      ],
+      [
+        "Guard/protect",
+        "[ad1.8]"
+      ],
+      [
+        "Incriminate or frame",
+        "[ad1.8]"
+      ],
+      [
+        "Kidnap",
+        "[ad1.8]"
+      ],
+      [
+        "Kill/assassinate",
+        "[ad1.8]"
+      ],
+      [
+        "Rescue",
+        "[ad1.8]"
+      ],
+      [
+        "Sabotage efforts of",
+        "[ad1.8]"
+      ],
+      [
+        "Spy upon",
+        "[ad1.8]"
+      ],
+      [
+        "Steal item from",
+        "[ad1.8]"
+      ],
+      [
+        "Waylay",
+        "[ad1.8]"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.5",
+    "aliases": [
+      "ad1.5",
+      "Mission (Item)"
+    ],
+    "description": "Adventure Design Mission (Item)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Attack to obtain",
+        "Body or corpse"
+      ],
+      [
+        "Conceal",
+        "Cargo"
+      ],
+      [
+        "Defend",
+        "Cattle or livestock"
+      ],
+      [
+        "Deliver or transport",
+        "Clue"
+      ],
+      [
+        "Destroy",
+        "Evidence of crime"
+      ],
+      [
+        "Fake existence of",
+        "Evidence of innocence"
+      ],
+      [
+        "Find or locate",
+        "Gold or jewelry"
+      ],
+      [
+        "Guard or protect",
+        "Magic item"
+      ],
+      [
+        "Hide",
+        "Map"
+      ],
+      [
+        "Hijack",
+        "Message or letter"
+      ],
+      [
+        "Prevent delivery of",
+        "Monster"
+      ],
+      [
+        "Prevent sabotage of",
+        "Mysterious sealed container"
+      ],
+      [
+        "Raid to obtain",
+        "Ownership documents"
+      ],
+      [
+        "Retake or repossess",
+        "Religious item"
+      ],
+      [
+        "Sabotage",
+        "Ship"
+      ],
+      [
+        "Salvage from dangerous place",
+        "Statue or idol (portable)"
+      ],
+      [
+        "Smuggle",
+        "Symbol of authority"
+      ],
+      [
+        "Steal from within location",
+        "Unusual animal (familiar, mascot, pet, prize cow, etc.)"
+      ],
+      [
+        "Steal while in transit",
+        "Vehicles with cargo"
+      ],
+      [
+        "Swap fake imitation",
+        "Weapon (siege engine, famous sword, etc.)"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.6",
+    "aliases": [
+      "ad1.6",
+      "Mission (Location)"
+    ],
+    "description": "Adventure Design Mission (Location)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Assault",
+        "Archaeological dig"
+      ],
+      [
+        "Assault",
+        "Caravan"
+      ],
+      [
+        "Break siege of",
+        "Castle"
+      ],
+      [
+        "Capture and hold",
+        "Caves"
+      ],
+      [
+        "Defend from attack",
+        "Cottage"
+      ],
+      [
+        "Defend from attack",
+        "Dungeon"
+      ],
+      [
+        "Destroy",
+        "Encampment"
+      ],
+      [
+        "Escape from",
+        "Extra-planar area"
+      ],
+      [
+        "Explore",
+        "Flying Structure"
+      ],
+      [
+        "Find or locate",
+        "Flying Vehicle"
+      ],
+      [
+        "Get supplies to",
+        "Forest"
+      ],
+      [
+        "Infiltrate and control",
+        "Fort"
+      ],
+      [
+        "Infiltrate and spy upon",
+        "Fortified building or manor"
+      ],
+      [
+        "Liberate",
+        "Grove"
+      ],
+      [
+        "Locate intruder/spy",
+        "Oasis"
+      ],
+      [
+        "Loot",
+        "Prison"
+      ],
+      [
+        "Loot",
+        "Ruins"
+      ],
+      [
+        "Protect from infiltration",
+        "Ship"
+      ],
+      [
+        "Reinforce",
+        "Stockade"
+      ],
+      [
+        "Rescue hostages from",
+        "Swamp"
+      ],
+      [
+        "Rescue hostages from",
+        "Tavern"
+      ],
+      [
+        "Retake",
+        "Temple"
+      ],
+      [
+        "Secretly return something to",
+        "Village"
+      ],
+      [
+        "Stage raid upon",
+        "Warehouse"
+      ],
+      [
+        "Stage raid upon",
+        "Wharfs or Docks"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.7",
+    "aliases": [
+      "ad1.7",
+      "Mission (Event)"
+    ],
+    "description": "Adventure Design Mission (Event)",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Destroy results of",
+        "Archaeological dig"
+      ],
+      [
+        "Escape from",
+        "Arena or gladiatorial battle"
+      ],
+      [
+        "Solve bizarre mystery arising from",
+        "Arrest or trial"
+      ],
+      [
+        "Expose someone involved in",
+        "Assassination"
+      ],
+      [
+        "Expose someone involved in",
+        "Cattle drive through a dangerous area"
+      ],
+      [
+        "Hide evidence of what really happened in a recent",
+        "Coronation or transfer of power"
+      ],
+      [
+        "Infiltrate group involved in",
+        "Coup d'etat or rebellion"
+      ],
+      [
+        "Infiltrate group involved in",
+        "Criminal conspiracy"
+      ],
+      [
+        "Investigate events of a recent",
+        "Disruption of ceremony"
+      ],
+      [
+        "Investigate events of an ancient",
+        "Duel"
+      ],
+      [
+        "Lead or coordinate",
+        "Execution or imprisonment"
+      ],
+      [
+        "Plan and execute",
+        "Exploration/mapping expedition"
+      ],
+      [
+        "Prevent",
+        "Furtive",
+        "stealthy raid"
+      ],
+      [
+        "Prevent",
+        "Military assault"
+      ],
+      [
+        "Protect someone involved in",
+        "Murder or attempted murder"
+      ],
+      [
+        "Protect someone involved in",
+        "Natural disaster"
+      ],
+      [
+        "Sabotage",
+        "Swindle"
+      ],
+      [
+        "Survive or overcome",
+        "Theft"
+      ],
+      [
+        "Survive or overcome",
+        "Trailblazing attempt into new area"
+      ],
+      [
+        "Take leadership in",
+        "Treason and aftermath"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.8",
+    "aliases": [
+      "ad1.8",
+      "Patrons & Targets"
+    ],
+    "description": "Adventure Design Patrons & Targets",
+    "variant": "columns",
+    "delimiter": "",
+    "table": [
+      [
+        "Abbot (large abbey)"
+      ],
+      [
+        "Abbot (heretic)"
+      ],
+      [
+        "Abbot (minor abbey or hermitage)"
+      ],
+      [
+        "Accused person (guilty)"
+      ],
+      [
+        "Accused person (innocent)"
+      ],
+      [
+        "Accused killer (real killer is [ad1.8])"
+      ],
+      [
+        "Actor (famous)"
+      ],
+      [
+        "Actor (leader of troupe)"
+      ],
+      [
+        "Actor (minor)"
+      ],
+      [
+        "Addict (alcohol)"
+      ],
+      [
+        "Addict (drugs)"
+      ],
+      [
+        "Addict (gambling)"
+      ],
+      [
+        "Addict (love)"
+      ],
+      [
+        "Addict (music)"
+      ],
+      [
+        "Addict (opium or hashish)"
+      ],
+      [
+        "Addict (other)"
+      ],
+      [
+        "Adulterer"
+      ],
+      [
+        "Adulterer (suspected)"
+      ],
+      [
+        "Adventurer (cleric)"
+      ],
+      [
+        "Adventurer (fighter)"
+      ],
+      [
+        "Adventurer (magic-user)"
+      ],
+      [
+        "Adventurer (thief)"
+      ],
+      [
+        "Agent (of deity)"
+      ],
+      [
+        "Agent (of demon)"
+      ],
+      [
+        "Agent (of fate)"
+      ],
+      [
+        "Agent (of guild)"
+      ],
+      [
+        "Agent (of merchant house)"
+      ],
+      [
+        "Agent (of mercy)"
+      ],
+      [
+        "Agent (of sultan)"
+      ],
+      [
+        "Agent (of the king)"
+      ],
+      [
+        "Agent (secret diplomat)"
+      ],
+      [
+        "Agent (secret police)"
+      ],
+      [
+        "Agent (spy)"
+      ],
+      [
+        "Alchemist"
+      ],
+      [
+        "Alchemist (with secret formula)"
+      ],
+      [
+        "Almoner (collecting alms)"
+      ],
+      [
+        "Almoner (dispensing alms)"
+      ],
+      [
+        "Almoner (embezzlement suspect)"
+      ],
+      [
+        "Ambassador (commercial or mercantile)"
+      ],
+      [
+        "Ambassador (local political)"
+      ],
+      [
+        "Ambassador (major political)"
+      ],
+      [
+        "Anarchist (at work)"
+      ],
+      [
+        "Anarchist (scheming)"
+      ],
+      [
+        "Anarchist (suspected)"
+      ],
+      [
+        "Anarcho-syndicalist peasant"
+      ],
+      [
+        "Animal trainer (normal animals)"
+      ],
+      [
+        "Animal trainer (unusual animals)"
+      ],
+      [
+        "Anonymous wretch"
+      ],
+      [
+        "Apothecary (illegal or unlicensed)"
+      ],
+      [
+        "Apothecary (legal)"
+      ],
+      [
+        "Apprentice (mundane craft)"
+      ],
+      [
+        "Apprentice (thief or assassin)"
+      ],
+      [
+        "Apprentice (wizard or alchemist)"
+      ],
+      [
+        "Architect (any)"
+      ],
+      [
+        "Architect (castle)"
+      ],
+      [
+        "Architect (dungeons or prison)"
+      ],
+      [
+        "Architect (palace)"
+      ],
+      [
+        "Archivist (births and deaths)"
+      ],
+      [
+        "Archivist (city or town history)"
+      ],
+      [
+        "Archivist (criminal records)"
+      ],
+      [
+        "Archivist (heraldry and lineage)"
+      ],
+      [
+        "Archivist (land rights)"
+      ],
+      [
+        "Archivist (noble family)"
+      ],
+      [
+        "Archivist (temple)"
+      ],
+      [
+        "Arena owner"
+      ],
+      [
+        "Armorer (famous)"
+      ],
+      [
+        "Armorer (skilled)"
+      ],
+      [
+        "Artifact holder or guardian"
+      ],
+      [
+        "Artificer (lenses and glass)"
+      ],
+      [
+        "Artificer (siege engines)"
+      ],
+      [
+        "Artificer (water power or aqueducts)"
+      ],
+      [
+        "Artisan (any)"
+      ],
+      [
+        "Artisan (glass)"
+      ],
+      [
+        "Assassin (currently employed)"
+      ],
+      [
+        "Assassin (not employed)"
+      ],
+      [
+        "Assistant or supporter (unauthorized)"
+      ],
+      [
+        "Astrologer (charlatan)"
+      ],
+      [
+        "Astrologer (in hiding)"
+      ],
+      [
+        "Astrologer (skillful)"
+      ],
+      [
+        "Auction-house owner"
+      ],
+      [
+        "Author (lascivious verse)"
+      ],
+      [
+        "Author (philosophical)"
+      ],
+      [
+        "Author (satirical)"
+      ],
+      [
+        "Author (spell book or magic tome)"
+      ],
+      [
+        "Bailiff (courtroom)"
+      ],
+      [
+        "Bailiff (sheriff's official serving writs, process)"
+      ],
+      [
+        "Baker"
+      ],
+      [
+        "Bandit (highwayman)"
+      ],
+      [
+        "Bandit (leader)"
+      ],
+      [
+        "Bandit (lone)"
+      ],
+      [
+        "Bandit (popular hero)"
+      ],
+      [
+        "Bandit (with stolen treasure)"
+      ],
+      [
+        "Barbarian"
+      ],
+      [
+        "Barber"
+      ],
+      [
+        "Bard (on mission)"
+      ],
+      [
+        "Bard (traveling minstrel)"
+      ],
+      [
+        "Baron (poor)"
+      ],
+      [
+        "Baron (rich)"
+      ],
+      [
+        "Baroness (beautiful)"
+      ],
+      [
+        "Baroness (cruel)"
+      ],
+      [
+        "Baroness (ugly)"
+      ],
+      [
+        "Bazaar owner"
+      ],
+      [
+        "Beadle (major temple)"
+      ],
+      [
+        "Beadle (minor temple)"
+      ],
+      [
+        "Beadle (of heretical temple)"
+      ],
+      [
+        "Beggar (crippled)"
+      ],
+      [
+        "Beggar (normal)"
+      ],
+      [
+        "Beggar (secret identity)"
+      ],
+      [
+        "Beggar (thief)"
+      ],
+      [
+        "Beggar (witness)"
+      ],
+      [
+        "Beverage-maker"
+      ],
+      [
+        "Bird catcher (fabulous and magical birds)"
+      ],
+      [
+        "Bird catcher (falcons)"
+      ],
+      [
+        "Bird catcher (game birds)"
+      ],
+      [
+        "Bird catcher (songbirds)"
+      ],
+      [
+        "Bird-creature"
+      ],
+      [
+        "Blackmailer (highly successful)"
+      ],
+      [
+        "Blackmailer (knows of crime)"
+      ],
+      [
+        "Blackmailer (of evil target)"
+      ],
+      [
+        "Blackmailer (political secret)"
+      ],
+      [
+        "Blackmailer (sexual information)"
+      ],
+      [
+        "Blackmailer (temple secret)"
+      ],
+      [
+        "Blacksmith"
+      ],
+      [
+        "Blasphemer"
+      ],
+      [
+        "Blind man"
+      ],
+      [
+        "Bodyguard (failed)"
+      ],
+      [
+        "Bodyguard (working)"
+      ],
+      [
+        "Bookseller"
+      ],
+      [
+        "Bounty hunter (congenial)"
+      ],
+      [
+        "Bounty hunter (debtors)"
+      ],
+      [
+        "Bounty hunter (escaped prisoners)"
+      ],
+      [
+        "Bounty hunter (killer of criminals)"
+      ],
+      [
+        "Bounty hunter (unlicensed)"
+      ],
+      [
+        "Brigand (highwayman)"
+      ],
+      [
+        "Brigand (leader)"
+      ],
+      [
+        "Brigand (local hero)"
+      ],
+      [
+        "Brigand (seeking vengeance)"
+      ],
+      [
+        "Brigand (unjustly accused)"
+      ],
+      [
+        "Broker (caravan cargoes)"
+      ],
+      [
+        "Broker (gems)"
+      ],
+      [
+        "Broker (land)"
+      ],
+      [
+        "Broker (loans)"
+      ],
+      [
+        "Broker (ship cargoes)"
+      ],
+      [
+        "Broker of a strange transaction"
+      ],
+      [
+        "Brothel owner"
+      ],
+      [
+        "Bureaucratic official (cunning)"
+      ],
+      [
+        "Bureaucratic official (diligent)"
+      ],
+      [
+        "Bureaucratic official (loyal)"
+      ],
+      [
+        "Bureaucratic official (pompous)"
+      ],
+      [
+        "Burglar (retired)"
+      ],
+      [
+        "Burglar (working)"
+      ],
+      [
+        "Burned man"
+      ],
+      [
+        "Butcher (poor)"
+      ],
+      [
+        "Butcher (rich)"
+      ],
+      [
+        "Butcher (sinister)"
+      ],
+      [
+        "Butterfly woman"
+      ],
+      [
+        "Buyer (of something)"
+      ],
+      [
+        "Buyer (prospective)"
+      ],
+      [
+        "Captain (barge)"
+      ],
+      [
+        "Captain (fishing boat)"
+      ],
+      [
+        "Captain (infantry)"
+      ],
+      [
+        "Captain (mercenary)"
+      ],
+      [
+        "Captain (pirate)"
+      ],
+      [
+        "Captain (secret police)"
+      ],
+      [
+        "Captain (ship)"
+      ],
+      [
+        "Caravan owner"
+      ],
+      [
+        "Cartographer (skilled)"
+      ],
+      [
+        "Cartographer (with vital map)"
+      ],
+      [
+        "Cattle breeder"
+      ],
+      [
+        "Cattle owner"
+      ],
+      [
+        "Cattle thief"
+      ],
+      [
+        "Celebrity figure (artistic)"
+      ],
+      [
+        "Celebrity figure (foreign)"
+      ],
+      [
+        "Celebrity figure (genius)"
+      ],
+      [
+        "Celebrity figure (in hiding or disguise)"
+      ],
+      [
+        "Celebrity figure (local)"
+      ],
+      [
+        "Celebrity figure (magic-related)"
+      ],
+      [
+        "Celebrity figure (sport or contest)"
+      ],
+      [
+        "Challenge recipient (cheating)"
+      ],
+      [
+        "Challenge recipient (hiding)"
+      ],
+      [
+        "Chef (skilled)"
+      ],
+      [
+        "Chef (trying hard)"
+      ],
+      [
+        "Circus owner"
+      ],
+      [
+        "Cleric (evil or chaotic)"
+      ],
+      [
+        "Cleric (good or lawful)"
+      ],
+      [
+        "Cleric (rebel or heretic)"
+      ],
+      [
+        "Clone or simulacrum"
+      ],
+      [
+        "Clown (entertaining)"
+      ],
+      [
+        "Clown (evil)"
+      ],
+      [
+        "Collector (animals)"
+      ],
+      [
+        "Collector (books)"
+      ],
+      [
+        "Collector (insects)"
+      ],
+      [
+        "Collector (magic items)"
+      ],
+      [
+        "Collector (minerals)"
+      ],
+      [
+        "Collector (mundane items)"
+      ],
+      [
+        "Collector (plants)"
+      ],
+      [
+        "Collector (unusual: souls, auras, demons, etc)"
+      ],
+      [
+        "Commander (city guard)"
+      ],
+      [
+        "Commander (secret police)"
+      ],
+      [
+        "Connoisseur (dangerous experiences)"
+      ],
+      [
+        "Connoisseur (meat)"
+      ],
+      [
+        "Connoisseur (men)"
+      ],
+      [
+        "Connoisseur (music)"
+      ],
+      [
+        "Connoisseur (scents and perfumes)"
+      ],
+      [
+        "Connoisseur (wine)"
+      ],
+      [
+        "Connoisseur (women)"
+      ],
+      [
+        "Conservative"
+      ],
+      [
+        "Contest loser"
+      ],
+      [
+        "Contest winner"
+      ],
+      [
+        "Cook"
+      ],
+      [
+        "Cooper"
+      ],
+      [
+        "Counselor (attorney)"
+      ],
+      [
+        "Counselor (political)"
+      ],
+      [
+        "Counterfeiter"
+      ],
+      [
+        "Courier (documents)"
+      ],
+      [
+        "Courier (gems)"
+      ],
+      [
+        "Courier (illegal substances)"
+      ],
+      [
+        "Courier (political messages)"
+      ],
+      [
+        "Courier (stolen goods)"
+      ],
+      [
+        "Courtesan (high class)"
+      ],
+      [
+        "Courtesan (low class)"
+      ],
+      [
+        "Courtesan (noble)"
+      ],
+      [
+        "Courtesan (witness or has secret)"
+      ],
+      [
+        "Cousin of someone"
+      ],
+      [
+        "Craftsman (general)"
+      ],
+      [
+        "Craftsman (glassblower)"
+      ],
+      [
+        "Craftsman (magical materials)"
+      ],
+      [
+        "Crime boss (cursed)"
+      ],
+      [
+        "Crime boss (second in command)"
+      ],
+      [
+        "Crime boss (taking care of business)"
+      ],
+      [
+        "Crime boss (with personal problems)"
+      ],
+      [
+        "Crime boss (worried)"
+      ],
+      [
+        "Criminal (accidental)"
+      ],
+      [
+        "Criminal (escaped)"
+      ],
+      [
+        "Criminal (unjustly accused)"
+      ],
+      [
+        "Crippled man"
+      ],
+      [
+        "Cutpurse"
+      ],
+      [
+        "Damsel (beautiful and noble)"
+      ],
+      [
+        "Damsel (commoner)"
+      ],
+      [
+        "Damsel (conniving and deceitful)"
+      ],
+      [
+        "Damsel (distressed)"
+      ],
+      [
+        "Damsel (noble birth)"
+      ],
+      [
+        "Damsel (only a disguise)"
+      ],
+      [
+        "Damsel (shockingly ugly)"
+      ],
+      [
+        "Damsel (unchaste)"
+      ],
+      [
+        "Damsel (very intelligent, with a mission)"
+      ],
+      [
+        "Dancer (famous)"
+      ],
+      [
+        "Dancer (salacious)"
+      ],
+      [
+        "Dancer (supernatural capability)"
+      ],
+      [
+        "Deaf-mute"
+      ],
+      [
+        "Defender (of moral virtue)"
+      ],
+      [
+        "Defender (of the peace)"
+      ],
+      [
+        "Defender (of the poor)"
+      ],
+      [
+        "Deity (very minor) in disguise"
+      ],
+      [
+        "Demigod (cursed)"
+      ],
+      [
+        "Demigod (imprisoned)"
+      ],
+      [
+        "Demigod (incorporeal)"
+      ],
+      [
+        "Demonologist"
+      ],
+      [
+        "Dentist"
+      ],
+      [
+        "Dentist (insane)"
+      ],
+      [
+        "Dentist (sinister)"
+      ],
+      [
+        "Deserter (army)"
+      ],
+      [
+        "Deserter (criminal gang)"
+      ],
+      [
+        "Diplomat (any)"
+      ],
+      [
+        "Diplomat (commercial)"
+      ],
+      [
+        "Diplomat (political)"
+      ],
+      [
+        "Disembodied voice"
+      ],
+      [
+        "Doctor (charlatan)"
+      ],
+      [
+        "Doctor (general practice)"
+      ],
+      [
+        "Doctor (mystical)"
+      ],
+      [
+        "Doctor (sinister)"
+      ],
+      [
+        "Doctor (specialist)"
+      ],
+      [
+        "Druid"
+      ],
+      [
+        "Drummer"
+      ],
+      [
+        "Elemental creature"
+      ],
+      [
+        "Emissary (affairs of the heart)"
+      ],
+      [
+        "Emissary (commercial)"
+      ],
+      [
+        "Emissary (false)"
+      ],
+      [
+        "Emissary (political)"
+      ],
+      [
+        "Emissary (religious)"
+      ],
+      [
+        "Emissary (secret)"
+      ],
+      [
+        "Enchanter"
+      ],
+      [
+        "Enchanter (evil)"
+      ],
+      [
+        "Enchanter (insane)"
+      ],
+      [
+        "Enchanter (non-human)"
+      ],
+      [
+        "Enchanter (senile)"
+      ],
+      [
+        "Enchanter (very young)"
+      ],
+      [
+        "Enchantress (beautiful)"
+      ],
+      [
+        "Enchantress (in love)"
+      ],
+      [
+        "Enchantress (non-human)"
+      ],
+      [
+        "Enchantress (reborn)"
+      ],
+      [
+        "Enchantress (villainous)"
+      ],
+      [
+        "Engineer (aqueducts and water)"
+      ],
+      [
+        "Engineer (castles and temples)"
+      ],
+      [
+        "Engineer (dungeon excavation)"
+      ],
+      [
+        "Engineer (sieges)"
+      ],
+      [
+        "Escapee (disaster location)"
+      ],
+      [
+        "Escapee (monster's lair)"
+      ],
+      [
+        "Escapee (prison)"
+      ],
+      [
+        "Escapee (wizard's lab)"
+      ],
+      [
+        "Executioner"
+      ],
+      [
+        "Executioner (disgraced)"
+      ],
+      [
+        "Executioner (famous)"
+      ],
+      [
+        "Executioner (retired)"
+      ],
+      [
+        "Expert (code breaker)"
+      ],
+      [
+        "Expert (gems)"
+      ],
+      [
+        "Expert (investigator)"
+      ],
+      [
+        "Expert (magical substances)"
+      ],
+      [
+        "Expert (planting rumors)"
+      ],
+      [
+        "Expert (runes)"
+      ],
+      [
+        "Expert (weapons)"
+      ],
+      [
+        "Expert (wilderness tracking)"
+      ],
+      [
+        "Explorer"
+      ],
+      [
+        "Explorer (well known)"
+      ],
+      [
+        "Explorer (with secret knowledge)"
+      ],
+      [
+        "Extortionist (blackmailer)"
+      ],
+      [
+        "Extortionist (for something other than money)"
+      ],
+      [
+        "Extortionist (magical threats)"
+      ],
+      [
+        "Extortionist (violent)"
+      ],
+      [
+        "Extraplanar being"
+      ],
+      [
+        "Extraplanar being (in trouble)"
+      ],
+      [
+        "Falconer"
+      ],
+      [
+        "Falconer (unusual birds)"
+      ],
+      [
+        "Farmer (poor)"
+      ],
+      [
+        "Farmer (rich)"
+      ],
+      [
+        "Farmer (with three daughters)"
+      ],
+      [
+        "Father or mother"
+      ],
+      [
+        "Felon (innocent)"
+      ],
+      [
+        "Felon (oppressed)"
+      ],
+      [
+        "Ferryman"
+      ],
+      [
+        "Ferryman (hunchback)"
+      ],
+      [
+        "Fey creature or being"
+      ],
+      [
+        "Filthy peasant"
+      ],
+      [
+        "Fire marshal"
+      ],
+      [
+        "Fisherman (owns boat)"
+      ],
+      [
+        "Fisherman (poor)"
+      ],
+      [
+        "Flower arranger (possibly a monk?)"
+      ],
+      [
+        "Flower-bedecked woman"
+      ],
+      [
+        "Food-producer"
+      ],
+      [
+        "Fool (cursed)"
+      ],
+      [
+        "Fool (insane)"
+      ],
+      [
+        "Fool (professional)"
+      ],
+      [
+        "Foreigner (beautiful noblewoman)"
+      ],
+      [
+        "Foreigner (other plane of existence)"
+      ],
+      [
+        "Foreigner (sinister)"
+      ],
+      [
+        "Foreigner (spy)"
+      ],
+      [
+        "Foreigner (stranded)"
+      ],
+      [
+        "Foreigner (with outrageous accent)"
+      ],
+      [
+        "Forest owner/protector"
+      ],
+      [
+        "Forester (acorn-grabbing peasant)"
+      ],
+      [
+        "Forester (forest protector)"
+      ],
+      [
+        "Forger (artworks)"
+      ],
+      [
+        "Forger (documents)"
+      ],
+      [
+        "Fortune-teller (accurate)"
+      ],
+      [
+        "Fortune-teller (annoying doom-prophet)"
+      ],
+      [
+        "Fortune-teller (crone)"
+      ],
+      [
+        "Fortune-teller (fraud)"
+      ],
+      [
+        "Friend of Nature"
+      ],
+      [
+        "Fugitive"
+      ],
+      [
+        "Gambler (deadly games)"
+      ],
+      [
+        "Gambler (notorious cheat)"
+      ],
+      [
+        "Gambler (recent big losses)"
+      ],
+      [
+        "Gambler (recent big winnings)"
+      ],
+      [
+        "Gambler (with lucky charm)"
+      ],
+      [
+        "Gambling den owner"
+      ],
+      [
+        "Ghost (dangerous)"
+      ],
+      [
+        "Ghost (female)"
+      ],
+      [
+        "Ghost (harmless apparition)"
+      ],
+      [
+        "Ghost (unquiet spirit)"
+      ],
+      [
+        "Giant Insect (intelligent)"
+      ],
+      [
+        "Gladiator (famous)"
+      ],
+      [
+        "Gladiator (reluctant)"
+      ],
+      [
+        "Gladiatorial trainer"
+      ],
+      [
+        "Glassblower"
+      ],
+      [
+        "Goldsmith (cursed)"
+      ],
+      [
+        "Goldsmith (general)"
+      ],
+      [
+        "Goldsmith (impoverished)"
+      ],
+      [
+        "Goldsmith (rich)"
+      ],
+      [
+        "Goldsmith (skilled)"
+      ],
+      [
+        "Goldsmith (threatened)"
+      ],
+      [
+        "Goldsmith (with rival)"
+      ],
+      [
+        "Governor"
+      ],
+      [
+        "Governor (benevolent)"
+      ],
+      [
+        "Governor (cursed)"
+      ],
+      [
+        "Governor (local)"
+      ],
+      [
+        "Governor (oppressive)"
+      ],
+      [
+        "Governor (with personal problem)"
+      ],
+      [
+        "Grave robber (accused)"
+      ],
+      [
+        "Grave robber (avaricious)"
+      ],
+      [
+        "Grave robber (necromantic purposes)"
+      ],
+      [
+        "Grave robber (terrified)"
+      ],
+      [
+        "Grave robber (with curse therefrom)"
+      ],
+      [
+        "Grim reaper (yep, no kidding)"
+      ],
+      [
+        "Guardian (archives)"
+      ],
+      [
+        "Guardian (bodyguard)"
+      ],
+      [
+        "Guardian (criminal evidence)"
+      ],
+      [
+        "Guardian (holy book or relic)"
+      ],
+      [
+        "Guardian (of child)"
+      ],
+      [
+        "Guardian (of idea or concept)"
+      ],
+      [
+        "Guardian (of magical item)"
+      ],
+      [
+        "Guardian (of place)"
+      ],
+      [
+        "Guardian (other)"
+      ],
+      [
+        "Guardsman"
+      ],
+      [
+        "Guild member (high ranking)"
+      ],
+      [
+        "Guild member (loyal and hardworking)"
+      ],
+      [
+        "Guild member (secret freelancer)"
+      ],
+      [
+        "Guildmaster (assassin)"
+      ],
+      [
+        "Guildmaster (craft)"
+      ],
+      [
+        "Guildmaster (merchants)"
+      ],
+      [
+        "Guildmaster (profession)"
+      ],
+      [
+        "Guildmaster (thieves)"
+      ],
+      [
+        "Hangman (loves his job)"
+      ],
+      [
+        "Hangman (retired)"
+      ],
+      [
+        "Hangman (working in his official capacity)"
+      ],
+      [
+        "Heir (if someone dies)"
+      ],
+      [
+        "Heir (to a barony)"
+      ],
+      [
+        "Heir (to a fortune)"
+      ],
+      [
+        "Heir (to something interesting)"
+      ],
+      [
+        "Heir (to the throne)"
+      ],
+      [
+        "Heiress (lovable)"
+      ],
+      [
+        "Heiress (of curse)"
+      ],
+      [
+        "Heiress (of hereditary powers)"
+      ],
+      [
+        "Heiress (secret)"
+      ],
+      [
+        "Heiress (sinister)"
+      ],
+      [
+        "Herbalist (with secret knowledge)"
+      ],
+      [
+        "Heretic"
+      ],
+      [
+        "Hester (with political influence)"
+      ],
+      [
+        "Hidden witness"
+      ],
+      [
+        "Historian (ancients and demigods)"
+      ],
+      [
+        "Historian (kings and kingdoms)"
+      ],
+      [
+        "Historian (magic and wizards)"
+      ],
+      [
+        "Historian (of a region)"
+      ],
+      [
+        "Historian (of a single famous person)"
+      ],
+      [
+        "Holy man (fake)"
+      ],
+      [
+        "Holy man (genuine)"
+      ],
+      [
+        "Huntsman (mythical beasts)"
+      ],
+      [
+        "Huntsman (noble)"
+      ],
+      [
+        "Huntsman (people)"
+      ],
+      [
+        "Huntsman (stag and pheasant)"
+      ],
+      [
+        "Hybrid human/monster type"
+      ],
+      [
+        "Illusionist"
+      ],
+      [
+        "Imposter (political or social)"
+      ],
+      [
+        "Imposter (secret identity)"
+      ],
+      [
+        "Infidel"
+      ],
+      [
+        "Inquisitor (any sort)"
+      ],
+      [
+        "Inquisitor (government)"
+      ],
+      [
+        "Inquisitor (illegal)"
+      ],
+      [
+        "Inquisitor (of powerful temple)"
+      ],
+      [
+        "Intelligent Animal"
+      ],
+      [
+        "Intelligent fish or sea animal"
+      ],
+      [
+        "Intelligent item (book)"
+      ],
+      [
+        "Intelligent item (statue)"
+      ],
+      [
+        "Intelligent Plant"
+      ],
+      [
+        "Investigator (curious amateur)"
+      ],
+      [
+        "Investigator (guild quality standards)"
+      ],
+      [
+        "Investigator (knows too much)"
+      ],
+      [
+        "Investigator (legitimate)"
+      ],
+      [
+        "Investor (lost money)"
+      ],
+      [
+        "Investor (needs information)"
+      ],
+      [
+        "Investor (suspects funny business)"
+      ],
+      [
+        "Jailor (prison official)"
+      ],
+      [
+        "Jailor simple turnkey"
+      ],
+      [
+        "Jester (on the run)"
+      ],
+      [
+        "Jester (sinister)"
+      ],
+      [
+        "Jester (with magical powers)"
+      ],
+      [
+        "Jeweler (working on a commission)"
+      ],
+      [
+        "Journalist"
+      ],
+      [
+        "Judge (from a past trial)"
+      ],
+      [
+        "Judge (local)"
+      ],
+      [
+        "Judge (of a contest)"
+      ],
+      [
+        "Judge (of a tournament)"
+      ],
+      [
+        "Judge (religious court)"
+      ],
+      [
+        "Kidnapper (accused but innocent)"
+      ],
+      [
+        "Kidnapper (no longer has victim)"
+      ],
+      [
+        "Kidnapper (still has victim)"
+      ],
+      [
+        "Killer (justified)"
+      ],
+      [
+        "King (dead)"
+      ],
+      [
+        "King (dethroned)"
+      ],
+      [
+        "King (disguised)"
+      ],
+      [
+        "King (distant foreign realm)"
+      ],
+      [
+        "King (in hiding)"
+      ],
+      [
+        "King (in official capacity)"
+      ],
+      [
+        "King (insane)"
+      ],
+      [
+        "King (missing)"
+      ],
+      [
+        "King (of something strange)"
+      ],
+      [
+        "King's body part"
+      ],
+      [
+        "Knave (inconstant in affairs of finance)"
+      ],
+      [
+        "Knave (inconstant in affairs of the heart)"
+      ],
+      [
+        "Knave (inconstant in matters of secrecy)"
+      ],
+      [
+        "Knave (inconstant in matters of truthfulness)"
+      ],
+      [
+        "Knight (cursed)"
+      ],
+      [
+        "Knight (disgraced)"
+      ],
+      [
+        "Knight (evil)"
+      ],
+      [
+        "Knight (paladin)"
+      ],
+      [
+        "Knight (renowned)"
+      ],
+      [
+        "Knight (wandering)"
+      ],
+      [
+        "Lady in waiting (dishonored)"
+      ],
+      [
+        "Lady in waiting (faithful to her lady)"
+      ],
+      [
+        "Lady in waiting (knows terrible secret)"
+      ],
+      [
+        "Lady in waiting (treacherous)"
+      ],
+      [
+        "Land manager/protector"
+      ],
+      [
+        "Landlord (greedy)"
+      ],
+      [
+        "Landlord (under threat of death)"
+      ],
+      [
+        "Landlord (with property problems)"
+      ],
+      [
+        "Lawyer"
+      ],
+      [
+        "Lawyer (carrying out terms of a will)"
+      ],
+      [
+        "Lawyer (for the defense)"
+      ],
+      [
+        "Lawyer (for the prosecution)"
+      ],
+      [
+        "Lawyer (in a civil suit)"
+      ],
+      [
+        "Leader of mob or riots)"
+      ],
+      [
+        "Leader of prayer group"
+      ],
+      [
+        "Leader of sting or entrapment operation"
+      ],
+      [
+        "Leader of the autonomous commune"
+      ],
+      [
+        "Leader of the glorious uprising"
+      ],
+      [
+        "Leader of the pack"
+      ],
+      [
+        "Leader of the posse"
+      ],
+      [
+        "Legislator (corrupt)"
+      ],
+      [
+        "Legislator (getting too close to the truth)"
+      ],
+      [
+        "Legislator (kidnapped)"
+      ],
+      [
+        "Legislator (moral)"
+      ],
+      [
+        "Legislator (radical)"
+      ],
+      [
+        "Legislator (suspicious)"
+      ],
+      [
+        "Legislator (traditionalist)"
+      ],
+      [
+        "Leper (contagious)"
+      ],
+      [
+        "Leper (fake)"
+      ],
+      [
+        "Leper (real)"
+      ],
+      [
+        "Locksmith (accused of crime)"
+      ],
+      [
+        "Locksmith (magical locks)"
+      ],
+      [
+        "Locksmith (skilled)"
+      ],
+      [
+        "Lord"
+      ],
+      [
+        "Lord (of the dance)"
+      ],
+      [
+        "Lord (of the manor)"
+      ],
+      [
+        "Lord (of the skies)"
+      ],
+      [
+        "Lord (of yon great castle)"
+      ],
+      [
+        "Lottery winner"
+      ],
+      [
+        "Love doctor"
+      ],
+      [
+        "Loyal friend of someone"
+      ],
+      [
+        "Madman"
+      ],
+      [
+        "Madman (cyclical madness)"
+      ],
+      [
+        "Madman (dangerous)"
+      ],
+      [
+        "Madman (obsessed)"
+      ],
+      [
+        "Maid"
+      ],
+      [
+        "Maid of honor"
+      ],
+      [
+        "Maiden (abandoned)"
+      ],
+      [
+        "Maiden (chaste)"
+      ],
+      [
+        "Maiden (poor)"
+      ],
+      [
+        "Maiden (rich)"
+      ],
+      [
+        "Maiden (seeking to change that status)"
+      ],
+      [
+        "Majordomo (for wizard)"
+      ],
+      [
+        "Majordomo (great manor)"
+      ],
+      [
+        "Majordomo (large castle or fortress)"
+      ],
+      [
+        "Majordomo (of nobleman's city residence)"
+      ],
+      [
+        "Majordomo (small castle)"
+      ],
+      [
+        "Majordomo (small manor)"
+      ],
+      [
+        "Man in strange mask"
+      ],
+      [
+        "Man with red or glowing eyes"
+      ],
+      [
+        "Man with unusual capability"
+      ],
+      [
+        "Man with unusual legs"
+      ],
+      [
+        "Man with unusual pet"
+      ],
+      [
+        "Man with unusual skin"
+      ],
+      [
+        "Man with wooden leg"
+      ],
+      [
+        "Medicine man"
+      ],
+      [
+        "Member of secret police"
+      ],
+      [
+        "Mercenary (leader)"
+      ],
+      [
+        "Mercenary (soldier)"
+      ],
+      [
+        "Mercenary (wounded)"
+      ],
+      [
+        "Merchant (addictive substances)"
+      ],
+      [
+        "Merchant (caravan member)"
+      ],
+      [
+        "Merchant (caravan owner)"
+      ],
+      [
+        "Merchant (fleet owner)"
+      ],
+      [
+        "Merchant (great)"
+      ],
+      [
+        "Merchant (minor)"
+      ],
+      [
+        "Merchant (ship owner)"
+      ],
+      [
+        "Merchant (silks)"
+      ],
+      [
+        "Merchant (sinister items)"
+      ],
+      [
+        "Merchant (spices)"
+      ],
+      [
+        "Merchant (strange items)"
+      ],
+      [
+        "Merchant (sundry vices)"
+      ],
+      [
+        "Merchant (wines)"
+      ],
+      [
+        "Messenger (commercial)"
+      ],
+      [
+        "Messenger (for military leader)"
+      ],
+      [
+        "Messenger (for wizard)"
+      ],
+      [
+        "Messenger (love affair)"
+      ],
+      [
+        "Messenger (of death)"
+      ],
+      [
+        "Messenger (of deity)"
+      ],
+      [
+        "Messenger (of noble)"
+      ],
+      [
+        "Messenger (of religious leader)"
+      ],
+      [
+        "Messenger (with message for characters)"
+      ],
+      [
+        "Military leader (betrayed)"
+      ],
+      [
+        "Military leader (defeated)"
+      ],
+      [
+        "Military leader (victorious)"
+      ],
+      [
+        "Miller"
+      ],
+      [
+        "Miller (grinds strange or magical substances)"
+      ],
+      [
+        "Miller (with three sons)"
+      ],
+      [
+        "Miller (with unusual cat)"
+      ],
+      [
+        "Mine owner"
+      ],
+      [
+        "Miner (crippled)"
+      ],
+      [
+        "Miner (with secret)"
+      ],
+      [
+        "Minister of defense"
+      ],
+      [
+        "Minister of justice"
+      ],
+      [
+        "Minister of pomp and circumstance"
+      ],
+      [
+        "Minister of the treasury"
+      ],
+      [
+        "Minstrel (poor)"
+      ],
+      [
+        "Minstrel (rich)"
+      ],
+      [
+        "Minstrel (with attendant fans or followers)"
+      ],
+      [
+        "Minstrel (with magic powers or instrument)"
+      ],
+      [
+        "Miser"
+      ],
+      [
+        "Moneylender (victim of a swindle)"
+      ],
+      [
+        "Moneylender (victim of theft)"
+      ],
+      [
+        "Moneylender (with an outstanding debt)"
+      ],
+      [
+        "Monk (European friar)"
+      ],
+      [
+        "Monk (hermit)"
+      ],
+      [
+        "Monk (seeks to avenge dead master)"
+      ],
+      [
+        "Monk (vow of silence)"
+      ],
+      [
+        "\"Monk's severed head, talking, in sandalwood box\""
+      ],
+      [
+        "Necromancer"
+      ],
+      [
+        "Noble (cursed)"
+      ],
+      [
+        "Noble (debtor)"
+      ],
+      [
+        "Noble (dishonored)"
+      ],
+      [
+        "Noble (impoverished)"
+      ],
+      [
+        "Noble (in hiding)"
+      ],
+      [
+        "Noble (rich)"
+      ],
+      [
+        "Noble (with disease)"
+      ],
+      [
+        "Noble (with personal problem)"
+      ],
+      [
+        "Noblewoman (lovely)"
+      ],
+      [
+        "Noblewoman (protecting husband)"
+      ],
+      [
+        "Noblewoman (shrewish)"
+      ],
+      [
+        "Nomad (barbarian wanderer)"
+      ],
+      [
+        "Nomad (religious dervish)"
+      ],
+      [
+        "Nomad (savage tribesman)"
+      ],
+      [
+        "Nomad (seeking lost homeland)"
+      ],
+      [
+        "Nomad (semi-civilized herdsman)"
+      ],
+      [
+        "Obvious suspect"
+      ],
+      [
+        "Oddly familiar person"
+      ],
+      [
+        "Operator (gambling den)"
+      ],
+      [
+        "Operator (public baths)"
+      ],
+      [
+        "Operator (scams)"
+      ],
+      [
+        "Opium den owner"
+      ],
+      [
+        "Orchard owner"
+      ],
+      [
+        "Organizer (coronation)"
+      ],
+      [
+        "Organizer (festival)"
+      ],
+      [
+        "Organizer (important wedding)"
+      ],
+      [
+        "Organizer (labor)"
+      ],
+      [
+        "Organizer (political)"
+      ],
+      [
+        "Organizer (religious)"
+      ],
+      [
+        "Outlaw (hunted)"
+      ],
+      [
+        "Outlaw (repentant)"
+      ],
+      [
+        "Outlaw (secret)"
+      ],
+      [
+        "Outlaw (suspected)"
+      ],
+      [
+        "Outlaw (violated taboo)"
+      ],
+      [
+        "Outlaw (working in his job capacity)"
+      ],
+      [
+        "Outraged parent"
+      ],
+      [
+        "Outraged purchaser"
+      ],
+      [
+        "Owner of dangerous property"
+      ],
+      [
+        "Owner of magic item"
+      ],
+      [
+        "Pardoner (fake political pardons)"
+      ],
+      [
+        "Pardoner (fraud)"
+      ],
+      [
+        "Pardoner (pardons have actual effect)"
+      ],
+      [
+        "Pardoner (real criminal pardons for sale)"
+      ],
+      [
+        "Partner (in crime)"
+      ],
+      [
+        "Partner (in love)"
+      ],
+      [
+        "Partner in a business"
+      ],
+      [
+        "Patron (of arts)"
+      ],
+      [
+        "Patron (of temple)"
+      ],
+      [
+        "Peasant (farmer)"
+      ],
+      [
+        "Peasant (oppressed)"
+      ],
+      [
+        "Peasant (revolting)"
+      ],
+      [
+        "Peasant (shepherd)"
+      ],
+      [
+        "Peasant (wealthy)"
+      ],
+      [
+        "Performer (biting satire)"
+      ],
+      [
+        "Performer (deadly stunts)"
+      ],
+      [
+        "Performer (feats of memory and observation)"
+      ],
+      [
+        "Performer (discredited)"
+      ],
+      [
+        "Performer (rich)"
+      ],
+      [
+        "Performer (with rival)"
+      ],
+      [
+        "Performer (with secret)"
+      ],
+      [
+        "Person of ancient ancestry"
+      ],
+      [
+        "Person of evil ancestry"
+      ],
+      [
+        "Person pure of blood"
+      ],
+      [
+        "Person who changes size"
+      ],
+      [
+        "Person who counted votes for an election"
+      ],
+      [
+        "Person who hears a voice"
+      ],
+      [
+        "Person who returned from a mysterious journey"
+      ],
+      [
+        "Person who returned from the dead"
+      ],
+      [
+        "Person with no apparent face"
+      ],
+      [
+        "Pickpocket"
+      ],
+      [
+        "Pikeman (city guard)"
+      ],
+      [
+        "Pikeman (mercenary)"
+      ],
+      [
+        "Pikeman (unemployed)"
+      ],
+      [
+        "Pilgrim (disguised)"
+      ],
+      [
+        "Pilgrim (false)"
+      ],
+      [
+        "Pilgrim (seeking absolution)"
+      ],
+      [
+        "Pilgrim (seeking better luck)"
+      ],
+      [
+        "Pilgrim (seeking vengeance)"
+      ],
+      [
+        "Pirate (aerial)"
+      ],
+      [
+        "Pirate (captain)"
+      ],
+      [
+        "Pirate (first mate)"
+      ],
+      [
+        "Pirate (in hiding)"
+      ],
+      [
+        "Pirate (sailor)"
+      ],
+      [
+        "Plowman"
+      ],
+      [
+        "Poacher (noble huntsman)"
+      ],
+      [
+        "Poacher (starving peasant)"
+      ],
+      [
+        "Poet (heroic verse)"
+      ],
+      [
+        "Poet (impoverished)"
+      ],
+      [
+        "Poet (insane)"
+      ],
+      [
+        "Poet (lovelorn)"
+      ],
+      [
+        "Poet (satire)"
+      ],
+      [
+        "Poisoner (amateur)"
+      ],
+      [
+        "Poisoner (unemployed)"
+      ],
+      [
+        "Poisoner (working)"
+      ],
+      [
+        "Police authority (guild's police)"
+      ],
+      [
+        "Police authority (illegal police)"
+      ],
+      [
+        "Police authority (informal police)"
+      ],
+      [
+        "Police authority (military police)"
+      ],
+      [
+        "Police authority (public police)"
+      ],
+      [
+        "Police authority (vigilantes)"
+      ],
+      [
+        "Polluter (food)"
+      ],
+      [
+        "Polluter (water)"
+      ],
+      [
+        "Portal controller or guardian"
+      ],
+      [
+        "Poseur (as celebrity)"
+      ],
+      [
+        "Poseur (as guild official)"
+      ],
+      [
+        "Poseur (as military leader)"
+      ],
+      [
+        "Poseur (as political personage)"
+      ],
+      [
+        "Poseur (as religious personage)"
+      ],
+      [
+        "Possessed person"
+      ],
+      [
+        "Potential witness"
+      ],
+      [
+        "Potential witness (financial crime)"
+      ],
+      [
+        "Potential witness (political)"
+      ],
+      [
+        "Potential witness (religious)"
+      ],
+      [
+        "Potion maker"
+      ],
+      [
+        "\"Preacher (anti-establishment, political)\""
+      ],
+      [
+        "Preacher (new cult)"
+      ],
+      [
+        "Preacher (pro-government)"
+      ],
+      [
+        "Preacher (return to old ways)"
+      ],
+      [
+        "Preacher (sees visions)"
+      ],
+      [
+        "Preacher (social reformer)"
+      ],
+      [
+        "Priest (defrocked)"
+      ],
+      [
+        "Priest (general)"
+      ],
+      [
+        "Priest (self-sacrificing)"
+      ],
+      [
+        "Priest (sinful)"
+      ],
+      [
+        "Priest (with secret past)"
+      ],
+      [
+        "Priestess (accessible)"
+      ],
+      [
+        "Priestess (inaccessible)"
+      ],
+      [
+        "Priestess (oracle)"
+      ],
+      [
+        "Priestess (saintly)"
+      ],
+      [
+        "Prince (deposed)"
+      ],
+      [
+        "Prince (evil)"
+      ],
+      [
+        "Prince (foolish)"
+      ],
+      [
+        "Prince (general)"
+      ],
+      [
+        "Prince (minor)"
+      ],
+      [
+        "Prince (unworthy)"
+      ],
+      [
+        "Prince (younger son)"
+      ],
+      [
+        "Princess (has lost important item)"
+      ],
+      [
+        "Princess (imprisoned)"
+      ],
+      [
+        "Princess (intriguing for power)"
+      ],
+      [
+        "Princess (kidnapped for marriage)"
+      ],
+      [
+        "Princess (kidnapped for ransom)"
+      ],
+      [
+        "Princess (threatened with death)"
+      ],
+      [
+        "Prisoner (guilty)"
+      ],
+      [
+        "Prisoner (innocent)"
+      ],
+      [
+        "Prisoner (secretly held)"
+      ],
+      [
+        "Prodigal son (greedy)"
+      ],
+      [
+        "Prodigal son (repentant)"
+      ],
+      [
+        "Professor"
+      ],
+      [
+        "Prophet (accurate)"
+      ],
+      [
+        "Prophet (dangerous)"
+      ],
+      [
+        "Prophet (deranged)"
+      ],
+      [
+        "Prophet (false)"
+      ],
+      [
+        "Prophet (heretical)"
+      ],
+      [
+        "Racketeer (extortion)"
+      ],
+      [
+        "Racketeer (high finance)"
+      ],
+      [
+        "Racketeer (shipping)"
+      ],
+      [
+        "Ranger"
+      ],
+      [
+        "Ratcatcher"
+      ],
+      [
+        "Rebel (against criminal organization)"
+      ],
+      [
+        "Rebel (political)"
+      ],
+      [
+        "Rebel (religious)"
+      ],
+      [
+        "Rebel (without a particular cause)"
+      ],
+      [
+        "Recipient of strange challenge"
+      ],
+      [
+        "Reeve"
+      ],
+      [
+        "Refugee (from bad event)"
+      ],
+      [
+        "Refugee (from combat)"
+      ],
+      [
+        "Reluctant witness"
+      ],
+      [
+        "Revenge-seeker"
+      ],
+      [
+        "Revolutionary"
+      ],
+      [
+        "Rival (bidder)"
+      ],
+      [
+        "Rival (guild)"
+      ],
+      [
+        "Rival (in love affair)"
+      ],
+      [
+        "Rival (merchant)"
+      ],
+      [
+        "Rival (noble)"
+      ],
+      [
+        "Rival (of the party)"
+      ],
+      [
+        "Rival (poet or artist)"
+      ],
+      [
+        "Rival (wizards)"
+      ],
+      [
+        "Royalist"
+      ],
+      [
+        "Rumormonger"
+      ],
+      [
+        "Rumormonger (punished)"
+      ],
+      [
+        "Rumormonger (suspected)"
+      ],
+      [
+        "Rune-scriber"
+      ],
+      [
+        "Sage (astrology)"
+      ],
+      [
+        "Sage (history)"
+      ],
+      [
+        "Sage (magic)"
+      ],
+      [
+        "Sage (mathematics and science)"
+      ],
+      [
+        "Sage (nature)"
+      ],
+      [
+        "Sage (philosophy)"
+      ],
+      [
+        "Sage (religious lore)"
+      ],
+      [
+        "Sailor"
+      ],
+      [
+        "Savage (curious)"
+      ],
+      [
+        "Savage (dangerous)"
+      ],
+      [
+        "Scholar (history)"
+      ],
+      [
+        "Scholar (magic)"
+      ],
+      [
+        "Scholar (natural phenomena)"
+      ],
+      [
+        "Scholar (religious lore)"
+      ],
+      [
+        "Scribe"
+      ],
+      [
+        "Servant (in tavern of inn)"
+      ],
+      [
+        "Servant (of assassin)"
+      ],
+      [
+        "Servant (of merchant)"
+      ],
+      [
+        "Servant (of military leader)"
+      ],
+      [
+        "Servant (of noble)"
+      ],
+      [
+        "Servant (of priest)"
+      ],
+      [
+        "Servant (of sage)"
+      ],
+      [
+        "Servant (of wizard)"
+      ],
+      [
+        "Shepherd"
+      ],
+      [
+        "Sheriff (corrupt)"
+      ],
+      [
+        "Sheriff (dutiful)"
+      ],
+      [
+        "Sheriff (rural)"
+      ],
+      [
+        "Sheriff (sinister)"
+      ],
+      [
+        "Sheriff (with personal problems)"
+      ],
+      [
+        "Shoemaker (poor)"
+      ],
+      [
+        "Shoemaker (rich)"
+      ],
+      [
+        "Sin eater"
+      ],
+      [
+        "Singer (any sort)"
+      ],
+      [
+        "Singer (cursed)"
+      ],
+      [
+        "Singer (famous)"
+      ],
+      [
+        "Son or daughter"
+      ],
+      [
+        "Sorcerer (demagicked)"
+      ],
+      [
+        "Sorcerer (political aspirations)"
+      ],
+      [
+        "Sorcerer (power in amulet)"
+      ],
+      [
+        "Sorcerer (power in familiar)"
+      ],
+      [
+        "Sorcerer (power in fingernails)"
+      ],
+      [
+        "Sorcerer (power in hair)"
+      ],
+      [
+        "Sorcerer (powerful)"
+      ],
+      [
+        "Sorcerer (transformed)"
+      ],
+      [
+        "Sorcerer (weak)"
+      ],
+      [
+        "Speaker for the ancients"
+      ],
+      [
+        "Speaker of foreign language"
+      ],
+      [
+        "Speaker of the dead"
+      ],
+      [
+        "Speaker of the gods"
+      ],
+      [
+        "Speaker of the king"
+      ],
+      [
+        "Spirit-creature"
+      ],
+      [
+        "Spy (for criminal network)"
+      ],
+      [
+        "Spy (for guild or merchant)"
+      ],
+      [
+        "Spy (for noble)"
+      ],
+      [
+        "Spy (for suspicious spouse)"
+      ],
+      [
+        "Spy (for the man)"
+      ],
+      [
+        "Spy (for the priesthood)"
+      ],
+      [
+        "Spy (for wizard)"
+      ],
+      [
+        "Squire (for haughty knight)"
+      ],
+      [
+        "Squire (for missing or kidnapped knight)"
+      ],
+      [
+        "Squire (for poor knight)"
+      ],
+      [
+        "Squire (of dead knight)"
+      ],
+      [
+        "Steward (for a wizard)"
+      ],
+      [
+        "Steward (great manor)"
+      ],
+      [
+        "Steward (large castle)"
+      ],
+      [
+        "Steward (noble's city residence)"
+      ],
+      [
+        "Steward (small castle)"
+      ],
+      [
+        "Steward (small manor)"
+      ],
+      [
+        "Stonemason (general)"
+      ],
+      [
+        "Stonemason (knows where something is hidden in the walls)"
+      ],
+      [
+        "Student"
+      ],
+      [
+        "Subject of a recent prophesy"
+      ],
+      [
+        "\"Subject of an ancient prophesy (apparently)\""
+      ],
+      [
+        "Subject of the inquisition"
+      ],
+      [
+        "Subterranean citizen"
+      ],
+      [
+        "Survivor (assassination attempt)"
+      ],
+      [
+        "Survivor (dungeon expedition)"
+      ],
+      [
+        "Survivor (wilderness expedition)"
+      ],
+      [
+        "Survivor (with dangerous secret)"
+      ],
+      [
+        "Suspected witness"
+      ],
+      [
+        "Swindler (accused)"
+      ],
+      [
+        "Swindler (suspected)"
+      ],
+      [
+        "Swindler (working on scam)"
+      ],
+      [
+        "Swordsman (duelist)"
+      ],
+      [
+        "Swordsman (legendary)"
+      ],
+      [
+        "Swordsman (mercenary)"
+      ],
+      [
+        "Swordsman (old)"
+      ],
+      [
+        "Swordsmith (discredited)"
+      ],
+      [
+        "Swordsmith (famous)"
+      ],
+      [
+        "Swordsmith (skilled)"
+      ],
+      [
+        "Swordsmith (with a family problem)"
+      ],
+      [
+        "Tailor (poor)"
+      ],
+      [
+        "Tailor (to the nobility)"
+      ],
+      [
+        "Tavern owner"
+      ],
+      [
+        "Tax collector (embezzler)"
+      ],
+      [
+        "Tax collector (oppressive bully)"
+      ],
+      [
+        "Tax collector (working at his job)"
+      ],
+      [
+        "Taxidermist (strange beasts)"
+      ],
+      [
+        "Teamster (camel driver)"
+      ],
+      [
+        "Teamster (caravan leader)"
+      ],
+      [
+        "Teamster (regular wagon driver)"
+      ],
+      [
+        "Teamster (strange beasts of burden)"
+      ],
+      [
+        "Teamster (strange wagons)"
+      ],
+      [
+        "Telepathic Blob"
+      ],
+      [
+        "The half-a-man"
+      ],
+      [
+        "Theater owner"
+      ],
+      [
+        "Thief (convicted)"
+      ],
+      [
+        "Thief (freelance)"
+      ],
+      [
+        "Thief (guild member)"
+      ],
+      [
+        "Thief (guildmaster)"
+      ],
+      [
+        "Thief (retired)"
+      ],
+      [
+        "Thief (strange series of items)"
+      ],
+      [
+        "Toll bridge owner"
+      ],
+      [
+        "Toll road operator"
+      ],
+      [
+        "Town drunk"
+      ],
+      [
+        "Trader (cattle)"
+      ],
+      [
+        "Trader (furs)"
+      ],
+      [
+        "Trader (horses)"
+      ],
+      [
+        "Trader (scrolls and books)"
+      ],
+      [
+        "Trader (strange items and oddments)"
+      ],
+      [
+        "Traditionalist"
+      ],
+      [
+        "Traitor (religious)"
+      ],
+      [
+        "Traitor (secret society)"
+      ],
+      [
+        "Traitor (to city)"
+      ],
+      [
+        "Traitor (to guild)"
+      ],
+      [
+        "Trapper (furs)"
+      ],
+      [
+        "Trapper (live animals)"
+      ],
+      [
+        "Trapper (normal)"
+      ],
+      [
+        "Traveler (of planes and strange dimensions)"
+      ],
+      [
+        "Traveler (stranded)"
+      ],
+      [
+        "Traveler (with rumors or news)"
+      ],
+      [
+        "Trustee (building)"
+      ],
+      [
+        "Trustee (item)"
+      ],
+      [
+        "Trustee (land)"
+      ],
+      [
+        "Trustee (money)"
+      ],
+      [
+        "Twin"
+      ],
+      [
+        "Two-headed person"
+      ],
+      [
+        "Unbelievably lucky person"
+      ],
+      [
+        "Unbelievably unlucky person"
+      ],
+      [
+        "\"Uncle or Aunt of (roll again)\""
+      ],
+      [
+        "Undead creature (intelligent)"
+      ],
+      [
+        "Undertaker"
+      ],
+      [
+        "Unknown victim"
+      ],
+      [
+        "Unwilling witness"
+      ],
+      [
+        "Usurper (criminal)"
+      ],
+      [
+        "Usurper (guild)"
+      ],
+      [
+        "Usurper (political)"
+      ],
+      [
+        "Usurper (religious)"
+      ],
+      [
+        "Vampire"
+      ],
+      [
+        "Vandal (unintentional)"
+      ],
+      [
+        "Veiled person"
+      ],
+      [
+        "Vendor (elixirs)"
+      ],
+      [
+        "Vendor (food)"
+      ],
+      [
+        "Vendor (religious charms)"
+      ],
+      [
+        "Vendor (shrunken heads)"
+      ],
+      [
+        "Victim (assault)"
+      ],
+      [
+        "Victim (counterfeit)"
+      ],
+      [
+        "Victim (kidnap)"
+      ],
+      [
+        "Victim (murder)"
+      ],
+      [
+        "Victim (of rumors)"
+      ],
+      [
+        "Victim (of slander)"
+      ],
+      [
+        "Victim (of theft)"
+      ],
+      [
+        "Vigilante (against crime)"
+      ],
+      [
+        "Vigilante (political faction)"
+      ],
+      [
+        "Vigilante (religious)"
+      ],
+      [
+        "Viking"
+      ],
+      [
+        "Vintner (awful wine)"
+      ],
+      [
+        "Vintner (fine wines)"
+      ],
+      [
+        "Wagoner"
+      ],
+      [
+        "Wanderer"
+      ],
+      [
+        "Wanderer (adventurer)"
+      ],
+      [
+        "Wanderer (outcast)"
+      ],
+      [
+        "Wanderer (with Followers)"
+      ],
+      [
+        "Warden (prisoner has escaped)"
+      ],
+      [
+        "Warden (with prisoner)"
+      ],
+      [
+        "Warlock (dead)"
+      ],
+      [
+        "Warlock (disembodied)"
+      ],
+      [
+        "Warlock (suspicious)"
+      ],
+      [
+        "Warlock (with rival)"
+      ],
+      [
+        "Warlock (with secret agenda)"
+      ],
+      [
+        "Weaver (oppressed)"
+      ],
+      [
+        "Weaver (rich)"
+      ],
+      [
+        "\"Widow or widower of (roll again)\""
+      ],
+      [
+        "\"Wife or husband of (roll again)\""
+      ],
+      [
+        "Witch (accused)"
+      ],
+      [
+        "Witch (working on a task)"
+      ],
+      [
+        "Wizard (absentminded)"
+      ],
+      [
+        "Wizard (cursed)"
+      ],
+      [
+        "Wizard (engaged in research)"
+      ],
+      [
+        "Wizard (flamboyant)"
+      ],
+      [
+        "Wizard (powerful)"
+      ],
+      [
+        "Wizard (sinister)"
+      ],
+      [
+        "Wizard (weak or defeated)"
+      ],
+      [
+        "Wizard (with personal crisis)"
+      ],
+      [
+        "Wizard (working on a commissioned task)"
+      ],
+      [
+        "Woman with dancing bear"
+      ],
+      [
+        "Woman with snake eyes"
+      ],
+      [
+        "Woodcutter"
+      ],
+      [
+        "Zealot (political)"
+      ],
+      [
+        "Zealot (religious)"
+      ],
+      [
+        "Zoo owner"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.9",
+    "aliases": [
+      "ad1.9",
+      "Patron Motivation"
+    ],
+    "description": "Adventure Design Patron Motivation",
+    "variant": "columns",
+    "delimiter": " ",
+    "table": [
+      [
+        "Cause dishonor for, Ancestral enemy"
+      ],
+      [
+        "Defeat, Business partner"
+      ],
+      [
+        "Escape from, Business rival"
+      ],
+      [
+        "Friendship with, Concubine"
+      ],
+      [
+        "Gain knowledge about (or on behalf of), Detective, investigator, or one who asks too many questions"
+      ],
+      [
+        "Gain status over, Employer"
+      ],
+      [
+        "Gain status with, Former compatriot"
+      ],
+      [
+        "Lust for, Former employee"
+      ],
+      [
+        "Protect livelihood of (or from), Friend"
+      ],
+      [
+        "Protect reputation of (or from), Guild or business association"
+      ],
+      [
+        "Protect wealth of (or from), Offspring"
+      ],
+      [
+        "Reconciliation with, Parent"
+      ],
+      [
+        "Regain favor with, Political compatriot"
+      ],
+      [
+        "Regain honor stolen by, Political leader"
+      ],
+      [
+        "Removal of (by death), Political or justice official"
+      ],
+      [
+        "Removal of (kidnapping), Religious compatriot"
+      ],
+      [
+        "Rescue, Spiritual leader"
+      ],
+      [
+        "Revenge upon (or on behalf of), Spouse"
+      ],
+      [
+        "Self-protection from, Temple official"
+      ],
+      [
+        "Steal from, Temple or religious society"
+      ]
+    ],
+    "hidden": false
+  },
+  {
+    "slug": "ad/ad1.35",
+    "aliases": [
+      "ad1.35",
+      "Unusual Villain Minions"
+    ],
+    "description": "Adventure Design Unusual Villain Minions",
+    "variant": "template",
+    "delimiter": "",
+    "table": [
+      [
+        "Accused killer (real killer is [ad1.8])"
+      ]
+    ],
+    "hidden": false
+  }
+]

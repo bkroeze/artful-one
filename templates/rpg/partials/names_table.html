@@ -1,0 +1,55 @@
+{% load static %}
+<div class="ui stackable two column grid">
+  <div class="column">
+    <table class="ui celled table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th width="50">Favorite</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name in names %}
+        <tr>
+          <td>{{ name }}</td>
+          <td class="center aligned">
+            <form
+              hx-post="{% url 'rpg:htmx_toggle_favorite' %}"
+              hx-target="#favorites-container"
+              hx-swap="innerHTML"
+              style="display: inline;"
+            >
+              <input
+                type="hidden"
+                name="name"
+                value="{{ name }}"
+              />
+              <input
+                type="hidden"
+                name="table"
+                value="{{ table_alias }}"
+              />
+              <input
+                type="hidden"
+                name="addon"
+                value="{{ addon|default:'' }}"
+              />
+              <button
+                type="submit"
+                class="ui icon button"
+                title="Add to favorites"
+              >
+                <i class="heart outline icon"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="2" class="center aligned">No names generated</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+{% extends "base.html" %}{% load static %}{% load rpg_filters %}
+
+{% block title %}RPG Name Generator{% endblock %}
+
+{% block extrahead %}
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+{% endblock %}
+
+{% block body %}
+<div class="ui container" style="margin-top: 2rem; margin-bottom: 2rem;">
+  <h1 class="ui header">RPG Name Generator</h1>
+
+  <div class="ui segment">
+    <div class="ui dividing header">
+      <div class="ui horizontal list">
+        <div class="item">
+          <a href="{% url 'rpg:names' %}?set=names" class="{% if table_set == 'names' %}active{% endif %} ui link">
+            Name Tables
+          </a>
+        </div>
+        <div class="item">
+          <a href="{% url 'rpg:names' %}?set=adventure-design" class="{% if table_set == 'adventure-design' %}active{% endif %} ui link">
+            Adventure Design Tables
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <form
+      hx-post="{% url 'rpg:htmx_generate' %}"
+      hx-target="#names-results"
+      hx-swap="innerHTML"
+      hx-indicator="#loading"
+      class="ui form"
+    >
+      <div class="two fields">
+        <div class="field">
+          <label>Table</label>
+          <select name="table" class="ui dropdown search selection">
+            <option value="">Select a table...</option>
+            {% for table in tables %}
+            <option
+              value="{{ table.slug }}"
+              data-addons="{{ table.addon|to_json }}"
+            >
+              {{ table.description }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Count</label>
+          <input
+            type="number"
+            name="count"
+            value="10"
+            min="1"
+            max="100"
+          />
+        </div>
+      </div>
+
+      <div class="field" id="addon-field" style="display: none;">
+        <label>Addon</label>
+        <select name="addon" class="ui dropdown">
+          <option value="">None</option>
+        </select>
+      </div>
+
+      <button type="submit" class="ui button primary">
+        Generate Names
+        <div id="loading" class="ui mini active inline loader"></div>
+      </button>
+    </form>
+  </div>
+
+  <div class="ui segment">
+    <h2 class="ui header">Results</h2>
+    <div id="names-results">
+      <p class="text-muted">Select a table and click "Generate Names" to see results.</p>
+    </div>
+  </div>
+
+  <div class="ui segment">
+    <h2 class="ui header">
+      Favorites
+      <small class="text-muted">(saved in your browser)</small>
+    </h2>
+    <div
+      id="favorites-container"
+      hx-get="{% url 'rpg:htmx_favorites' %}"
+      hx-trigger="load"
+    >
+      <!-- Loaded via HTMX -->
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Fomantic UI dropdowns
+  $('.ui.dropdown').dropdown();
+
+  const tableSelect = document.querySelector('select[name="table"]');
+  const addonField = document.getElementById('addon-field');
+  const addonSelect = addonField.querySelector('select');
+
+  // Update addon options when table changes
+  tableSelect.addEventListener('change', function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const addonsJson = selectedOption.getAttribute('data-addons');
+
+    // Clear current options
+    addonSelect.innerHTML = '<option value="">None</option>';
+
+    if (addonsJson) {
+      try {
+        const addons = JSON.parse(addonsJson);
+
+        // Populate addon options
+        for (const [key, value] of Object.entries(addons)) {
+          // Skip DEFAULT for the dropdown, allow it for regular usage
+          if (key === 'DEFAULT') continue;
+
+          const option = document.createElement('option');
+          option.value = key;
+          option.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+          addonSelect.appendChild(option);
+        }
+
+        if (Object.keys(addons).length > 0) {
+          addonField.style.display = 'block';
+        } else {
+          addonField.style.display = 'none';
+        }
+      } catch (e) {
+        addonField.style.display = 'none';
+      }
+    } else {
+      addonField.style.display = 'none';
+    }
+  });
+});
+</script>
+{% endblock %}
