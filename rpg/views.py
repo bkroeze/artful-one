@@ -98,7 +98,7 @@ def rpg_names_page(request: HttpRequest) -> HttpResponse:
         tables_query = tables_query.filter(slug__startswith="names/")
     # else: don't filter, show all
 
-    tables = tables_query.order_by("slug")
+    tables = tables_query.order_by("description")
 
     # Get favorites
     favorites = get_favorites(request)

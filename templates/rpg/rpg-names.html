@@ -1,12 +1,23 @@
-{% extends "base.html" %}{% load static %}{% load rpg_filters %}
+{% extends "site_page.html" %}{% load static %}{% load rpg_filters %}
 
 {% block title %}RPG Name Generator{% endblock %}
 
 {% block extrahead %}
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<script language="javascript">
+  $(document).on('htmx:afterSwap', function(event){
+  var target = $(event.target);
+  if (target.hasClass('hx-indicator')) {
+    target.addClass('active');
+  }
+  else {
+    target.removeClass('active');
+  }
+});
+</script>
 {% endblock %}
 
-{% block body %}
+{% block primary %}
 <div class="ui container" style="margin-top: 2rem; margin-bottom: 2rem;">
   <h1 class="ui header">RPG Name Generator</h1>
 
@@ -43,7 +54,7 @@
               value="{{ table.slug }}"
               data-addons="{{ table.addon|to_json }}"
             >
-              {{ table.description }}
+              [{{ table.slug}}] {{ table.description }}
             </option>
             {% endfor %}
           </select>
@@ -70,7 +81,7 @@
 
       <button type="submit" class="ui button primary">
         Generate Names
-        <div id="loading" class="ui mini active inline loader"></div>
+        <div id="loading" class="ui mini inline loader"></div>
       </button>
     </form>
   </div>
