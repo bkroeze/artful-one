@@ -1,0 +1,112 @@
+{% extends "site_detail_page.html" %}{% load humanize %}
+
+{% load pictures %}
+{% load blog_tags %}
+
+{% block title %}Art Gallery - Bruce Kroeze{% endblock %}
+
+{% block extrahead %}
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Art Gallery - Bruce Kroeze" />
+<meta property="og:description" content="Browse photo collections by tag. {{ tag_data|length }} collections available." />
+<meta property="og:site_name" content="Bruce Kroeze's Weblog" />
+<style>
+.photo-tags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.tag-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.tag-card:hover .ui.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+
+.tag-card .ui.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-card .ui.card .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-card .ui.card .image {
+    height: 250px;
+    overflow: hidden;
+}
+
+.tag-card .ui.card .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
+{% endblock %}
+
+{% block primary %}
+<h1 class="archive-h2">Art Gallery</h1>
+<p class="text-muted">
+    Browse {{ tag_data|length }} photo collection{{ tag_data|pluralize }}.
+</p>
+
+{% if tag_data %}
+<div class="photo-tags-grid">
+    {% for item in tag_data %}
+    <a href="/photo-tags/{{ item.tag.slug }}/" class="tag-card">
+        <div class="ui card">
+            {% if item.photo.image %}
+            <div class="image">
+                {% picture item.photo.image picture_id=item.photo.html_id img_alt=item.photo.title|default:"Photo" img_loading="lazy" picture_class="ui fluid image" %}
+            </div>
+            {% endif %}
+            <div class="content">
+                <div class="header">{{ item.tag.name }}</div>
+                {% if item.photo.title %}
+                <div class="description">
+                    <em>{{ item.photo.title }}</em>
+                </div>
+                {% endif %}
+                <div class="meta">
+                    <span class="date">
+                        {{ item.photo_count }} photo{{ item.photo_count|pluralize }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No photo collections found.</p>
+{% endif %}
+{% endblock %}
+
+{% block secondary %}
+<div class="ui container" style="margin-top: 2rem;">
+    <p><strong>Browse Collections</strong></p>
+    <p>
+        Click on any collection to view all photos tagged with that theme.
+    </p>
+
+    <p><strong>Total Collections</strong></p>
+    <p>{{ tag_data|length }} collection{{ tag_data|pluralize }}</p>
+
+    <p><strong>Total Photos</strong></p>
+    <p>
+        {{ total_photos|intcomma }}
+    </p>
+</div>
+{% endblock %}

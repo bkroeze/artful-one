@@ -38,7 +38,7 @@ class TableResolver:
 
         if table:
             self._cache[alias] = table
-        
+
         return table
 
     def resolve_template(self, template: str, max_depth: int = 10) -> str:

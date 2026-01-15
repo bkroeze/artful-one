@@ -150,6 +150,7 @@ urlpatterns = [
     re_path(r"^series/$", blog_views.series_index),
     re_path(r"^series/(.*?)/$", blog_views.archive_series),
     re_path(r"^series/(.*?).atom$", blog_views.archive_series_atom),
+    re_path(r"^art/$", blog_views.photo_tag_landing),
     re_path(r"^photo-tags/(.*?)/$", blog_views.photo_tag_detail),
     re_path(r"^photos/(.*?)/$", blog_views.photo_detail),
     re_path(r"^atom/entries/$", count_subscribers(feeds.Entries().__call__)),

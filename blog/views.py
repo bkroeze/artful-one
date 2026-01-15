@@ -642,6 +642,48 @@ def archive_series_atom(request, slug):
     return SeriesFeed(series)(request)
 
 
+def photo_tag_landing(request):
+    """Display landing page with a grid of photo tags.
+
+    Each tag shows one random photo from that set, along with the tag name,
+    photo name, and count of photos in the set.
+    """
+    # Get all photo tags with their photo counts
+    from django.db.models import Count
+
+    photo_tags = (
+        PhotoTag.objects.annotate(photo_count=Count("photo"))
+        .filter(photo_count__gt=0)
+        .order_by("name")
+    )
+
+    # For each tag, get a random photo
+    tag_data = []
+    total_photos = 0
+    for photo_tag in photo_tags:
+        # Get all photos for this tag
+        photos = Photo.objects.filter(photo_tags=photo_tag)
+        photo_count = photos.count()
+        total_photos += photo_count
+
+        if photo_count > 0:
+            # Get a random photo
+            random_photo = photos.order_by("?").first()
+            tag_data.append(
+                {
+                    "tag": photo_tag,
+                    "photo": random_photo,
+                    "photo_count": photo_count,
+                }
+            )
+
+    return render(
+        request,
+        "photo_tag_landing.html",
+        {"tag_data": tag_data, "total_photos": total_photos},
+    )
+
+
 def photo_tag_detail(request, slug):
     """Display all photos tagged with the given photo tag."""
     photo_tag = get_object_or_404(PhotoTag, slug=slug)
