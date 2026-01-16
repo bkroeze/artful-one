@@ -1492,13 +1492,6 @@
         p.draw();
       }
     };
-    p.mousePressed = () => {
-      const { height, width } = sketchParams;
-      if (p.mouseX > 0 && p.mouseX < width && p.mouseY > 0 && p.mouseY < height) {
-        const fs = p.fullscreen();
-        p.fullscreen(!fs);
-      }
-    };
     p.draw = () => {
       p.noLoop();
       p.blendMode(p.BLEND);

@@ -18,38 +18,13 @@
     border: 1px solid #ddd;
 }
 
-.full-screen-mode #primary,
-.full-screen-mode #secondary,
-.full-screen-mode .ui.inverted.masthead,
-.full-screen-mode .ui.inverted.footer {
-    display: none;
-}
-
-.full-screen-mode #canvas-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
-    background: black;
-    margin: 0;
-    height: 100vh;
-}
-
-.ui.fullscreen-button {
-    margin: 2rem 0;
-}
 </style>
 {% endblock %}
 
 {% block primary %}
 <div class="ui container">
-    <h1 class="ui header">
+     <h1 class="ui header">
         {{ sketch.name }}
-        <button id="fullscreen-btn" class="ui button icon right floated full-screen-button">
-            <i class="icon expand"></i> Maximize
-        </button>
     </h1>
 
     {% if sketch.description %}
@@ -59,12 +34,12 @@
     {% endif %}
 
     <div id="canvas-container">
-        <div id="{{ sketch.slug }}"></div>
+        <div id="{{ sketch.slug }}" data-height="600" data-width="800"></div>
     </div>
 
     <script src="{% static 'js/p5/p5.min.js' %}"></script>
     <script src="{% static script_url %}"></script>
-</div>
+</div>  
 {% endblock %}
 
 {% block secondary %}

@@ -1518,13 +1518,6 @@
         }
       }
     };
-    p.mousePressed = () => {
-      const { height, width } = sketchParams;
-      if (p.mouseX > 0 && p.mouseX < width && p.mouseY > 0 && p.mouseY < height) {
-        const fs = p.fullscreen();
-        p.fullscreen(!fs);
-      }
-    };
     function SawTooth(span2, teeth, fg, triangleWidth) {
       const increment = 2 * Math.PI / teeth;
       p.noStroke();
