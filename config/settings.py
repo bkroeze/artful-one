@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "feedstats",
     "pictures",
     "rpg",
+    "sketches",
     "django_http_debug",
 ]
 
@@ -237,4 +238,12 @@ PICTURES = {
     "USE_PLACEHOLDERS": False,
     "QUEUE_NAME": "pictures",
     "PROCESSOR": "pictures.tasks.process_picture",
+}
+
+# Django Tasks configuration for django-pictures
+TASKS = {
+    "default": {
+        "BACKEND": "django.tasks.backends.immediate.ImmediateBackend",
+        "QUEUES": ["pictures"],
+    }
 }

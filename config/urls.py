@@ -7,6 +7,7 @@ from django.http import (
 )
 from django.views.decorators.cache import never_cache
 from django.conf import settings
+from django.urls import path, re_path, include
 from blog import views as blog_views
 from blog import search as search_views
 from blog import tag_views
@@ -153,6 +154,7 @@ urlpatterns = [
     re_path(r"^art/$", blog_views.photo_tag_landing),
     re_path(r"^photo-tags/(.*?)/$", blog_views.photo_tag_detail),
     re_path(r"^photos/(.*?)/$", blog_views.photo_detail),
+    path("sketch/", include("sketches.urls")),
     re_path(r"^atom/entries/$", count_subscribers(feeds.Entries().__call__)),
     re_path(r"^atom/links/$", count_subscribers(feeds.Blogmarks().__call__)),
     re_path(r"^atom/everything/$", count_subscribers(feeds.Everything().__call__)),

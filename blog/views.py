@@ -709,7 +709,6 @@ def photo_detail(request, slug):
         },
     )
 
-
 @never_cache
 @staff_member_required
 def write(request):

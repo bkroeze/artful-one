@@ -1,12 +1,12 @@
-default: 
+default:
   uv run manage.py runserver 0.0.0.0:8003
 
-static: 
+static:
   uv run manage.py collectstatic
 
 test:
   uv run pytest
-  
+
 ruff:
   uv run ruff check
 
@@ -22,4 +22,10 @@ ruff-format-check:
 check:
   uv run manage.py check
   uv run ruff check
+
+compile-sketches:
+  uv run manage.py compile_sketches
+
+compile-sketches-clear:
+  uv run manage.py compile_sketches --clear
 
