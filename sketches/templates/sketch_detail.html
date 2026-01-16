@@ -1,4 +1,4 @@
-{% extends "site_detail_page.html" %}{% load static %}
+{% extends "site_page.html" %}{% load static %}
 
 {% load pictures %}
 {% load blog_tags %}
@@ -13,9 +13,19 @@
 <style>
 #canvas-container {
     width: 100%;
-    height: 600px;
+    display: flex;
+    justify-content: center;
     margin: 2rem 0;
     border: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+#canvas-container > div {
+    margin: 1rem;
+}
+
+.center {
+    text-align: center;
 }
 
 </style>
@@ -44,21 +54,6 @@
 
 {% block secondary %}
 <div class="ui container" style="margin-top: 2rem;">
-    <p><strong>Sketch Information</strong></p>
-    <p>
-        <strong>Name:</strong> {{ sketch.name }}<br>
-        <strong>Slug:</strong> {{ sketch.slug }}
-    </p>
-
-    <p><strong>Created:</strong></p>
-    <p>{{ sketch.created_at|date:"F j, Y, g:i a" }}</p>
-
-    <p><strong>Updated:</strong></p>
-    <p>{{ sketch.updated_at|date:"F j, Y, g:i a" }}</p>
-
-    {% if sketch.photo %}
-    <p><strong>Thumbnail Photo:</strong></p>
-    <p><a href="{{ sketch.photo.get_absolute_url }}">{{ sketch.photo.title }}</a></p>
-    {% endif %}
+    <p class="center"><strong>Name:</strong> {{ sketch.name }}</p>
 </div>
 {% endblock %}
