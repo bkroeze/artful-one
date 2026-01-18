@@ -17,16 +17,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = os.environ.get("DJANGO_SECRET") or "dev-secret-s(p7%ue-l6r^&@y63p*ix*1"
 SCREENSHOT_SECRET = os.environ.get("SCREENSHOT_SECRET") or ""
 
+# Helpers
+def env_bool(name: str, default: bool = False) -> bool:
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 # CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = []
 if os.environ.get("CSRF_TRUSTED_ORIGINS"):
     CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(",")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DJANGO_DEBUG"))
+DEBUG = env_bool("DJANGO_DEBUG")
 INTERNAL_IPS = ("127.0.0.1",)
 
-STAGING = bool(os.environ.get("STAGING"))
+STAGING = env_bool("STAGING")
 
 # Django SQL Dashboard
 DASHBOARD_ROW_LIMIT = 200
@@ -43,7 +51,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = False
 if os.environ.get("SESSION_COOKIE_DOMAIN"):
     SESSION_COOKIE_DOMAIN = os.environ["SESSION_COOKIE_DOMAIN"]
 if os.environ.get("SESSION_COOKIE_SECURE"):
-    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE")
 
 # Application definition
 
@@ -219,6 +227,10 @@ LOGGING = {
             "handlers": ["console"],
             "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
             "propagate": False,
+        },
+        "django.contrib.auth": {
+            "handlers": ["console"],
+            "level": "DEBUG",
         },
     },
 }
