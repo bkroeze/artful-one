@@ -232,6 +232,16 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
         },
+        "django.security.csrf": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "django.middleware.csrf": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
     },
 }
 
