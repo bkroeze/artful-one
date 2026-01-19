@@ -1,43 +1,254 @@
 {% load pictures %}
+<style>
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-slides-wrapper {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+}
+
+.carousel-image-item {
+  flex: 0 0 auto;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Mobile: 1 item per slide */
+.carousel-image-item {
+  width: 100%;
+}
+
+/* Tablet: 2 items per slide */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .carousel-image-item {
+    width: 50%;
+  }
+}
+
+/* Desktop: 3 items per slide */
+@media (min-width: 1024px) {
+  .carousel-image-item {
+    width: 33.333%;
+  }
+}
+
+/* Ensure proper spacing and alignment */
+.carousel-image-item:first-child {
+  padding-left: 0;
+}
+
+.carousel-image-item:last-child {
+  padding-right: 0;
+}
+
+/* Photo Modal Styles */
+#photo-modal {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+#photo-modal .header {
+  display: none !important;
+}
+
+#photo-modal .content {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+#photo-modal .image.content {
+  position: relative;
+  padding: 0 !important;
+}
+
+#photo-modal .image.content img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Pill-shaped overlay for show name */
+.photo-name-pill {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(128, 128, 128, 0.8);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  backdrop-filter: blur(5px);
+}
+
+.photo-name-pill:hover {
+  background: rgba(128, 128, 128, 0.9);
+  color: white;
+  text-decoration: none;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.carousel-nav.left {
+  left: 1rem;
+}
+
+.carousel-nav.right {
+  right: 1rem;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+  height: 300px; /* Fixed height for all images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintains aspect ratio while filling container */
+  display: block;
+}
+</style>
+
 <script>
 $(document).ready(function() {
+  const initialPhotoIndex = parseInt($('.carousel-container').data('initial-photo-index'), 10);
+  const initialIndex = Number.isNaN(initialPhotoIndex) ? 0 : initialPhotoIndex;
   let currentSlide = 0;
-  const slides = $('.carousel-slide');
-  const totalSlides = slides.length;
+  let itemsPerSlide = 1; // Default for mobile
+  const $slidesWrapper = $('.carousel-slides-wrapper');
+  const $imageItems = $('.carousel-image-item');
+  const totalItems = $imageItems.length;
+  
+  // Function to get items per slide based on screen size
+  function getItemsPerSlide() {
+    if ($(window).width() >= 1024) {
+      return 3; // Large desktop
+    } else if ($(window).width() >= 768) {
+      return 2; // Tablet
+    } else {
+      return 1; // Mobile
+    }
+  }
+  
+  // Function to calculate total slides based on current screen size
+  function getTotalSlides() {
+    return Math.ceil(totalItems / itemsPerSlide);
+  }
   
   function showSlide(index) {
-    slides.removeClass('active');
-    $(slides[index]).addClass('active');
+    const translateX = -(index * itemsPerSlide * (100 / itemsPerSlide));
+    $slidesWrapper.css('transform', `translateX(${translateX}%)`);
+  }
+  
+  function updateCarousel() {
+    const newItemsPerSlide = getItemsPerSlide();
+    const newTotalSlides = Math.ceil(totalItems / newItemsPerSlide);
+    
+    // Only update if items per slide changed
+    if (newItemsPerSlide !== itemsPerSlide) {
+      itemsPerSlide = newItemsPerSlide;
+      
+      // Adjust current slide if it's beyond the new total
+      if (currentSlide >= newTotalSlides) {
+        currentSlide = Math.max(0, newTotalSlides - 1);
+      }
+    }
+    
+    if (currentSlide === 0 && initialIndex > 0) {
+      currentSlide = Math.floor(initialIndex / itemsPerSlide);
+    }
+
+    showSlide(currentSlide);
+    
+    // Hide nav buttons if only one slide
+    if (newTotalSlides <= 1) {
+      $('.carousel-nav').hide();
+    } else {
+      $('.carousel-nav').show();
+    }
   }
   
   $('#carousel-prev').on('click', function() {
+    const totalSlides = getTotalSlides();
     currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
     showSlide(currentSlide);
   });
   
   $('#carousel-next').on('click', function() {
+    const totalSlides = getTotalSlides();
     currentSlide = (currentSlide + 1) % totalSlides;
     showSlide(currentSlide);
   });
   
-  // Show first slide
-  if (totalSlides > 0) {
-    showSlide(0);
-  }
+  // Handle window resize with debouncing
+  let resizeTimeout;
+  $(window).on('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+      updateCarousel();
+    }, 100);
+  });
   
-  // Hide nav buttons if only one slide
-  if (totalSlides <= 1) {
-    $('.carousel-nav').hide();
-  }
+  // Initialize carousel
+  updateCarousel();
+  
+  // Use Fomantic UI visibility to handle responsive behavior
+  $('.carousel-container').visibility({
+    once: false,
+    onTopPassed: function() {
+      // Carousel is visible, ensure it's properly initialized
+      updateCarousel();
+    },
+    onBottomPassed: function() {
+      // Carousel is visible, ensure it's properly initialized
+      updateCarousel();
+    }
+  });
 
   // Handle image clicks to show in modal
   $('.image-wrapper.clickable').on('click', function() {
-    const imageTitle = $(this).data('title');
+    const photoSlug = $(this).data('photo-slug');
+    const photoName = $(this).data('photo-name');
     const imageSrc = $(this).find('img').attr('src');
     
     // Populate modal
-    $('#photo-modal .header').text(imageTitle || 'Photo');
     $('#photo-modal img').attr('src', imageSrc);
+
+    // Update photo name pill
+    const $photoPill = $('#photo-modal .photo-name-pill');
+    if (photoName) {
+      $photoPill.text(photoName).show();
+      const fullUrl = `/photos/${photoSlug}/`;
+      $photoPill.attr('href', fullUrl).text(photoName).show();
+    } else {
+      $photoPill.hide();
+    }
     
     // Show modal
     $('#photo-modal').modal('show');
@@ -46,26 +257,24 @@ $(document).ready(function() {
 
 </script>
 
-<div class="carousel-container">
+<div class="carousel-container" {% if selected_photo_index is not None %}data-initial-photo-index="{{ selected_photo_index }}"{% endif %}>
   <button id="carousel-prev" class="ui circular icon button carousel-nav left">
     <i class="left chevron icon"></i>
   </button>
   
-  {% for photo in photoset.get_randomized_photos %}
-    {% if forloop.counter0|divisibleby:3 %}
-      <div class="carousel-slide">
-        <div class="carousel-images-container">
-    {% endif %}
-          <div class="carousel-image-item">
-            <div class="image-wrapper clickable" data-title="{{ photo.title }}" style="cursor: pointer;">
-              {% picture photo.image picture_id=photo.html_id img_alt="{{ photo.title }}" img_loading="lazy" picture_class="ui fluid image" %}
-            </div>
-          </div>
-    {% if forloop.counter|divisibleby:3 or forloop.last %}
+  <div class="carousel-slides-wrapper">
+    {% for photo in photoset.get_randomized_photos %}
+      <div class="carousel-image-item" data-index="{{ forloop.counter0 }}">
+        <div class="image-wrapper clickable" 
+             data-title="{{ photo.title }}" 
+             data-photo-slug="{{ photo.slug }}"
+             data-photo-name="{{ photo.title }}"
+             style="cursor: pointer;">
+          {% picture photo.image picture_id=photo.html_id img_alt="{{ photo.title }}" img_loading="lazy" picture_class="ui fluid image" %}
         </div>
       </div>
-    {% endif %}
-  {% endfor %}
+    {% endfor %}
+  </div>
   
   <button id="carousel-next" class="ui circular icon button carousel-nav right">
     <i class="right chevron icon"></i>
@@ -75,12 +284,10 @@ $(document).ready(function() {
 <!-- Photo Modal -->
 <div id="photo-modal" class="ui modal">
   <i class="close icon"></i>
-  <div class="header">
-    Photo Title
-  </div>
   <div class="image content">
     <div class="ui fluid image">
       <img src="" alt="Photo">
+      <a href="" class="photo-name-pill" style="display: none;"></a>
     </div>
   </div>
 </div>

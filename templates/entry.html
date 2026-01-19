@@ -1,5 +1,6 @@
 {% extends "item_base.html" %}
 {% load entry_tags %}
+{% load blog_tags %}
 {% block title %}{{ entry.title|typography }}{% endblock %}
 
 {% block extrahead %}
@@ -8,7 +9,15 @@
 {% endblock %}
 
 {% block card_title %}{{ entry.title|typography }}{% endblock %}
-{% block card_description %}{{ entry.body|xhtml|remove_context_paragraph|typography|xhtml2html|striptags|truncatewords:30|force_escape }}{% endblock %}
+{% block card_description %}
+{% spaceless %}
+{% if entry.is_markdown %}
+{{ entry.body|markdownify|xhtml|remove_context_paragraph|typography|xhtml2html|striptags|truncatewords:30|force_escape }}
+{% else %}
+{{ entry.body|xhtml|remove_context_paragraph|typography|striptags|truncatewords:30|force_escape }}
+{% endif %}
+{% endspaceless %}
+{% endblock %}
 
 {% block item_content %}
 <div data-permalink-context="{{ entry.get_absolute_url }}">
@@ -17,7 +26,11 @@
 
 {% include "_draft_warning.html" %}
 
+{% if entry.is_markdown %}
+{{ entry.body|markdownify|xhtml|resize_images_to_fit_width:"450"|typography|xhtml2html }}
+{% else %}
 {{ entry.body|xhtml|resize_images_to_fit_width:"450"|typography|xhtml2html }}
+{% endif %}
 
 {% if updates %}
 <div id="live-updates">

@@ -240,6 +240,7 @@ class Entry(BaseModel):
     """.strip(),
     )
     custom_template = models.CharField(max_length=100, null=True, blank=True)
+    is_markdown = models.BooleanField(default=True)
     is_entry = True
     live_timezone = models.CharField(max_length=100, null=True, blank=True)
 
