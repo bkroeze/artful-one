@@ -54,13 +54,6 @@ def projects_redirect(request):
 FAVICON = open(os.path.join(settings.BASE_DIR, "static/favicon.ico"), "rb").read()
 
 
-def static_redirect(request):
-    logger.info("Static redirect")
-    return HttpResponsePermanentRedirect(
-        "http://static.artful.one%s" % request.get_full_path()
-    )
-
-
 def tag_redirect(request, tag):
     return HttpResponsePermanentRedirect("/tags/{}/".format(tag))
 
@@ -193,12 +186,7 @@ if settings.DEBUG:
         ] + urlpatterns
     except ImportError:
         pass
-else:
-    logger.info("In production, redirecting to external static server")
-    # In production, redirect to external static server
-    urlpatterns += [
-        re_path(r"^static/", static_redirect),
-    ]
+
 
 if get_settings().USE_PLACEHOLDERS:
     logger.info("Using placeholders")
