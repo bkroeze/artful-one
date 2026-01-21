@@ -1,0 +1,45 @@
+{% load static %}
+<div class="ui stackable two column grid">
+  <div class="column">
+    <table class="ui celled table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Tagline</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for character in characters %}
+        <tr>
+          <td style="cursor: pointer;"
+              hx-post="{% url 'rpg_chargen:generate_details' %}"
+              hx-target="#character-details"
+              hx-swap="innerHTML"
+              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'>
+            <strong>{{ character.name }}</strong>
+          </td>
+          <td style="cursor: pointer;"
+              hx-post="{% url 'rpg_chargen:generate_details' %}"
+              hx-target="#character-details"
+              hx-swap="innerHTML"
+              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'>
+            {{ character.tagline }}
+          </td>
+          <td style="cursor: pointer;"
+              hx-post="{% url 'rpg_chargen:generate_details' %}"
+              hx-target="#character-details"
+              hx-swap="innerHTML"
+              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'>
+            {{ character.description }}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="center aligned">No characters generated</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

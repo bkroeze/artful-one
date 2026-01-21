@@ -31,6 +31,7 @@ dependencies = [
     "django-pictures>=1.5.3",
     "python-dotenv>=1.0.0",
     "psycopg2-binary>=2.9.11",
+    "google-generativeai>=0.8.6",
 ]
 
 [tool.pyright]

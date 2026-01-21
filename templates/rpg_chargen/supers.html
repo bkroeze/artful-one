@@ -1,0 +1,97 @@
+{% extends "site_page.html" %}{% load static %}
+
+{% block title %}AI Superhero Name Generator{% endblock %}
+
+{% block extrahead %}
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<style>
+.HTMX-indicator {
+  display: none;
+}
+.HTMX-indicator.htmx-request {
+  display: inline;
+}
+.character-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.character-row:hover {
+  background-color: #f8f9fa;
+}
+.character-details-sidebar {
+  background: #f8f9fa;
+  border-radius: 0.2857rem;
+  padding: 1.5rem;
+}
+</style>
+{% endblock %}
+
+{% block primary %}
+<div class="ui container" style="margin-top: 2rem; margin-bottom: 2rem;">
+  <h1 class="ui header">AI Superhero Name Generator</h1>
+
+  <div class="ui segment">
+    <form
+      hx-post="{% url 'rpg_chargen:generate_names' %}"
+      hx-target="#names-results"
+      hx-swap="innerHTML"
+      class="ui form"
+    >
+      <div class="two fields">
+        <div class="field">
+          <label>Number of Names</label>
+          <input
+            type="number"
+            name="num_names"
+            value="3"
+            min="1"
+            max="5"
+            style="padding: 0.5em; font-size: 1em;"
+          />
+        </div>
+
+        <div class="field">
+          <label>Genre</label>
+          <select name="genre" class="ui dropdown selection">
+            {% for genre in genres %}
+            <option value="{{ genre }}"{% if forloop.first %} selected{% endif %}>
+              {{ genre }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="ui button primary">
+        Generate Names
+        <i class="loading spinner icon HTMX-indicator"></i>
+      </button>
+    </form>
+  </div>
+
+  <div class="ui segment">
+    <h2 class="ui header">Characters</h2>
+    <p class="text-muted">
+      <em>Click on any character to view detailed information in the sidebar below.</em>
+    </p>
+    <div id="names-results">
+      <p class="text-muted">Click "Generate Names" to see results.</p>
+    </div>
+  </div>
+
+  <div class="ui segment" id="character-details">
+    <!-- Character details will be loaded here via HTMX -->
+    <p class="text-muted">Select a character to view detailed information.</p>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Fomantic UI dropdowns
+  $('.ui.dropdown').dropdown();
+
+  // Set document height to avoid jumping when HTMX content loads
+  document.body.style.minHeight = window.innerHeight + 'px';
+});
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% load static %}
+<div class="ui segment character-details-sidebar">
+  {% if character %}
+  <h2 class="ui header">{{ character.name }}</h2>
+  <p><strong>Tagline:</strong> {{ character.tagline }}</p>
+  <p><strong>Description:</strong> {{ character.description }}</p>
+
+  <div class="ui divider"></div>
+
+  <h3 class="ui header">Details</h3>
+
+  {% for key, value in character.items %}
+  {% if key not in 'name,tagline,description' %}
+    <p>
+      <strong>{{ key|title }}:</strong>
+      {% if value is iterable and value is not string %}
+        <ul class="ui list" style="margin-top: 0.5em; margin-left: 1.5em;">
+          {% for item in value %}
+            {% if item is iterable and item is not string %}
+              <li>
+                {% for subkey, subval in item.items %}
+                  {{ subkey|title }}: {{ subval }}<br>
+                {% endfor %}
+              </li>
+            {% else %}
+              <li>{{ item }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ value }}
+      {% endif %}
+    </p>
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <p class="text-muted">No character details available.</p>
+  {% endif %}
+</div>
