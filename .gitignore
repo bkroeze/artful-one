@@ -7,6 +7,8 @@ wheels/
 *.egg-info
 node_modules/
 
+# DB
+artful-one.db
 
 # Virtual environments
 .venv
