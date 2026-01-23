@@ -5,12 +5,6 @@
 {% block extrahead %}
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <style>
-.HTMX-indicator {
-  display: none;
-}
-.HTMX-indicator.htmx-request {
-  display: inline;
-}
 .character-row {
   cursor: pointer;
   transition: background-color 0.2s;
@@ -28,13 +22,17 @@
 
 {% block primary %}
 <div class="ui container" style="margin-top: 2rem; margin-bottom: 2rem;">
-  <h1 class="ui header">AI Superhero Name Generator</h1>
+  <h1 class="ui header">AI Hero/Villain Name Generator</h1>
+  <p>
+    Generate unique superhero or supervillain names using AI! Select your preferred genre and the number of names to generate. Click on any character to view detailed information in the sidebar below.
+  </p>
 
   <div class="ui segment">
     <form
       hx-post="{% url 'rpg_chargen:generate_names' %}"
       hx-target="#names-results"
       hx-swap="innerHTML"
+      hx-indicator="#names-results"
       class="ui form"
     >
       <div class="two fields">
@@ -64,7 +62,6 @@
 
       <button type="submit" class="ui button primary">
         Generate Names
-        <i class="loading spinner icon HTMX-indicator"></i>
       </button>
     </form>
   </div>
@@ -75,12 +72,14 @@
       <em>Click on any character to view detailed information in the sidebar below.</em>
     </p>
     <div id="names-results">
+      <p class="text-muted htmx-indicator">Generating...</p>
       <p class="text-muted">Click "Generate Names" to see results.</p>
     </div>
   </div>
 
   <div class="ui segment" id="character-details">
     <!-- Character details will be loaded here via HTMX -->
+    <p class="text-muted htmx-indicator">Generating...</p>
     <p class="text-muted">Select a character to view detailed information.</p>
   </div>
 </div>

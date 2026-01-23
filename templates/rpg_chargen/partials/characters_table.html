@@ -16,21 +16,24 @@
               hx-post="{% url 'rpg_chargen:generate_details' %}"
               hx-target="#character-details"
               hx-swap="innerHTML"
-              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'>
+              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'
+              hx-indicator="#character-details">
             <strong>{{ character.name }}</strong>
           </td>
           <td style="cursor: pointer;"
               hx-post="{% url 'rpg_chargen:generate_details' %}"
               hx-target="#character-details"
               hx-swap="innerHTML"
-              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'>
+              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'
+              hx-indicator="#character-details">
             {{ character.tagline }}
           </td>
           <td style="cursor: pointer;"
               hx-post="{% url 'rpg_chargen:generate_details' %}"
               hx-target="#character-details"
               hx-swap="innerHTML"
-              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'>
+              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'
+              hx-indicator="#character-details">
             {{ character.description }}
           </td>
         </tr>

@@ -20,14 +20,12 @@ BASE_NAMING_RULES = [
     "Avoid exact copies of existing names",
     "Consider both heroes and villains",
     "At least one response should be alliterative",
-    'response should be in the form of a list of characters, following the format: "name","tagline","short description" one per line, with no markdown or other formatting'
+    'response should be in the form of a list of characters, following the format: "name","tagline","short description" one per line, with no markdown or other formatting',
 ]
 
 GENRES = ["Superhero", "Dark/Gritty", "Military", "Sci-Fi", "Urban Fantasy"]
 
-BASE_CHARACTER_RULES = [
-    "Generate a detailed description of this character"
-]
+BASE_CHARACTER_RULES = ["Generate a detailed description of this character"]
 
 
 def character_rules_by_genre(genre: str) -> List[str]:
@@ -35,14 +33,25 @@ def character_rules_by_genre(genre: str) -> List[str]:
         "Genre of character to generate: " + genre,
     ]
 
-    base_fields = ['powers', 'backstory', 'appearance', 'personality', 'goals', 'motivations', 'weaknesses', 'strengths', 'origin', 'amusing trivial fact']
+    base_fields = [
+        "powers",
+        "backstory",
+        "appearance",
+        "personality",
+        "goals",
+        "motivations",
+        "weaknesses",
+        "strengths",
+        "origin",
+        "amusing trivial fact",
+    ]
 
     if genre == "Superhero":
-        fields = base_fields + ['team']
+        fields = base_fields + ["team"]
         return rules + [
             "Include occasional pun references in backstory or origin",
             "Include heroics or villainy in backstory or origin",
-            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}"
+            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}",
         ]
 
     elif genre == "Sci-Fi":
@@ -50,34 +59,34 @@ def character_rules_by_genre(genre: str) -> List[str]:
             "Include occasional alien or futuristic details in appropriate fields",
             "Include occasional military titles or ranks where appropriate",
             "Include occasional tech or science terms",
-            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(base_fields)}"
+            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(base_fields)}",
         ]
 
     elif genre == "Dark/Gritty":
-        fields = ['abilities'] + base_fields[1:]
+        fields = ["abilities"] + base_fields[1:]
         return rules + [
             "Include occasional anti-hero, dark or grim themes",
             "Replace the 'powers' field with 'abilities'",
             "Imply the dark cost of or debt due for the character's abilities",
-            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}"
+            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}",
         ]
 
     elif genre == "Military":
-        fields = ['abilities'] + base_fields[1:] + ['team']
+        fields = ["abilities"] + base_fields[1:] + ["team"]
         return rules + [
             "Include occasional military titles, ranks, operation names or vehicle names where appropriate",
             "Have the origin field include a military background and rank",
             "Add a 'team' field with the name of the team the character is part of",
-            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}"
+            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}",
         ]
 
     elif genre == "Urban Fantasy":
-        fields = base_fields + ['team']
+        fields = base_fields + ["team"]
         return rules + [
             "Include occasional magical creatures, weapons, occult or supernatural details",
             "Have the origin field include a magical background unless the name doesn't fit",
             "Include occasional puns",
-            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}"
+            f"The response should be in the form of a raw JSON object without any markdown formatting, with keys: {', '.join(fields)}",
         ]
 
     else:
@@ -87,21 +96,17 @@ def character_rules_by_genre(genre: str) -> List[str]:
 
 
 def naming_rules_by_genre(genre: str) -> List[str]:
-    rules = BASE_NAMING_RULES + [
-        "Genre of names to generate: " + genre
-    ]
+    rules = BASE_NAMING_RULES + ["Genre of names to generate: " + genre]
     if genre == "Superhero":
-        return rules + [
-            "Names can be 1-3 words long",
-            "Include occasional pun names"]
+        return rules + ["Names can be 1-3 words long", "Include occasional pun names"]
     elif genre == "Sci-Fi":
         return rules + [
             "Include occasional alien or futuristic names",
             "Names can be 1-4 words long"
             "Names can include military titles or ranks"
             "Names can include numbers or symbols"
-            "Names can include tech or science terms"
-            ]
+            "Names can include tech or science terms",
+        ]
     elif genre == "Dark/Gritty":
         return rules + [
             "Names can be 1-3 words long",
@@ -109,8 +114,8 @@ def naming_rules_by_genre(genre: str) -> List[str]:
             "Include occasional dark or grim names",
             "Names can include violent or aggressive terms",
             "Names can include supernatural or occult terms",
-            "Names can include criminal or underworld terms"
-            ]
+            "Names can include criminal or underworld terms",
+        ]
     elif genre == "Military":
         return rules + [
             "Names can be 1-4 words long",
@@ -119,8 +124,8 @@ def naming_rules_by_genre(genre: str) -> List[str]:
             "Include occasional military rank names",
             "Include occasional military vehicle names",
             "Include occasional military weapon names",
-            "Include occasional military term names"
-            ]
+            "Include occasional military term names",
+        ]
     elif genre == "Urban Fantasy":
         return rules + [
             "Names can be 1-3 words long",
@@ -129,11 +134,11 @@ def naming_rules_by_genre(genre: str) -> List[str]:
             "Include occasional magical item names",
             "Include occasional magical term names",
             "Include occasional magical location names",
-            "Include occasional magical event names"
-            ]
+            "Include occasional magical event names",
+        ]
     else:
         return rules + [
-             "Names can be 1-3 words long",
+            "Names can be 1-3 words long",
         ]
 
 
@@ -146,7 +151,7 @@ def parse_naming_response(response: str) -> List[dict]:
     Returns list of dicts with keys: name, tagline, description
     """
     results = []
-    for line in response.strip().split('\n'):
+    for line in response.strip().split("\n"):
         if not line.strip():
             continue
 
@@ -155,11 +160,13 @@ def parse_naming_response(response: str) -> List[dict]:
             row = next(reader)
 
             if len(row) >= 3:
-                results.append({
-                    'name': row[0].strip(),
-                    'tagline': row[1].strip(),
-                    'description': row[2].strip()
-                })
+                results.append(
+                    {
+                        "name": row[0].strip().replace('"', ""),
+                        "tagline": row[1].strip(),
+                        "description": row[2].strip(),
+                    }
+                )
         except Exception:
             continue
     return results
@@ -167,23 +174,28 @@ def parse_naming_response(response: str) -> List[dict]:
 
 class NameGenerator:
     def __init__(self):
-        api_key = os.environ.get('PALM_API_KEY')
+        api_key = os.environ.get("PALM_API_KEY")
         if api_key:
             palm.configure(api_key=api_key)
-            self.palm_model = palm.GenerativeModel('models/gemini-2.5-flash')
+            self.palm_model = palm.GenerativeModel("models/gemini-2.5-flash")
         else:
             self.palm_model = None
         self.used_names = []
         self.history = []
 
     def load_example_names(self, file_path: str) -> List[str]:
-        with open(file_path, 'r') as f:
+        with open(file_path, "r") as f:
             reader = csv.reader(f)
             return [row[0] for row in reader]
 
-    def create_prompt(self, example_names: List[str], count: int = 1, genre: str = "Superhero") -> str:
+    def create_prompt(
+        self, example_names: List[str], count: int = 1, genre: str = "Superhero"
+    ) -> str:
         import random
-        examples = "\n".join(f"- {line}" for line in random.choices(example_names, k=10))
+
+        examples = "\n".join(
+            f"- {line}" for line in random.choices(example_names, k=10)
+        )
         rule_list = naming_rules_by_genre(genre)
         rules = "\n".join(f"- {line}" for line in rule_list)
         prompt = f"""Task: Generate {count} unique superhero or supervillain names.
@@ -198,7 +210,9 @@ Rules:
         if self.used_names:
             if len(self.used_names) > 100:
                 self.used_names = self.used_names[:100]
-            prompt = f"{prompt}\n\nPreviously generated do not reuse:\n" + "\n".join(self.used_names)
+            prompt = f"{prompt}\n\nPreviously generated do not reuse:\n" + "\n".join(
+                self.used_names
+            )
 
         return prompt
 
@@ -211,7 +225,7 @@ Rules:
 
     def parse_and_add_to_history(self, response: str, count: int = 1) -> List[dict]:
         characters = parse_naming_response(response)
-        names = [character['name'] for character in characters]
+        names = [character["name"] for character in characters]
         self.used_names.extend(names[:count])
         rows = characters[:count]
         rows.extend(self.history)
@@ -221,10 +235,10 @@ Rules:
 
 class CharacterGenerator:
     def __init__(self):
-        api_key = os.environ.get('PALM_API_KEY')
+        api_key = os.environ.get("PALM_API_KEY")
         if api_key:
             palm.configure(api_key=api_key)
-            self.palm_model = palm.GenerativeModel('models/gemini-2.5-flash')
+            self.palm_model = palm.GenerativeModel("models/gemini-2.5-flash")
         else:
             self.palm_model = None
 
@@ -249,7 +263,7 @@ Rules:
         except json.JSONDecodeError:
             details = {}
 
-        details['name'] = name
-        details['tagline'] = tagline
-        details['description'] = description
+        details["name"] = name
+        details["tagline"] = tagline
+        details["description"] = description
         return details

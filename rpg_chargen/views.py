@@ -1,5 +1,6 @@
 """Views for RPG Character Generator app."""
 
+import logging
 import os
 
 from django.http import HttpResponse
@@ -8,13 +9,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rpg_chargen.generator import NameGenerator, CharacterGenerator, GENRES
 
+log = logging.getLogger(__name__)
+
 
 def supers_page(request):
     """Main superhero character generator page."""
     context = {
-        'genres': GENRES,
+        "genres": GENRES,
     }
-    return render(request, 'rpg_chargen/supers.html', context)
+    return render(request, "rpg_chargen/supers.html", context)
 
 
 @csrf_exempt
@@ -41,8 +44,8 @@ def htmx_generate_names(request):
             genre = GENRES[0]
 
         # Get the data file path
-        data_dir = os.path.join(os.path.dirname(__file__), 'data')
-        example_file = os.path.join(data_dir, 'supernames.csv')
+        data_dir = os.path.join(os.path.dirname(__file__), "data")
+        example_file = os.path.join(data_dir, "supernames.csv")
 
         # Generate names
         generator = NameGenerator()
@@ -51,16 +54,16 @@ def htmx_generate_names(request):
         characters = generator.generate_with_palm(prompt, num_names)
 
         context = {
-            'characters': characters,
-            'genre': genre,
+            "characters": characters,
+            "genre": genre,
         }
 
-        return render(request, 'rpg_chargen/partials/characters_table.html', context)
+        return render(request, "rpg_chargen/partials/characters_table.html", context)
 
     except Exception as e:
         return HttpResponse(
             f'<div class="ui error message">Error generating names: {str(e)}</div>',
-            status=500
+            status=500,
         )
 
 
@@ -89,7 +92,7 @@ def htmx_generate_details(request):
         if not all([character_name, tagline, description]):
             return HttpResponse(
                 '<div class="ui error message">Missing required character information</div>',
-                status=400
+                status=400,
             )
 
         # Generate character details
@@ -97,13 +100,13 @@ def htmx_generate_details(request):
         details = char_generator.generate(character_name, tagline, description, genre)
 
         context = {
-            'character': details,
+            "character": details,
         }
 
-        return render(request, 'rpg_chargen/partials/character_details.html', context)
+        return render(request, "rpg_chargen/partials/character_details.html", context)
 
     except Exception as e:
         return HttpResponse(
             f'<div class="ui error message">Error generating character details: {str(e)}</div>',
-            status=500
+            status=500,
         )
