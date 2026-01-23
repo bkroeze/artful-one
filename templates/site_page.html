@@ -11,7 +11,13 @@
         <a class="item" href="/about/">About</a>
         <a class="item" href="/art/">Art</a>
         <a class="item" href="/sketch/">Sketches</a>
-        <a class="item" href="/rpg/names/">RPG</a>
+        <div class="ui dropdown item">
+            RPG <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" href="{% url 'rpg:names' %}">Table Based Generators</a>
+                <a class="item" href="{% url 'rpg_chargen:supers' %}">AI Hero/Villain Name Generator</a>
+            </div>
+        </div>
         <a class="item" href="/search/">Search</a>
     </div>
 </div>
@@ -21,7 +27,14 @@
     <a class="item" href="/about/">About</a>
     <a class="item" href="/art/">Art</a>
     <a class="item" href="/sketch/">Sketches</a>
-    <a class="item" href="/rpg/names/">RPG</a>
+    <div class="ui dropdown item">
+        RPG <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item" href="{% url 'rpg:names' %}">Table Based Generators</a>
+            <a class="item" href="{% url 'rpg_chargen:supers' %}">AI Hero/Villain Name Generator</a>
+        </div>
+    </div>
+
     <a class="item" href="/search/">Search</a>
     <a class="item" href="/atom/everything/" title="My Atom feed">
         <i class="rss icon"></i> Atom Feed
@@ -37,7 +50,14 @@
                 <a class="item" href="/about/">About</a>
                 <a class="item" href="/art/">Art</a>
                 <a class="item" href="/sketch/">Sketches</a>
-                <a class="item" href="/rpg/names/">RPG</a>
+                <div class="ui dropdown item">
+                    RPG <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="{% url 'rpg:names' %}">Table Based Generators</a>
+                        <a class="item" href="{% url 'rpg_chargen:supers' %}">AI Hero/Villain Name Generator</a>
+                    </div>
+                </div>
+
                 <a class="item" href="/search/">Search</a>
                 <div class="right item">
                     <form action="/search/" method="GET">
@@ -100,7 +120,10 @@ $(document).ready(function() {
     // Create sidebar
     $('.ui.sidebar')
         .sidebar('attach events', '.toc.item');
-    
+
+    // Initialize dropdowns
+    $('.ui.dropdown').dropdown();
+
     // Show fixed menu on scroll
     $('.masthead')
         .visibility({
@@ -112,7 +135,7 @@ $(document).ready(function() {
                 $('.fixed.menu').transition('fade out');
             }
         });
-    
+
     // Make search icon submit the form
     $('.ui.icon.input .search.icon').on('click', function() {
         $(this).closest('form').submit();
