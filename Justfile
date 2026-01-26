@@ -29,3 +29,5 @@ compile-sketches:
 compile-sketches-clear:
   uv run manage.py compile_sketches --clear
 
+icons *args:
+  uv run python -m rpg_chargen.icons.cli {{args}}

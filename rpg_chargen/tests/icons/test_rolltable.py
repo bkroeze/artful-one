@@ -2,7 +2,7 @@
 
 import pytest
 
-from icons_rpg.rolltable import (
+from rpg_chargen.icons.rolltable import (
     RollTable,
     rolltable_factory,
     rolltable_lookup,
