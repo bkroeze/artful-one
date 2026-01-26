@@ -1,0 +1,21 @@
+Icons Super
+-----------
+Name: {{ super.name }}
+Origin: {{ super.origin | capitalize }}
+Stam: {{ super.stamina }}  DP:    {{ super.determination }}
+Prow: {{ super.abilities.prowess.level }}  Str:   {{ super.abilities.strength.level }}  Coord: {{ super.abilities.coordination.level }}
+Int:  {{ super.abilities.intellect.level }}  Aware: {{ super.abilities.awareness.level }}  Will:  {{ super.abilities.willpower.level }}
+Powers ({{ super.powers | length }}):
+{% for power in super.powers %} - {{ power.name }}: {{ power.level }} ({{ power.source | capitalize }})
+{% endfor %}Specialties ({{ super.specialties | length }}):
+{% for specialty in super.specialties %}  - {{ specialty.name }}: {{ specialty.level }}
+{% endfor %}Background:
+Gender: {{ super.gender }}  Age: {{ super.age[0] }} ({{ super.age[1] }})  Ethnicity: {{ super.ethnicity }}
+Birthplace: {{ super.birth_place }}  Birth Status: {{ super.birth_status }}
+Attitude: {{ super.attitude }}
+Manner: {{ super.manner }}
+Who do they value? {{ super.who_value }}
+Tragedy: {{ super.tragedy if super.tragedy else "None" }}
+Past ({{ super.past | length }}):
+{% for past in super.past %}   - {{ past.description }}
+{% endfor %}

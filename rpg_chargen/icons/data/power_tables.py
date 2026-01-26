@@ -1,0 +1,537 @@
+"""Power and background tables for ICONS RPG."""
+
+from ..rolltable import rolltable_factory
+
+NAMES1 = [
+    "The Accidental", "The Ancient", "The Aqua", "The Awesome",
+    "The Black", "The Blue", "The Brass", "The Brave", "The Broad", "The Broken", "The Bronze",
+    "The Calm", "The Clever", "The Cold", "The Colossal", "The Confident",
+    "The Cool", "The Copper", "The Crimson",
+    "The Dapper", "The Dark", "The Defiant", "The Dramatic",
+    "The Eager", "The Earth", "The Earthen", "The Electric", "The Electron",
+    "The Elegant", "The Ethereal",
+    "The Fabulous", "The Famous", "The Fancy", "The Fantastic", "The Fast",
+    "The Fearless", "The Fiery", "The Fire",
+    "The Galactic", "The Gentle", "The Giant", "The Gigantic", "The Glorious",
+    "The Godly", "The Golden", "The Good", "The Gorgeous", "The Gray", "The Green",
+    "The Heavenly", "The Heavy", "The Honorable", "The Hot", "The Huge", "The Hypnotic",
+    "The Ice", "The Impossible", "The Incredible", "The Infamous",
+    "The Intelligent", "The Iron",
+    "The Jade", "The Jolly",
+    "The Kind",
+    "The Light", "The Long", "The Loud", "The Lucky",
+    "The Macho", "The Magical", "The Magnificent", "The Majestic", "The Mammoth",
+    "The Marked", "The Marvelous", "The Merciful", "The Mighty", "The Misty",
+    "The Mysterious",
+    "The Nifty", "The Nimble", "The Nuclear",
+    "The Old", "The Orange", "The Outrageous",
+    "The Pink", "The Proud", "The Purple",
+    "The Quantum", "The Quick", "The Quiet",
+    "The Rapid", "The Red", "The Righteous", "The Royal",
+    "The Scarlet", "The Silver", "The Smooth", "The Spectacular",
+    "The Steel", "The Storm", "The Swift",
+    "The Tan", "The Terrific", "The Thunder",
+    "The Vengeful", "The Voiceless",
+    "The Wacky", "The Water", "The Whispering", "The White", "The Wise",
+    "The Yellow",
+]
+
+NAMES2 = [
+    "Agent", "Amazon", "Angel", "Ant", "Antman", "Armadillo", "Assassin", "Axeman",
+    "Baron", "Bat", "Bear", "Beetle",
+    "Captain", "Cat", "Catman", "Champion", "Charmer", "Cheetah", "Chief",
+    "Commando", "Condor", "Conjurer", "Crane", "Cricket", "Crow", "Cultist",
+    "Dagger", "Daggers", "Defender", "Detective", "Devil", "Doctor", "Dragonfly", "Duke",
+    "Eagle", "Elephantman", "Enchanter",
+    "Falcon", "Fighter", "Fox",
+    "Gamer", "General", "Genius", "Gladiator", "Gloom", "Gorilla", "Grasshopper",
+    "Guard", "Guardian", "Gunner",
+    "Hammer", "Hawk", "Hornet",
+    "Ibis", "Illusionist",
+    "Jackal",
+    "Katana", "Keeper", "Killer", "Knuckles",
+    "Leader", "Leopard", "Lion", "Lord", "Lynx",
+    "Macaw", "Mage", "Magician", "Mantis", "Marksman", "Master", "Mastermind",
+    "Mercenary", "Merlin", "Mole", "Monarch", "Mongoose", "Moth", "Mothman", "Nighthawk",
+    "Nightowl",
+    "Owl", "Ox", "Oxman",
+    "Panther", "Phoenix", "Prince", "Prodigy", "Prophet", "Protector", "Puma",
+    "Queen",
+    "Raccoon", "Raven", "Rhino", "Rhinoceros", "Robin",
+    "Sage", "Saviour", "Scepter", "Scimitar", "Scorpion", "Scout", "Seer", "Sentinel",
+    "Shade", "Shadow", "Shaman", "Shepherd", "Shield", "Siren", "Slayer", "Smasher",
+    "Snipe", "Sniper", "Soldier", "Sparrow", "Spectacle", "Spider", "Spirit", "Spy",
+    "Starling", "Swallow", "Swan", "Sword", "Swordsman",
+    "Termite", "Tiger", "Trident",
+    "Veteran", "Vindicator", "Vulture",
+    "Warden", "Warrior", "Wasp", "Waspman", "Watcher", "Watchman", "Whiz", "Wizard",
+    "Wolf", "Wolfman", "Wolverine", "Wonder", "Wonderman",
+]
+
+NAMES3 = [
+    "Doctor", "Captain", "Doctor", "Captain", "Lord", "Professor", "Professor",
+    "Mister", "Mistress", "Madame", "Commander", "Master", "Agent", "Master",
+    "Agent", "Chief", "Warden", "", "", "", "", "", "", "", "", "", "", "",
+]
+
+NAMES4 = [
+    "Red", "Blue", "Green", "Yellow", "Purple", "Pink", "Gray", "Dark", "Light",
+    "Orange", "Galactic", "Black", "White", "Clever", "Famous", "Infamous", "Brave",
+    "Calm", "Gentle", "Proud", "Dapper", "Eager", "Jolly", "Broad", "Brass", "Copper",
+    "Golden", "Silver", "Bronze", "Iron", "Steel", "Huge", "Mammoth", "Gigantic",
+    "Colossal", "Quiet", "Thundering", "Whispering", "Ancient", "Fast", "Fancy",
+    "Magnificent", "Mysterious", "Old", "Long", "Rapid", "Swift", "Quick", "Broken",
+    "Cold", "Cool", "Hot", "Heavy", "Light", "Good", "Eager", "Fiery", "Elegent",
+    "Electric", "Defiant", "Brave", "Accidental", "Ethereal", "Dramatic", "Awesome",
+    "Impossible", "Incredible", "Intelligent", "Heavenly", "Honorable", "Huge",
+    "Hypnotic", "Gentle", "Giant", "Glorious", "Godly", "Gorgeous", "Fabulous",
+    "Fancy", "Fantastic", "Fearless", "Kind", "Lucky", "Macho", "Magical", "Majestic",
+    "Marked", "Marvelous", "Mighty", "Messy", "Merciful", "Misty", "Nifty", "Nimble",
+    "Outrageous", "Confident", "Rapid", "Righteous", "Royal", "Terrific", "Smooth",
+    "Spectacular", "Wacky", "Wise", "Vengeful", "Voiceless", "Unarmed", "Armed",
+    "Nuclear", "Scarlet", "Quantum", "Electron", "Crimson", "Fire", "Ice", "Earth",
+    "Earthen", "Water", "Aqua", "Storm", "Thunder",
+]
+
+NAMES5 = [
+    "Masquerade", "Robin", "Owl", "Vulture", "Condor", "Falcon", "Merlin", "Eagle",
+    "Hawk", "Swan", "Ibis", "Phoenix", "Crane", "Snipe", "Macaw", "Amazon", "Nighthawk",
+    "Nightowl", "Monarch", "Lord", "Crow", "Raven", "Swallow", "Starling", "Sparrow",
+    "Ant", "Antman", "Wasp", "Waspman", "Grasshopper", "Cricket", "Beetle", "Assassin",
+    "Mantis", "Mothman", "Moth", "Termite", "Dragonfly", "Elephantman", "Wolf",
+    "Wolfman", "Bat", "Rhino", "Rhinoceros", "Cat", "Catman", "Lynx", "Gorilla",
+    "Leopard", "Armadillo", "Bear", "Tiger", "Lion", "Fox", "Raccoon", "Ox", "Oxman",
+    "Puma", "Panther", "Wolverine", "Cheetah", "Mongoose", "Jackal", "Hornet",
+    "Warrior", "Fighter", "Angel", "Devil", "Guardian", "Protector", "Champion",
+    "Defender", "Saviour", "Watcher", "Slayer", "Killer", "Sentinel", "Shepherd",
+    "Magician", "Charmer", "Conjurer", "Enchanter", "Genius", "Illusionist", "Prophet",
+    "Mastermind", "Prodigy", "Sage", "Wonder", "Spectacle", "Shield", "Sword",
+    "Dagger", "Trident", "Knuckles", "Daggers", "Swordsman", "Scimitar", "Katana",
+    "Axeman", "Scepter", "Hammer", "Shadow", "Shade", "Gloom", "Mole", "Smasher",
+    "Spirit", "Scorpion", "Spider",
+]
+
+NAMES6 = [
+    "Black Wing", "Liquid Steel", "Frost", "Golden Hope", "Hope", "Elemental",
+    "Impossible Girl", "Griffin", "Tecton", "Captain Atomic", "Titanio", "Solar Flare",
+    "Alley Cat", "Snow Storm", "Absolute Zero", "The Great Defender", "Timeline",
+    "Skylar Storm", "Optimo", "Remix", "Citadel", "Alpha Dog", "Brain Matter",
+    "Dark Warrior", "The Crusher", "Owl", "Incognito", "Gray Granite", "Gamma",
+    "Spark Plug", "Silver Shield", "Quiver", "Smoke", "Captain Quake", "Icicle",
+    "Metanite", "Blaze", "Fantasia", "Phantasm", "Sparks", "Ace", "Amethyst Heart",
+    "Animalia", "Armed", "Black Bat", "Black Cat", "Black Knight", "Black Phoenix",
+    "Black Star", "Blitzfire", "Boler", "Bolt", "Brass Bison", "Bright Shadow",
+    "Broken Watchman", "Choicemaker", "Cleanser", "Crazy Eight", "Creature",
+    "Criss Cross", "Dark Flame", "Dark Omen", "Dark Titan", "Dazzler", "Deadnite",
+    "Death Roach", "Doctor Chronos", "Doctor Dynasty", "Doctor Juggernaut",
+    "Doctor Titanium", "Dragon Boy", "Dragon Spectre", "Dragonloom", "Dragontooth",
+    "Electric Arrow", "Eltrocus", "Ethereal Phoenix", "Ethereal Titan",
+    "Fallen Pheonix", "Fiery Falcon", "Firebird", "Freefall", "Frozenstar",
+    "Galactic Gargoyle", "Gecko", "Griffin", "Heavy Step", "Helon", "Heloth",
+    "Hopewing", "Ice Raven", "Iron Archer", "Iron Assassin", "Jade Stranger",
+    "King Scorp", "Mad Manta", "Makeshift", "Marked Stranger", "Master Defiance",
+    "Mighty Mamba", "Mister Penance", "Mister X", "Mister Y", "Misty Manta",
+    "Moon Halo", "Moonshadow", "Nightbolt", "Nightleaf", "Nightquake", "Nightwave",
+    "Orothos", "Osa", "Peacebringer", "Phantom", "Phantom Archer", "Phantom Kid",
+    "Phantom Spectre", "Phoen-X", "Quantum Colossus", "Quantum Commander", "Razor",
+    "Red Heart", "Rosethorn", "Saber", "Saberleaf", "Sage", "Savior",
+    "Scarlet Feathers", "Scarlet Horse", "Scarlet King", "Scarlet Sentinel", "Shaden",
+    "Shadow", "Shadowleaf", "Shadowstar", "Silver Goliath", "Silver Shepherd",
+    "Silver Wolf", "Snow Raven", "Spitfire", "Spur", "Star Sentinel", "Starbright",
+    "Stareye", "Starlight", "Starry Night", "Sunspot", "Switcher", "The Hunter",
+    "The Last One", "Thornhead", "Thunder Hawk", "Thunderclap", "Thundering Whisper",
+    "Venom", "Venombite", "Voiceless Stranger", "Wild Tornado", "Wildfire",
+    "Wildflame", "Karma",
+]
+
+NAMES_TYPE_TABLE = rolltable_factory(
+    [(3, "NAMES_A"), (7, "NAMES_B"), (10, "NAMES_C")],
+    dice=1,
+)
+
+LEVEL_TABLE = rolltable_factory(
+    [(2, 1), (3, 2), (4, 3), (6, 4), (8, 5), (10, 6), (11, 7), (12, 8)],
+    dice=1,
+)
+
+ORIGINS_TABLE = rolltable_factory(
+    [
+        (4, "trained"),
+        (6, "transformed"),
+        (7, "birthright"),
+        (9, "gimmick"),
+        (10, "artificial"),
+        (12, "unearthly"),
+    ],
+    dice=1,
+)
+
+POWER_GROUPS = rolltable_factory(
+    [
+        (3, "mental"),
+        (5, "control"),
+        (6, "defensive"),
+        (7, "offensive"),
+        (8, "movement"),
+        (10, "alteration"),
+        (12, "sensory"),
+    ],
+    dice=1,
+)
+
+POWER_ALTERATION = rolltable_factory(
+    [
+        ((2, 1), "Ability Boost"),
+        ((2, 2), "Ability Increase"),
+        ((2, 3), "Alter Ego"),
+        ((2, 4), "Alternate Form"),
+        ((2, 5), "Aquatic"),
+        ((2, 6), "Density"),
+        ((4, 1), "Duplication"),
+        ((4, 2), "Extra Body Parts"),
+        ((4, 3), "Growth"),
+        ((4, 4), "Invisibility"),
+        ((4, 5), "Phasing"),
+        ((4, 6), "Shrinking"),
+        ((6, 1), "Animal Mimicry"),
+        ((6, 2), "Material Mimicry"),
+        ((6, 3), "Plant Mimicry"),
+        ((6, 4), "Power Mimicry"),
+        ((6, 5), "Stretching"),
+        ((6, 6), "Transformation"),
+    ],
+    dice=2,
+)
+
+POWER_CONTROL = rolltable_factory(
+    [
+        ((2, 2), "Alteration Ray"),
+        ((2, 4), "Element Control"),
+        ((2, 5), "Probability Control"),
+        ((2, 6), "Time Control"),
+        ((4, 2), "Energy Control"),
+        ((4, 3), "Healing"),
+        ((4, 5), "Telekinesis"),
+        ((4, 6), "Transmutation"),
+        ((6, 1), "Cosmic Power"),
+        ((6, 3), "Gadgets"),
+        ((6, 4), "Magic"),
+        ((6, 5), "Nullification"),
+        ((6, 6), "Servant"),
+    ],
+    dice=2,
+)
+
+POWER_DEFENSIVE = rolltable_factory(
+    [
+        ((2, 2), "Absorption"),
+        ((2, 3), "Adaptation"),
+        ((2, 6), "Force Field"),
+        ((4, 1), "Immortality"),
+        ((4, 4), "Life Support"),
+        ((4, 6), "Reflection"),
+        ((6, 2), "Regeneration"),
+        ((6, 6), "Resistance"),
+    ],
+    dice=2,
+)
+
+POWER_MENTAL = rolltable_factory(
+    [
+        ((3, 1), "Astral Projection"),
+        ((3, 2), "Dream Control"),
+        ((3, 4), "Emotion Control"),
+        ((3, 5), "Illusion"),
+        ((3, 6), "Images"),
+        ((6, 2), "Mental Blast"),
+        ((6, 3), "Mind Control"),
+        ((6, 4), "Mind Shield"),
+        ((6, 6), "Telepathy"),
+    ],
+    dice=2,
+)
+
+POWER_MOVEMENT = rolltable_factory(
+    [
+        ((3, 1), "Burrowing"),
+        ((3, 2), "Dimensional Travel"),
+        ((3, 4), "Flight"),
+        ((3, 6), "Leaping"),
+        ((6, 1), "Spinning"),
+        ((6, 3), "Super-Speed"),
+        ((6, 4), "Swinging"),
+        ((6, 5), "Teleportation"),
+        ((6, 6), "Wall-Crawling"),
+    ],
+    dice=2,
+)
+
+POWER_OFFENSIVE = rolltable_factory(
+    [
+        ((3, 1), "Affliction"),
+        ((3, 2), "Binding"),
+        ((3, 4), "Blast"),
+        ((3, 6), "Strike"),
+        ((6, 1), "Aura"),
+        ((6, 3), "Dazzle"),
+        ((6, 4), "Energy Drain"),
+        ((6, 5), "Fast Attack"),
+        ((6, 6), "Stunning"),
+    ],
+    dice=2,
+)
+
+POWER_SENSORY = rolltable_factory(
+    [
+        ((3, 2), "Detection"),
+        ((3, 3), "ESP"),
+        ((3, 6), "Super-Senses"),
+        ((6, 2), "Danger Sense"),
+        ((6, 3), "Interface"),
+        ((6, 4), "Postcognition"),
+        ((6, 6), "Precognition"),
+    ],
+    dice=2,
+)
+
+POWER_EXTRA_BODY_PARTS = rolltable_factory(
+    [
+        (3, "carapace"),
+        (5, "claws"),
+        (6, "extra_arms"),
+        (7, "extra_legs"),
+        (8, "tail"),
+        (10, "tentacles"),
+        (12, "wings"),
+    ],
+    dice=1,
+)
+
+POWER_COUNT_TABLE = rolltable_factory(
+    [(4, 2), (7, 3), (10, 4), (12, 5)],
+    dice=1,
+)
+
+SPECIALTIES_TABLE = rolltable_factory(
+    [
+        ((1, 1), "Aerial Combat"),
+        ((1, 2), "Art"),
+        ((1, 4), "Athletics"),
+        ((1, 5), "Business"),
+        ((1, 6), "Drive"),
+        ((2, 2), "Investigation"),
+        ((2, 3), "Law"),
+        ((2, 5), "Leadership"),
+        ((2, 6), "Linguistics"),
+        ((3, 2), "Martial Arts"),
+        ((3, 3), "Medicine"),
+        ((3, 5), "Mental Resistance"),
+        ((3, 6), "Military"),
+        ((4, 1), "Occult"),
+        ((4, 2), "Performance"),
+        ((4, 3), "Pilot"),
+        ((4, 6), "Power"),
+        ((5, 1), "Psychiatry"),
+        ((5, 3), "Science"),
+        ((5, 4), "Sleight of Hand"),
+        ((5, 6), "Stealth"),
+        ((6, 2), "Technology"),
+        ((6, 3), "Underwater Combat"),
+        ((6, 4), "Weapons"),
+        ((6, 6), "Wrestling"),
+    ],
+    dice=2,
+)
+
+BG_GENDER = rolltable_factory(
+    [
+        (2, "Androgynous or Non-binary"),
+        (7, "Female"),
+        (11, "Male"),
+        (12, "Transgender or Intersex"),
+    ],
+    dice=1,
+)
+
+BG_ETHNICITY = rolltable_factory(
+    [
+        (2, "Native American"),
+        (5, "African"),
+        (7, "Caucasian"),
+        (9, "Asian or Pacific Islander"),
+        (11, "Latino"),
+        (12, "Mixed-heritage"),
+    ],
+    dice=1,
+)
+
+BG_SUPER_AGE = rolltable_factory(
+    [
+        (3, ("Young", 10)),
+        (5, ("Young adult", 15)),
+        (8, ("Adult", 20)),
+        (10, ("Mature", 30)),
+        (11, ("Middle Aged", 40)),
+        (12, ("Elder", 50)),
+    ],
+    dice=1,
+)
+
+BG_MANNER = rolltable_factory(
+    [
+        (2, "Shy, quiet or secretive"),
+        (3, "Rebellious and antisocial"),
+        (4, "Proud, aloof or arrogant"),
+        (5, "Moody and headstrong"),
+        (7, "Friendly and outgoing"),
+        (8, "Serious and sober"),
+        (9, "Fun-loving and playful"),
+        (10, "Sneaky and underhanded"),
+        (11, "Detached and logical"),
+        (12, "Anxious, nervous, or jumpy"),
+    ],
+    dice=1,
+)
+
+BG_WHO_VALUE = rolltable_factory(
+    [
+        (2, "Child"),
+        (4, "Family member"),
+        (5, "Friend"),
+        (6, "Themselves"),
+        (7, "Romantic partner"),
+        (8, "Pet"),
+        (9, "Mentor or teacher"),
+        (10, "Public figure"),
+        (11, "Personal hero"),
+        (12, "Group or organization"),
+    ],
+    dice=1,
+)
+
+BG_ATTITUDE = rolltable_factory(
+    [
+        (2, "Every person is a unique and valuable individual"),
+        (3, "People are generally good, given the opportunity"),
+        (4, "No one really understands me"),
+        (5, "People need strong leadership and guidance"),
+        (7, "Neutral towards most people"),
+        (8, "Respect is earned, not given away"),
+        (9, "People are generally not to be trusted"),
+        (10, "No one will ever hurt me again"),
+        (11, "People are endless sources of wonder"),
+        (12, "People are terrible and few are worth anything"),
+    ],
+    dice=1,
+)
+
+BG_BIRTH_PLACE = rolltable_factory(
+    [(2, "Urban"), (4, "Suburban"), (6, "Rural")],
+    dice=1,
+)
+
+BG_BIRTH_STATUS = rolltable_factory(
+    [
+        (3, "Poor"),
+        (6, "Middle Class"),
+        (8, "Well-Off"),
+        (10, "Wealthy"),
+        (12, "Rich"),
+    ],
+    dice=1,
+)
+
+BG_FAMILY_TRAGEDIES = rolltable_factory(
+    [
+        ((3, 1), "betrayed by a loved one and lost everything."),
+        ((3, 2), "banished or exiled from home."),
+        ((3, 3), "murdered."),
+        ((3, 4), "targeted by a sinister organization."),
+        ((3, 5), "abducted or vanished without a trace."),
+        ((3, 6), "killed by a disaster, terrorist attack, or war."),
+        ((6, 1), "Convicted of a crime and"),
+        ((6, 2), "isolated, living ignorant of the existence of other members of the family."),
+        ((6, 3), "killed by disease or toxicity."),
+        ((6, 4), "witness to a crime and placed in a protection program."),
+        ((6, 5), "displaced from home by a disaster or war."),
+        ((6, 6), "divided by an intra-family conflict."),
+    ],
+    dice=2,
+)
+
+BG_PAST_EXPERIENCE_TYPE = rolltable_factory(
+    [(2, "friend_foe"), (4, "good_experience"), (6, "bad_experience")],
+    dice=1,
+)
+
+BG_FRIEND_FOE_RELATIONSHIP = rolltable_factory(
+    [
+        (1, "like a family member to you"),
+        (2, "a current or former romantic interest"),
+        (3, "a current or former colleague or co-worker"),
+        (4, "a friend turned foe or foe turned friend"),
+        (5, "is powerfully influential or resourceful (or both)"),
+        (6, "is an entire organization or faction"),
+    ],
+    dice=1,
+)
+
+BG_PAST_GOOD_EXPERIENCE = rolltable_factory(
+    [
+        (1, "Connection: Made a connection, contact or earned a favor"),
+        (2, "Mentor: Met someone willing to teach and mentor"),
+        (3, "Opportunity: Found a new opportunity, job, invention, viewpoint"),
+        (4, "Promotion: Promotion or general step-up in career or recognition"),
+        (5, "Renown: You have a particular achievement or quality people remember and respect."),
+        (6, "Windfall: You received some material or financial gains"),
+    ],
+    dice=1,
+)
+
+BG_PAST_BAD_EXPERIENCE = rolltable_factory(
+    [
+        (1, "Framed: You were framed or falsely accused"),
+        (2, "Illness: You suffered a physical or mental illness, and may still"),
+        (3, "Imprisoned: Abducted, held hostage, sent to prison, otherwise held against your will"),
+        (4, "Infamy: Your rep took a hit, may still be living it down or have something to prove"),
+        (5, "Injury: Injury, possibly with lasting disability or disfigurements"),
+        (6, "Loss: Personal loss such as the death of a loved one, serious financial setback, or personal tragedy"),
+    ],
+    dice=1,
+)
+
+KAIJU_TYPE = rolltable_factory(
+    [
+        (1, "Animal"),
+        (2, "Vegetable"),
+        (3, "Mineral"),
+        (4, "Machine"),
+        (5, "Energy"),
+        (6, "Animal"),
+    ],
+    dice=1,
+)
+
+KAIJU_FEATURES = rolltable_factory(
+    [
+        (1, "Wings"),
+        (2, "Drill limbs"),
+        (3, "Tentacles"),
+        (4, "Armor"),
+        (5, "Blade limbs"),
+        (6, "Armor"),
+    ],
+    dice=1,
+)
+
+KAIJU_MOTIVATIONS = rolltable_factory(
+    [
+        (1, "Protect its birthplace"),
+        (2, "Destroy civilization"),
+        (3, "Friend to all children"),
+        (4, "Devour all energy"),
+        (5, "Destroy its birthplace"),
+        (6, "Destroy all monsters"),
+    ],
+    dice=1,
+)

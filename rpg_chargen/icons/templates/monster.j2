@@ -1,0 +1,17 @@
+Icons Monster
+-------------
+Name: {{ monster.name }}
+Stam: {{ monster.stamina }}
+Type: {% for type in monster.type %}{{ type }} {% endfor %}
+
+Prow: {{ monster.abilities.prowess.level }}  Str:   {{ monster.abilities.strength.level }}  Coord: {{ monster.abilities.coordination.level }}
+Int:  {{ monster.abilities.intellect.level }}  Aware: {{ monster.abilities.awareness.level }}  Will:  {{ monster.abilities.willpower.level }}
+Features ({{ monster.features | length }}):
+{% for feature in monster.features %}  {{ feature }}
+{% endfor %}
+Powers ({{ monster.powers | length if monster.powers else 0 }}):
+{% if monster.powers %}{% for power in monster.powers %}  - {{ power.name }}: {{ power.level }} ({{ power.source | capitalize }})
+{% endfor %}{% endif %}
+Specialties ({{ monster.specialties | length if monster.specialties else 0 }}):
+{% if monster.specialties %}{% for specialty in monster.specialties %}  - {{ specialty.name }}: {{ specialty.level }}
+{% endfor %}{% endif %}
