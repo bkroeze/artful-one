@@ -1,0 +1,126 @@
+{% load static %}
+<div class="ui segment">
+  <h3 class="ui header">
+    {{ character.name }}
+    <div class="sub header">{{ character.origin|title }} Origin</div>
+  </h3>
+
+  <div class="ui divider"></div>
+
+  <div class="ui two column stackable grid">
+    <div class="column">
+      <h4 class="ui header">Core Stats</h4>
+      <table class="ui very basic compact table">
+        <tbody>
+          <tr>
+            <td><strong>Stamina:</strong></td>
+            <td>{{ character.stamina }}</td>
+            <td><strong>Determination:</strong></td>
+            <td>{{ character.determination }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4 class="ui header">Abilities</h4>
+      <table class="ui very basic compact table">
+        <tbody>
+          <tr>
+            <td><strong>Prowess:</strong></td>
+            <td>{{ character.abilities.prowess.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Coordination:</strong></td>
+            <td>{{ character.abilities.coordination.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Strength:</strong></td>
+            <td>{{ character.abilities.strength.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Intellect:</strong></td>
+            <td>{{ character.abilities.intellect.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Awareness:</strong></td>
+            <td>{{ character.abilities.awareness.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Willpower:</strong></td>
+            <td>{{ character.abilities.willpower.level }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="column">
+      <h4 class="ui header">Powers ({{ character.powers|length }})</h4>
+      <div class="ui list">
+        {% for power in character.powers %}
+        <div class="item">
+          <i class="lightning icon"></i>
+          <div class="content">
+            <strong>{{ power.name }}</strong>: Level {{ power.level }}
+            <br><small class="text-muted">({{ power.source|title }})</small>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <h4 class="ui header">Specialties ({{ character.specialties|length }})</h4>
+      <div class="ui list">
+        {% for specialty in character.specialties %}
+        <div class="item">
+          <i class="star icon"></i>
+          <div class="content">
+            <strong>{{ specialty.name }}</strong>: Level {{ specialty.level }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="ui divider"></div>
+
+  <h4 class="ui header">Background</h4>
+  <div class="ui relaxed list">
+    <div class="item">
+      <strong>Gender:</strong> {{ character.gender }}
+    </div>
+    <div class="item">
+      <strong>Age:</strong> {{ character.age.0 }} ({{ character.age.1 }})
+    </div>
+    <div class="item">
+      <strong>Ethnicity:</strong> {{ character.ethnicity }}
+    </div>
+    <div class="item">
+      <strong>Birthplace:</strong> {{ character.birth_place }}
+    </div>
+    <div class="item">
+      <strong>Birth Status:</strong> {{ character.birth_status }}
+    </div>
+    <div class="item">
+      <strong>Attitude:</strong> {{ character.attitude }}
+    </div>
+    <div class="item">
+      <strong>Manner:</strong> {{ character.manner }}
+    </div>
+    <div class="item">
+      <strong>Who do they value?</strong> {{ character.who_value }}
+    </div>
+    {% if character.tragedy %}
+    <div class="item">
+      <strong>Tragedy:</strong> {{ character.tragedy }}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if character.past %}
+  <h4 class="ui header">Past Experiences ({{ character.past|length }})</h4>
+  <div class="ui bulleted list">
+    {% for experience in character.past %}
+    <div class="item">{{ experience.description }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

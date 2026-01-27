@@ -1,0 +1,19 @@
+{% for entity in entities %}
+<div class="entity-card">
+  <button
+    class="ui button mini copy-button"
+    onclick="copyToClipboard(this.getAttribute('data-text'), this)"
+    data-text="{{ entity.text|escapejs }}"
+  >
+    <i class="copy icon"></i> Copy Text
+  </button>
+
+  {% if entity.type == "character" %}
+    {% include "rpg_chargen/partials/icons_character.html" with character=entity.data %}
+  {% else %}
+    {% include "rpg_chargen/partials/icons_monster.html" with monster=entity.data %}
+  {% endif %}
+</div>
+{% empty %}
+<p class="text-muted">No entities generated</p>
+{% endfor %}

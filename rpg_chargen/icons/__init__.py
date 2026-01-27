@@ -55,6 +55,7 @@ from .icons_creatures import (
     make_triceratops,
     make_tyrannosaur,
 )
+from .cli import CREATURE_REGISTRY
 
 __version__ = "0.1.0"
 __all__ = [
@@ -112,4 +113,5 @@ __all__ = [
     "make_pterodactyl",
     "make_triceratops",
     "make_tyrannosaur",
+    "CREATURE_REGISTRY",
 ]

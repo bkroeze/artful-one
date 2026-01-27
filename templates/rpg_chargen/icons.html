@@ -1,0 +1,155 @@
+{% extends "site_page.html" %}
+{% load static %}
+
+{% block title %}ICONS RPG Character & Monster Generator{% endblock %}
+
+{% block extrahead %}
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<style>
+.entity-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.2857rem;
+  position: relative;
+}
+.copy-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.copy-feedback {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  padding: 1rem 2rem;
+  background: #21ba45;
+  color: white;
+  border-radius: 0.2857rem;
+  font-weight: bold;
+}
+.copy-feedback.show {
+  display: block;
+}
+</style>
+{% endblock %}
+
+{% block primary %}
+<div class="ui container" style="margin-top: 2rem; margin-bottom: 2rem;">
+  <h1 class="ui header">ICONS RPG Character & Monster Generator</h1>
+  <p>
+    Generate random ICONS RPG characters or monsters with full stats and backgrounds.
+  </p>
+
+  <div class="ui segment">
+    <form
+      hx-post="{% url 'rpg_chargen:icons_generate' %}"
+      hx-target="#icons-results"
+      hx-swap="innerHTML"
+      hx-indicator="#icons-results .htmx-indicator"
+      class="ui form"
+    >
+      <div class="three fields">
+        <div class="field">
+          <label>Type</label>
+          <select name="entity_type" id="entity-type-select" class="ui dropdown selection">
+            <option value="character">Character</option>
+            <option value="monster">Monster</option>
+          </select>
+        </div>
+
+        <div class="field" id="monster-type-field" style="display: none;">
+          <label>Monster Type</label>
+          <select name="monster_type" class="ui dropdown search selection">
+            <option value="kaiju">Random Kaiju</option>
+            <option disabled>──────────</option>
+            {% for creature in creature_types %}
+            <option value="{{ creature }}">{{ creature|title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Count</label>
+          <input
+            type="number"
+            name="count"
+            value="1"
+            min="1"
+            max="10"
+            style="padding: 0.5em; font-size: 1em;"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="ui button primary">
+        Generate
+      </button>
+    </form>
+  </div>
+
+  <div class="ui segment">
+    <h2 class="ui header">Results</h2>
+    <div id="icons-results">
+      <p class="text-muted htmx-indicator" style="display: none;">Generating...</p>
+      <p class="text-muted">Select options and click "Generate" to see results.</p>
+    </div>
+  </div>
+</div>
+
+<div id="copy-feedback" class="copy-feedback">
+  Copied to clipboard!
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Fomantic UI dropdowns
+  $('.ui.dropdown').dropdown();
+
+  // Show/hide monster type field based on entity type selection
+  const entityTypeSelect = document.getElementById('entity-type-select');
+  const monsterTypeField = document.getElementById('monster-type-field');
+
+  entityTypeSelect.addEventListener('change', function() {
+    if (this.value === 'monster') {
+      monsterTypeField.style.display = 'block';
+    } else {
+      monsterTypeField.style.display = 'none';
+    }
+  });
+
+  // Set document height to avoid jumping when HTMX content loads
+  document.body.style.minHeight = window.innerHeight + 'px';
+});
+
+// Copy to clipboard function
+function copyToClipboard(text, button) {
+  navigator.clipboard.writeText(text).then(() => {
+    // Show feedback
+    const feedback = document.getElementById('copy-feedback');
+    feedback.classList.add('show');
+
+    // Hide after 2 seconds
+    setTimeout(() => {
+      feedback.classList.remove('show');
+    }, 2000);
+
+    // Optional: Change button text temporarily
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="check icon"></i> Copied!';
+    button.classList.add('green');
+
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.classList.remove('green');
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy:', err);
+    alert('Failed to copy to clipboard');
+  });
+}
+</script>
+{% endblock %}

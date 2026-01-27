@@ -1,0 +1,97 @@
+{% load static %}
+<div class="ui segment">
+  <h3 class="ui header">
+    {{ monster.name }}
+    <div class="sub header">
+      {% for type in monster.type %}
+        <span class="ui label">{{ type }}</span>
+      {% endfor %}
+    </div>
+  </h3>
+
+  <div class="ui divider"></div>
+
+  <div class="ui two column stackable grid">
+    <div class="column">
+      <h4 class="ui header">Core Stats</h4>
+      <table class="ui very basic compact table">
+        <tbody>
+          <tr>
+            <td><strong>Stamina:</strong></td>
+            <td>{{ monster.stamina }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4 class="ui header">Abilities</h4>
+      <table class="ui very basic compact table">
+        <tbody>
+          <tr>
+            <td><strong>Prowess:</strong></td>
+            <td>{{ monster.abilities.prowess.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Coordination:</strong></td>
+            <td>{{ monster.abilities.coordination.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Strength:</strong></td>
+            <td>{{ monster.abilities.strength.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Intellect:</strong></td>
+            <td>{{ monster.abilities.intellect.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Awareness:</strong></td>
+            <td>{{ monster.abilities.awareness.level }}</td>
+          </tr>
+          <tr>
+            <td><strong>Willpower:</strong></td>
+            <td>{{ monster.abilities.willpower.level }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="column">
+      {% if monster.features %}
+      <h4 class="ui header">Features ({{ monster.features|length }})</h4>
+      <div class="ui bulleted list">
+        {% for feature in monster.features %}
+        <div class="item">{{ feature }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if monster.powers %}
+      <h4 class="ui header">Powers ({{ monster.powers|length }})</h4>
+      <div class="ui list">
+        {% for power in monster.powers %}
+        <div class="item">
+          <i class="lightning icon"></i>
+          <div class="content">
+            <strong>{{ power.name }}</strong>: Level {{ power.level }}
+            <br><small class="text-muted">({{ power.source|title }})</small>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if monster.specialties %}
+      <h4 class="ui header">Specialties ({{ monster.specialties|length }})</h4>
+      <div class="ui list">
+        {% for specialty in monster.specialties %}
+        <div class="item">
+          <i class="star icon"></i>
+          <div class="content">
+            <strong>{{ specialty.name }}</strong>: Level {{ specialty.level }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
