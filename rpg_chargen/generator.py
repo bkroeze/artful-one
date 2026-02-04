@@ -11,9 +11,7 @@ import json
 import os
 from typing import List
 
-import google.generativeai as palm
-from django.conf import settings
-
+import llm
 
 BASE_NAMING_RULES = [
     "Names should be creative and memorable",
@@ -174,12 +172,10 @@ def parse_naming_response(response: str) -> List[dict]:
 
 class NameGenerator:
     def __init__(self):
-        api_key = os.environ.get("PALM_API_KEY")
+        api_key = os.environ.get("OPENROUTER_API_KEY")
+        self.model = llm.get_model("openrouter/openrouter/free")
         if api_key:
-            palm.configure(api_key=api_key)
-            self.palm_model = palm.GenerativeModel("models/gemini-2.5-flash")
-        else:
-            self.palm_model = None
+            self.model.key = api_key
         self.used_names = []
         self.history = []
 
@@ -216,12 +212,9 @@ Rules:
 
         return prompt
 
-    def generate_with_palm(self, prompt: str, count: int = 1) -> List[dict]:
-        if not self.palm_model:
-            raise ValueError("PALM_API_KEY not configured")
-
-        response = self.palm_model.generate_content(prompt)
-        return self.parse_and_add_to_history(response.text, count)
+    def generate_with_llm(self, prompt: str, count: int = 1) -> List[dict]:
+        response = self.model.prompt(prompt)
+        return self.parse_and_add_to_history(response.text(), count)
 
     def parse_and_add_to_history(self, response: str, count: int = 1) -> List[dict]:
         characters = parse_naming_response(response)
@@ -235,17 +228,12 @@ Rules:
 
 class CharacterGenerator:
     def __init__(self):
-        api_key = os.environ.get("PALM_API_KEY")
+        api_key = os.environ.get("OPENROUTER_API_KEY")
+        self.model = llm.get_model("openrouter/openrouter/free")
         if api_key:
-            palm.configure(api_key=api_key)
-            self.palm_model = palm.GenerativeModel("models/gemini-2.5-flash")
-        else:
-            self.palm_model = None
+            self.model.key = api_key
 
     def generate(self, name: str, tagline: str, description: str, genre: str) -> dict:
-        if not self.palm_model:
-            raise ValueError("PALM_API_KEY not configured")
-
         rules = character_rules_by_genre(genre)
         prompt = f"""Task: Generate a detailed description of a superhero or supervillain using the following information:
 
@@ -256,10 +244,10 @@ Description: {description}
 Rules:
 {rules}
 """
-        response = self.palm_model.generate_content(prompt)
+        response = self.model.prompt(prompt)
 
         try:
-            details = json.loads(response.text)
+            details = json.loads(response.text())
         except json.JSONDecodeError:
             details = {}
 

@@ -51,7 +51,7 @@ def htmx_generate_names(request):
         generator = NameGenerator()
         example_names = generator.load_example_names(example_file)
         prompt = generator.create_prompt(example_names, num_names, genre)
-        characters = generator.generate_with_palm(prompt, num_names)
+        characters = generator.generate_with_llm(prompt, num_names)
 
         context = {
             "characters": characters,
@@ -185,11 +185,13 @@ def icons_htmx_generate(request):
             for _ in range(count):
                 char = icons_random_super()
                 text_version = icons_render_character(char)
-                entities.append({
-                    "type": "character",
-                    "data": char,
-                    "text": text_version,
-                })
+                entities.append(
+                    {
+                        "type": "character",
+                        "data": char,
+                        "text": text_version,
+                    }
+                )
         else:
             # Generate monsters
             monster_type = request.POST.get("monster_type", "kaiju")
@@ -206,11 +208,13 @@ def icons_htmx_generate(request):
                         monster = make_random_kaiju()  # Fallback
 
                 text_version = icons_render_monster(monster)
-                entities.append({
-                    "type": "monster",
-                    "data": monster,
-                    "text": text_version,
-                })
+                entities.append(
+                    {
+                        "type": "monster",
+                        "data": monster,
+                        "text": text_version,
+                    }
+                )
 
         context = {
             "entities": entities,
