@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run pytest:*)",
+      "Bash(just icons --help:*)",
+      "Bash(uv run python:*)"
+    ]
+  }
+}
