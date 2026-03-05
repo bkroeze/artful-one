@@ -1,7 +1,8 @@
 from django.urls import path
+from . import views
 
 app_name = "filedrop"
 
 urlpatterns = [
-    # URL patterns will be added here
+    path("<slug:shortname>/", views.FileDownloadView.as_view(), name="download"),
 ]

@@ -107,6 +107,7 @@ urlpatterns = [
     path("rpg/", include("rpg.urls")),
     path("rpg/", include("rpg_chargen.urls")),
     path("monthly/", include("monthly.urls")),
+    path("filedrop/", include("filedrop.urls")),
     re_path(r"^card/(.*$)$", blog_views.screenshot_card),
     re_path(r"^$", blog_views.index),
     re_path(r"^(\d{4})/$", blog_views.archive_year),
