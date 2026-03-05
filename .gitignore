@@ -19,3 +19,5 @@ artful-one.db
 .python-version
 staticfiles/
 filedrop_files/
+etc/
+*~

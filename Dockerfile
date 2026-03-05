@@ -29,6 +29,7 @@ COPY . .
 
 # Collect static files
 RUN uv run manage.py collectstatic --noinput
+RUN uv run llm install llm-openrouter
 
 # Create a non-root user
 RUN useradd -m appuser && chown -R appuser:appuser /app
