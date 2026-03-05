@@ -268,6 +268,9 @@ PICTURES = {
     "PROCESSOR": "pictures.tasks.process_picture",
 }
 
+# Filedrop configuration
+FILEDROP_BASE_DIR = os.path.join(BASE_DIR, "filedrop_files")
+
 # Django Tasks configuration for django-pictures
 TASKS = {
     "default": {
