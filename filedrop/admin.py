@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from .models import Drop, Token, DownloadLog
 from .forms import TokenGenerationForm
 
@@ -99,7 +101,15 @@ class DropAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def generate_token_view(self, request, drop_id):
-        drop = Drop.objects.get(pk=drop_id)
+        # Check permissions
+        if not request.user.has_perm("filedrop.change_drop"):
+            raise PermissionDenied
+
+        # Handle missing drop
+        try:
+            drop = Drop.objects.get(pk=drop_id)
+        except Drop.DoesNotExist:
+            raise Http404("Drop not found")
 
         if request.method == "POST":
             form = TokenGenerationForm(request.POST)
