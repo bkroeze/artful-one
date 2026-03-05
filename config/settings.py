@@ -17,6 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = os.environ.get("DJANGO_SECRET") or "dev-secret-s(p7%ue-l6r^&@y63p*ix*1"
 SCREENSHOT_SECRET = os.environ.get("SCREENSHOT_SECRET") or ""
 
+
 # Helpers
 def env_bool(name: str, default: bool = False) -> bool:
     value = os.environ.get(name)
@@ -67,6 +68,7 @@ INSTALLED_APPS = [
     "blog",
     "monthly",
     "feedstats",
+    "filedrop",
     "pictures",
     "rpg",
     "rpg_chargen",
