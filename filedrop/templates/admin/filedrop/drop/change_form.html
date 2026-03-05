@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    <li>
+        <a href="{% url 'admin:filedrop_drop_generate_token' original.pk %}" class="historylink" style="background: #417690;">Generate Token</a>
+    </li>
+    {{ block.super }}
+{% endblock %}
