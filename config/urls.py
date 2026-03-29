@@ -15,6 +15,7 @@ from blog import feeds
 from feedstats.utils import count_subscribers
 import os
 import importlib.metadata
+from datetime import datetime, timezone
 import json
 from proxy.views import proxy_view
 from pictures.conf import get_settings
@@ -22,6 +23,16 @@ import logging
 
 handler404 = "blog.views.custom_404"
 logger = logging.getLogger("blog")
+
+
+def health_check(request):
+    return HttpResponse(
+        json.dumps({
+            "status": "ok",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }),
+        content_type="application/json"
+    )
 
 
 def wellknown_webfinger(request):
@@ -134,6 +145,7 @@ urlpatterns = [
     path("@bruce", username_redirect),
     re_path(r"^projects/?$", projects_redirect),
     re_path(r"^versions/$", versions),
+    re_path(r"^health/$", health_check),
     re_path(r"^robots\.txt$", robots_txt),
     re_path(r"^favicon\.ico$", favicon_ico),
     re_path(r"^search/$", search_views.search),

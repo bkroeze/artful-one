@@ -444,3 +444,11 @@ class TestBlog:
         assert "3 posts:" in response.content.decode()
         assert ">1 note</a>" in response.content.decode()
         assert "/search/?type=note&year=2025&month=7" in response.content.decode()
+
+
+    def test_health_check(self, client):
+        response = client.get("/health/")
+        assert response.status_code == 200
+        data = json.loads(response.content)
+        assert data["status"] == "ok"
+        assert "timestamp" in data
