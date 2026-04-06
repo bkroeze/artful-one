@@ -7,7 +7,6 @@ from django.http import (
 )
 from django.views.decorators.cache import never_cache
 from django.conf import settings
-from django.urls import path, re_path, include
 from blog import views as blog_views
 from blog import search as search_views
 from blog import tag_views
