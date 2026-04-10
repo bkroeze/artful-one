@@ -1,6 +1,5 @@
 """Tests for the rolltable module."""
 
-import pytest
 
 from rpg_chargen.icons.rolltable import (
     RollTable,

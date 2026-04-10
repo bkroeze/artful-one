@@ -1,11 +1,8 @@
 # coding=utf8
 from collections import Counter
 import datetime
-import hashlib
-import hmac
 import os
 import random
-from urllib.parse import urlencode
 
 from bs4 import BeautifulSoup as Soup
 import cloudflare
@@ -15,9 +12,8 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models import CharField, Value
 from django.http import JsonResponse
-from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect as Redirect
+from django.http import Http404, HttpResponsePermanentRedirect as Redirect
 from django.shortcuts import get_object_or_404, render
-from django.test import Client
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
@@ -863,111 +859,3 @@ def api_add_tag(request):
 
     return JsonResponse({"success": True, "tag": tag_name})
 
-
-# Hide vertical scrollbar, add fade at bottom of viewport
-SCREENSHOT_EXTRA_CSS = """
-::-webkit-scrollbar {
-  display: none;
-}
-body::after {
-  content: "";
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 20px;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 1)
-  );
-}
-html {
-  margin: 0 10px;
-}
-#smallhead {
-  margin-right: -10px;
-  margin-left: -10px;
-}
-html div#smallhead #smallhead-inner {
-  padding-left: 25px;
-  padding-right: 10px;
-}
-"""
-
-
-def screenshot_card(request, path):
-    raise Http404("Card not enabled")
-    # Fetch HTML for this path, to use as the version
-    response = Client().get("/" + path)
-    # response must have x-enable-card header
-    if not response.headers.get("x-enable-card"):
-        raise Http404("Card not enabled")
-    if response.status_code != 200:
-        raise Http404("Page not found")
-    html_bytes = response.content
-    if not getattr(settings, "SCREENSHOT_SECRET", None):
-        raise Http404("SCREENSHOT_SECRET is not set")
-    screenshot_url = generate_screenshot_url(
-        "https://screenshot-worker.0xbeedao.workers.dev/",
-        "https://artful.one/" + path,
-        hashlib.sha256(html_bytes).hexdigest(),
-        secret=settings.SCREENSHOT_SECRET,
-        width="700",
-        height="350",
-        css=SCREENSHOT_EXTRA_CSS,
-    )
-    # Proxy fetch that URL, so Cloudflare can cache it
-    screenshot_bytes = requests.get(screenshot_url).content
-    # Return with cache header
-    response = HttpResponse(
-        screenshot_bytes,
-        content_type="image/png",
-    )
-    response["Cache-Control"] = "s-maxage={}".format(365 * 60 * 60)
-    return response
-
-
-def generate_screenshot_url(
-    worker_url: str,
-    target_url: str,
-    version: str,
-    secret: str,
-    *,
-    width: str = "1200",
-    height: str = "800",
-    js: str = "",
-    css: str = "",
-) -> str:
-    """
-    Build a **signed** screenshot URL (now supports inline JS/CSS injection).
-
-    Parameters
-    ----------
-    js, css : str
-        JavaScript and CSS strings to inject with `addScriptTag` / `addStyleTag`.
-        Empty strings (default) mean “none”.
-    """
-    width, height = str(width), str(height)
-    # ---- (dimension validation unchanged) ---- #
-
-    message = _make_message(target_url, version, width, height, js, css)
-    signature = hmac.new(secret.encode(), message.encode(), hashlib.sha256).hexdigest()
-    params = {
-        "url": target_url,
-        "version": version,
-        "w": width,
-        "h": height,
-        "js": js,
-        "css": css,
-        "sig": signature,
-    }
-    return f"{worker_url.rstrip('/')}/?{urlencode(params, safe='')}"
-
-
-def _make_message(
-    target_url: str, version: str, width: str, height: str, js: str, css: str
-) -> str:
-    """Message string that must exactly match the Worker implementation."""
-    return f"{target_url}|{version}|{width}|{height}|{js}|{css}"

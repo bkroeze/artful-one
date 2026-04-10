@@ -28,28 +28,6 @@ def blog_mixed_list_with_dates(
     return context
 
 
-@register.inclusion_tag("includes/comments_list.html", takes_context=True)
-def comments_list(context, comments):
-    context.update(
-        {
-            "comments": comments,
-            "show_headers": False,
-        }
-    )
-    return context
-
-
-@register.inclusion_tag("includes/comments_list.html", takes_context=True)
-def comments_list_with_headers(context, comments):
-    context.update(
-        {
-            "comments": comments,
-            "show_headers": True,
-        }
-    )
-    return context
-
-
 @register.inclusion_tag("includes/phototag_list.html")
 def phototag_list(tags):
     return {"tags": tags}

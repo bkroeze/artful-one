@@ -5,7 +5,7 @@ from blog.models import (
     Entry,
     Tag,
 )
-from BeautifulSoup import BeautifulSoup as Soup
+from bs4 import BeautifulSoup as Soup
 import requests
 from django.utils.html import escape
 from django.utils.text import slugify

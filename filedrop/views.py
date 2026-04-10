@@ -9,7 +9,6 @@ from django.http import (
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views import View
-from django.conf import settings
 from .models import Drop, Token
 
 

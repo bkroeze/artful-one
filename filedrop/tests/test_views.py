@@ -4,7 +4,6 @@ from datetime import timedelta
 from unittest.mock import patch
 from django.urls import reverse
 from django.utils import timezone
-from django.http import Http404
 from django.conf import settings
 from filedrop.models import Drop, Token, DownloadLog
 

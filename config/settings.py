@@ -37,9 +37,6 @@ INTERNAL_IPS = ("127.0.0.1",)
 
 STAGING = env_bool("STAGING")
 
-# Django SQL Dashboard
-DASHBOARD_ROW_LIMIT = 200
-
 # Cloudflare details
 CLOUDFLARE_EMAIL = os.environ.get("CLOUDFLARE_EMAIL", "")
 CLOUDFLARE_TOKEN = os.environ.get("CLOUDFLARE_TOKEN", "")
@@ -172,7 +169,6 @@ ALLOWED_HOSTS = ["*"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 

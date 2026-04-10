@@ -22,7 +22,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Settings
-        import django
         from django.conf import settings
 
         sketches_dir = Path(settings.BASE_DIR) / "sketches" / "art"
