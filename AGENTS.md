@@ -7,10 +7,6 @@ This file provides guidance to AI Agents when working with code in this reposito
 
 This is a Django-based personal blog site for Artful.One, inspired by Simon Willison's blog architecture. The project supports multiple content types (entries, blogmarks, quotations, notes) with tagging, search, and RSS feeds.
 
-## Task tracking
-
-This project uses a CLI ticket system for task management. Run `tk help` when you need to use it.
-
 ## Core Commands
 
 Most commands are either already in the Justfile, and managed by "just", or else are standard python/django,
@@ -20,24 +16,9 @@ accessed via `uv ...`
 - create Django migration: `just makemigrations <django app, such as "blog">
 - test: `uv run pytest`
 
-## Integrating with Ticketing system (dependency-aware task planning)
-
-Typical flow (agents)
-1) **Pick ready work**
-   - `tk ready` → choose one item (highest priority, no blockers)
-2) **Work and update**
-   - `tk add-note jd-123 "progress notes, including sub-tickets opened"`
-3) **Complete and release**
-   - Add notes to AGENTS.md in the "Progress" section.
-   - `tk close jd-123`
-
 ### Best Practices
 
 - Never directly run Python, always use `uv`
-- Check `tk ready` at session start to find available work
-- Update status as you work (in_progress → closed)
-- Create new issues with `tk create` when you discover tasks
-- Use descriptive titles and set appropriate priority/type
 
 # Progress
 
