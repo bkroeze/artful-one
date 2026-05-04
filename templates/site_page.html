@@ -42,7 +42,7 @@
 <!-- main content -->
 <div class="pusher">
     <div class="ui vertical masthead center aligned segment" style="margin-bottom: 1rem;">
-        <div class="ui container black-squares">
+        <div class="ui container framed-lighter">
             <div class="ui large secondary pointing menu top">
                 <a class="toc item"><i class="sidebar icon"></i></a>
                 <a class="item" href="/">Artful.One</a>
@@ -69,7 +69,7 @@
     <div id="primary" class="ui container">
         {% block primary %}{% endblock %}
     </div>
-    <div id="secondary" class="ui container">
+    <div id="secondary" {% block secondary_class %}class="ui container"{% endblock %}>
         {% block secondary %}{% endblock %}
     </div>
     <div id="thirdsection" class="ui container"></div>

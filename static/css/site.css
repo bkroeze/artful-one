@@ -49,6 +49,21 @@
   font-style: normal;
 }
 
+.artistic .hero h1 {
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings:
+    "wdth" 100;
+  font-style: normal;
+  font-size: 3.5em;
+  text-align: center;
+  color: #9c580d;
+}
+
+.artistic .hero p {
+  font-size: 1.1em;
+}
+
 body h2,
 body h3,
 body h3.ui.header {
@@ -277,20 +292,20 @@ body h3.ui.header {
     border-style:  solid; 
   }
   
-body.artistic .item-stripe {
+.artistic .item-stripe {
     border-image:  url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAABrklEQVR4AXSVi3bDMAhDof//z0xc5JqsrRfzEEIhiXf6il7Z5rk3lBlF9XiSp7n8jBfJtMRd7qYYURWpv5J0Xs6vqGIm/ai3ikHrH0Gm/iJdprdbombaQWpTkXmEM2fa6tbfe4maaWdtOu/jl1SBrjHRDvxlDRIM1TNaIwB6saEg2zSondq6vgjMpK7jIGHU0W+yisfv+2SVVEsFbV0KPq+fH+pN3VKK9VJLssGOu1S6ScyRMlD27Zi6g2+bIsbVZ+c8vkvbQdt9H8VY4+bEGVo/H59qfxyRHCt6Xn26DuKYSSJmUid5OPo+hAAuAuyYYsyIsVZa1HVaiDGeNFafcRzs+LYek15CLSFrI2RGtTewYyC9U7DmPDbVRkrqc05bW+eUM9uxXtGbJSZxKdA1RwoEA124WmSzJUNS40PyHP9Q3lf8Wzn54/HBMFMM35mM810jBcdfnOJ7FrL1v79JRXEUFLZgKZMvpXOzFNDJ7ByHnUk3QpeBjiUkkUShIrNzWgt7zM5GFCRPXb7ind2wVJhfgQ4OAyIl0DYjSqHTu6EZZ7qSypkSfL+u29fRHwAAAP//YSYXRAAAAAZJREFUAwA8Zocy/NDE6QAAAABJRU5ErkJggg==") 7 /  7px / 0 round !important;
     border-width:  7px !important;
     border-style:  solid !important;
     padding: 1em 0;
 }
 
-body.artistic .item-stripe-bottom {
+.artistic .item-stripe-bottom {
     border-image:  url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAABkklEQVR4AXxUC5YDIQgLvf+d2RDSGrcf60AMENGZ1wdm1Jj7SeoNi5ABbocZKzqIUce1+mZ6AscAwvV0E8WKKiAjcoxWuYux3aTE02yJy+bD+ThJ927ilSTkjlgx09TAVXPY/HaqqI2F7Ej2Ho0IVBCPHdIwkfhhjlnNEjpH7UhgecToxXZaHFy+U+xQQCavIrGCm0yrjWW4eM22qAJ1dVSRJGi9w4v1ZSJqC/uiVCCDjfoek0o1YRk8h1O5ZKdn8dqUAc+sU2ISH/JVVvjy9rHjTeg+gZLufUixU1rPjCa2kLJuXpQ2FrIp7J1iRu91DuSXmeWiRLTgb8NOM+0zltpvHbajLBng/U4r6ucTrW7WNNmWF8ejkDizDyS6RI+eUV8ykqvhQB5YgxnOH8gnRKeGTPNhIyetnsWOMC6Un5RfpvnrRTH9NR3nmgW736h3kdl50KzPqhB/KKbt8BwU9JHZWhVVe1u3+5/PU0anVunxkdkUWoqRRnGyjoxzmvDfjDvNaGKg2C2A4o+fAl4jsxL/AQAA///NMLhwAAAABklEQVQDAO4xdzDjzA1fAAAAAElFTkSuQmCC") 7 /  7px / 0 round;
     border-width:  7px;
     border-style:  solid;
     padding: 1em 0;
 }
 
-body.artistic .ui.vertical.segment {
+.artistic .ui.vertical.segment {
     border: none;
 }

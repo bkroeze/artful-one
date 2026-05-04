@@ -10,13 +10,35 @@
 
 {% block primary %}
 {% load carousel_tags %}
-<div class="framed-lighter">
-{% carousel site_photoset %}
+{% load pictures %}
+<div class="ui stackable two column grid hero">
+  <div class="row">
+    <div class="column">
+      <h1>Artful.One</h1>
+      <p>
+        Welcome to my portfolio site, where I share some of my favorite art, coding, and combinations of the two.
+      </p>
+      <p>
+        I have over 30 years experience as a full-stack engineer, in almost any language worth knowing.
+      </p>
+      <p>
+        <i>To work with a multi-award-winning, creative, responsive and speedy professional, please contact me here.</i>
+      </p>
+    </div>
+    <div class="column">
+      <div class="black-squares" style="padding: .5em;">
+        {% with site_photoset.primary as photo %}
+        {% picture photo.image picture_id=photo.html_id picture_class="ui fluid image" %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
 </div>
-{% endblock %}
+ {% endblock %}
 
+ {% block secondary_class %}class="ui container little-bird" style="margin-top: 2rem; padding: 20px;"{% endblock %}
 {% block secondary %}
-<h2 class="overband" style="margin-top: 2rem;"><i class="sun icon"></i> Recent Writing</h2>
+<h2 class="overband"><i class="sun icon"></i> Recent Writing</h2>
 
 {% load blog_tags %}
 {% blog_mixed_list_with_dates items day_headers=1 %}
