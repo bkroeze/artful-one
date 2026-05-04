@@ -6,14 +6,23 @@
 <link href="https://github.com/bkroeze" rel="me">
 <link href="https://twitter.com/bkroeze" rel="me">
 {% for entry in entries %}{{ entry.extra_head_html|default:""|safe }}{% endfor %}
+<style>
+   canvas#dandelion {
+      width: 360px;
+      height: 200px;
+      image-rendering: auto;
+    }
+</style>
+
 {% endblock %}
+
 
 {% block primary %}
 {% load carousel_tags %}
 {% load pictures %}
 <div class="ui stackable two column grid hero">
   <div class="row">
-    <div class="column">
+    <div class="column" style="min-width: 360px;">
       <h1>Artful.One</h1>
       <p>
         Welcome to my portfolio site, where I share some of my favorite art, coding, and combinations of the two.
@@ -24,6 +33,9 @@
       <p>
         <i>To work with a multi-award-winning, creative, responsive and speedy professional, please contact me here.</i>
       </p>
+      <div style="text-align: center;">
+      <canvas id="dandelion" width="360" height="200"></canvas>
+      </div>
     </div>
     <div class="column">
       <div class="black-squares" style="padding: .5em;">
@@ -53,4 +65,9 @@
 
 {% endfor %}
 </ul>
-{% endblock %}  
+{% endblock %}
+
+{% block onDomReady %}
+{% include "homepage_sketch.js" %}
+{% endblock %}
+

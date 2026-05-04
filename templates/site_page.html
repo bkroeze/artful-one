@@ -8,7 +8,7 @@
 <!-- following menu -->
 <div class="ui large top fixed hidden menu transition">
     <div class="ui container">
-        <a class="item" href="/">Artful.One</a>
+        <a class="item" href="/">Artful.1</a>
         <a class="item" href="/about/">About</a>
         <a class="item" href="/art/">Art</a>
         <div class="ui dropdown item">
@@ -134,6 +134,9 @@ $(document).ready(function() {
     $('.ui.icon.input .search.icon').on('click', function() {
         $(this).closest('form').submit();
     });
+  {%block onDomReady %}
+  // no extras
+  {% endblock onDomReady %}
 });
 </script>
 {% endblock body %}
