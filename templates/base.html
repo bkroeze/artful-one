@@ -1,5 +1,5 @@
 <!DOCTYPE html>{% load static %}
-<html lang="en-gb">
+<html lang="en-us" {% block html_class %}class="artistic"{% endblock %}>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +10,15 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/site.css" %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/semantic.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&family=Special+Elite&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
 <meta name="author" content="Bruce Kroeze">
 <meta property="og:site_name" content="Bruce Kroeze's Weblog">
 <style>
   :root {
     --site-accent-color: #8b8383;
-    --site-accent-light: rgba(139, 131, 131, 0.1);
+    --site-accent-light: #f1d39d; 
     --site-accent-shadow: rgba(139, 131, 131, 0.3);
   }
 </style>

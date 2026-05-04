@@ -3,14 +3,60 @@
 {% load pictures %}
 {% load blog_tags %}
 
-{% block title %}Art Gallery - Bruce Kroeze{% endblock %}
+{% block title %}Art - Bruce Kroeze{% endblock %}
 
 {% block extrahead %}
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Art Gallery - Bruce Kroeze" />
-<meta property="og:description" content="Browse photo collections by tag. {{ tag_data|length }} collections available." />
+<meta property="og:title" content="Art - Bruce Kroeze" />
+<meta property="og:description" content="Live art code and photo galleries by Bruce Kroeze." />
 <meta property="og:site_name" content="Bruce Kroeze's Weblog" />
 <style>
+.art-section {
+    margin-bottom: 3rem;
+}
+
+.art-section-header {
+    margin-top: 2rem;
+}
+
+.sketches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.sketch-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+.sketch-card:hover {
+    transform: translateY(-4px);
+}
+
+.sketch-card .ui.card,
+.tag-card .ui.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sketch-card .ui.card .content,
+.tag-card .ui.card .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sketch-card .ui.card .image {
+    height: 300px;
+    overflow: hidden;
+}
+
 .photo-tags-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -31,23 +77,12 @@
     transition: all 0.2s ease;
 }
 
-.tag-card .ui.card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.tag-card .ui.card .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
 .tag-card .ui.card .image {
     height: 250px;
     overflow: hidden;
 }
 
+.sketch-card .ui.card .image img,
 .tag-card .ui.card .image img {
     width: 100%;
     height: 100%;
@@ -57,56 +92,97 @@
 {% endblock %}
 
 {% block primary %}
-<h1 class="archive-h2">Art Gallery</h1>
+<h1 class="archive-h2">Art</h1>
 <p class="text-muted">
-    Browse {{ tag_data|length }} photo collection{{ tag_data|pluralize }}.
+    Browse live generative art sketches and photo galleries.
 </p>
 
-{% if tag_data %}
-<div class="photo-tags-grid">
-    {% for item in tag_data %}
-    <a href="/photo-tags/{{ item.tag.slug }}/" class="tag-card">
-        <div class="ui card">
-            {% if item.photo.image %}
-            <div class="image">
-                {% picture item.photo.image picture_id=item.photo.html_id img_alt=item.photo.title|default:"Photo" img_loading="lazy" picture_class="ui fluid image" %}
-            </div>
-            {% endif %}
-            <div class="content">
-                <div class="header">{{ item.tag.name }}</div>
-                {% if item.photo.title %}
-                <div class="description">
-                    <em>{{ item.photo.title }}</em>
+<section class="art-section" aria-labelledby="live-art-code-heading">
+    <h2 id="live-art-code-heading" class="archive-h2 art-section-header">Live Art Code</h2>
+    <p class="text-muted">
+        Browse {{ sketches|length }} interactive sketch{{ sketches|pluralize }} created with P5.js.
+    </p>
+
+    {% if sketches %}
+    <div class="sketches-grid">
+        {% for sketch in sketches %}
+        <a href="{% url 'sketch_detail' slug=sketch.slug %}" class="sketch-card">
+            <div class="ui card">
+                {% if sketch.photo and sketch.photo.image %}
+                <div class="image">
+                    {% picture sketch.photo.image picture_id=sketch.photo.html_id img_alt=sketch.title|default:"Sketch" img_loading="lazy" picture_class="ui fluid image" %}
                 </div>
                 {% endif %}
-                <div class="meta">
-                    <span class="date">
-                        {{ item.photo_count }} photo{{ item.photo_count|pluralize }}
-                    </span>
+                <div class="content">
+                    <div class="header">{{ sketch.name }}</div>
+                    {% if sketch.description %}
+                    <div class="description">
+                        {{ sketch.description|truncatewords:20 }}
+                    </div>
+                    {% endif %}
+                    <div class="meta">
+                        <span class="date">Created {{ sketch.created_at|date:"F j, Y" }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
-    {% endfor %}
-</div>
-{% else %}
-<p class="text-muted">No photo collections found.</p>
-{% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No sketches found.</p>
+    {% endif %}
+</section>
+
+<section class="art-section" aria-labelledby="galleries-heading">
+    <h2 id="galleries-heading" class="archive-h2 art-section-header">Galleries</h2>
+    <p class="text-muted">
+        Browse {{ tag_data|length }} photo collection{{ tag_data|pluralize }}.
+    </p>
+
+    {% if tag_data %}
+    <div class="photo-tags-grid">
+        {% for item in tag_data %}
+        <a href="/photo-tags/{{ item.tag.slug }}/" class="tag-card">
+            <div class="ui card">
+                {% if item.photo.image %}
+                <div class="image">
+                    {% picture item.photo.image picture_id=item.photo.html_id img_alt=item.photo.title|default:"Photo" img_loading="lazy" picture_class="ui fluid image" %}
+                </div>
+                {% endif %}
+                <div class="content">
+                    <div class="header">{{ item.tag.name }}</div>
+                    {% if item.photo.title %}
+                    <div class="description">
+                        <em>{{ item.photo.title }}</em>
+                    </div>
+                    {% endif %}
+                    <div class="meta">
+                        <span class="date">
+                            {{ item.photo_count }} photo{{ item.photo_count|pluralize }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No photo collections found.</p>
+    {% endif %}
+</section>
 {% endblock %}
 
 {% block secondary %}
 <div class="ui container" style="margin-top: 2rem;">
-    <p><strong>Browse Collections</strong></p>
-    <p>
-        Click on any collection to view all photos tagged with that theme.
-    </p>
+    <p><strong>Live Art Code</strong></p>
+    <p>Click on any sketch to view the P5.js canvas.</p>
+    <p>{{ sketches|length }} sketch{{ sketches|pluralize }}</p>
 
-    <p><strong>Total Collections</strong></p>
+    <p><strong>Galleries</strong></p>
+    <p>Click on any collection to view all photos tagged with that theme.</p>
     <p>{{ tag_data|length }} collection{{ tag_data|pluralize }}</p>
 
     <p><strong>Total Photos</strong></p>
-    <p>
-        {{ total_photos|intcomma }}
-    </p>
+    <p>{{ total_photos|intcomma }}</p>
 </div>
 {% endblock %}

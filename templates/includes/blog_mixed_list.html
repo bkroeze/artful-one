@@ -1,8 +1,9 @@
 {% load entry_tags %}{% load humanize %}
 <div class="ui items">
 {% for item in items %}
-{% if year_headers %}{% ifchanged item.obj.created.year %}<h3 class="ui dividing header">{{ item.obj.created.year }}</h3>{% endifchanged %}{% endif %}
-{% if day_headers %}{% ifchanged item.obj.created.date %}<h3 class="ui dividing header">{% if day_links %}<a href="/{{ item.obj.created|date:"Y/M/j/" }}">{{ item.obj.created.date }}</a>{% else %}{{ item.obj.created.date }}{% endif %}</h3>{% endifchanged %}{% endif %}
+<div class="item-stripe{% if not forloop.first %}-bottom{% endif %}">
+{% if year_headers %}{% ifchanged item.obj.created.year %}<h3 class="ui header">{{ item.obj.created.year }}</h3>{% endifchanged %}{% endif %}
+{% if day_headers %}{% ifchanged item.obj.created.date %}<h3 class="ui header">{% if day_links %}<a href="/{{ item.obj.created|date:"Y/M/j/" }}">{{ item.obj.created.date }}</a>{% else %}{{ item.obj.created.date }}{% endif %}</h3>{% endifchanged %}{% endif %}
 {% if item.type == "photoset" %}
 <div class="item photoset" data-type="photoset" data-id="{{ item.obj.id }}">
   <a class="ui tiny image" href="{{ item.obj.get_absolute_url }}">
@@ -85,5 +86,6 @@
 </div>
 {% endif %}
 {% endwith %}
+</div>
 {% endfor %}
 </div>

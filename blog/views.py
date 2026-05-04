@@ -639,13 +639,9 @@ def archive_series_atom(request, slug):
 
 
 def photo_tag_landing(request):
-    """Display landing page with a grid of photo tags.
-
-    Each tag shows one random photo from that set, along with the tag name,
-    photo name, and count of photos in the set.
-    """
-    # Get all photo tags with their photo counts
+    """Display unified art landing page with live code sketches and photo galleries."""
     from django.db.models import Count
+    from sketches.models import Sketch
 
     photo_tags = (
         PhotoTag.objects.annotate(photo_count=Count("photo"))
@@ -653,17 +649,14 @@ def photo_tag_landing(request):
         .order_by("name")
     )
 
-    # For each tag, get a random photo
     tag_data = []
     total_photos = 0
     for photo_tag in photo_tags:
-        # Get all photos for this tag
         photos = Photo.objects.filter(photo_tags=photo_tag)
         photo_count = photos.count()
         total_photos += photo_count
 
         if photo_count > 0:
-            # Get a random photo
             random_photo = photos.order_by("?").first()
             tag_data.append(
                 {
@@ -673,10 +666,16 @@ def photo_tag_landing(request):
                 }
             )
 
+    sketches = Sketch.objects.select_related("photo").all().order_by("name")
+
     return render(
         request,
         "photo_tag_landing.html",
-        {"tag_data": tag_data, "total_photos": total_photos},
+        {
+            "sketches": sketches,
+            "tag_data": tag_data,
+            "total_photos": total_photos,
+        },
     )
 
 
@@ -858,4 +857,3 @@ def api_add_tag(request):
     obj.tags.add(tag)
 
     return JsonResponse({"success": True, "tag": tag_name})
-

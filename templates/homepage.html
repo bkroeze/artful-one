@@ -2,8 +2,6 @@
 
 {% block title %}Artful.One{% endblock %}
 
-{% block body_class %} class="pushable"{% endblock %}
-
 {% block extrahead %}
 <link href="https://github.com/bkroeze" rel="me">
 <link href="https://twitter.com/bkroeze" rel="me">
@@ -12,7 +10,9 @@
 
 {% block primary %}
 {% load carousel_tags %}
+<div class="framed-lighter">
 {% carousel site_photoset %}
+</div>
 {% endblock %}
 
 {% block secondary %}
@@ -28,6 +28,7 @@
 <ul>
 {% for entry in entries %}
   <li><a href="{{ entry.get_absolute_url }}">{{ entry }}</a> - {{ entry.created.date }}</li>
+
 {% endfor %}
 </ul>
-{% endblock %}
+{% endblock %}  

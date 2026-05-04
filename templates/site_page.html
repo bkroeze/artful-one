@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% block html_class %}class="artistic"{% endblock %}
 {% block body_class %}class="pushable"{% endblock %}
 
 {% block body %}
@@ -10,28 +11,26 @@
         <a class="item" href="/">Artful.One</a>
         <a class="item" href="/about/">About</a>
         <a class="item" href="/art/">Art</a>
-        <a class="item" href="/sketch/">Sketches</a>
         <div class="ui dropdown item">
-            RPG <i class="dropdown icon"></i>
+            Coding <i class="dropdown icon"></i>
             <div class="menu">
-                <a class="item" href="{% url 'rpg:names' %}">Table Based Generators</a>
-                <a class="item" href="{% url 'rpg_chargen:supers' %}">AI Hero/Villain Name Generator</a>
+                <a class="item" href="{% url 'rpg:names' %}">Name Maker</a>
+                <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
             </div>
         </div>
         <a class="item" href="/search/">Search</a>
     </div>
 </div>
 <!-- sidebar menu -->
-<div class="ui vertical inverted sidebar menu">
+<div class="ui vertical sidebar menu">
     <a class="item" href="/">Artful.One</a>
     <a class="item" href="/about/">About</a>
     <a class="item" href="/art/">Art</a>
-    <a class="item" href="/sketch/">Sketches</a>
     <div class="ui dropdown item">
-        RPG <i class="dropdown icon"></i>
+        Coding <i class="dropdown icon"></i>
         <div class="menu">
-            <a class="item" href="{% url 'rpg:names' %}">Table Based Generators</a>
-            <a class="item" href="{% url 'rpg_chargen:supers' %}">AI Hero/Villain Name Generator</a>
+            <a class="item" href="{% url 'rpg:names' %}">Name Maker</a>
+            <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
         </div>
     </div>
 
@@ -42,34 +41,29 @@
 </div>
 <!-- main content -->
 <div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment" style="margin-bottom: 1rem;">
-        <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
+    <div class="ui vertical masthead center aligned segment" style="margin-bottom: 1rem;">
+        <div class="ui container black-squares">
+            <div class="ui large secondary pointing menu top">
                 <a class="toc item"><i class="sidebar icon"></i></a>
                 <a class="item" href="/">Artful.One</a>
                 <a class="item" href="/about/">About</a>
                 <a class="item" href="/art/">Art</a>
-                <a class="item" href="/sketch/">Sketches</a>
                 <div class="ui dropdown item">
-                    RPG <i class="dropdown icon"></i>
+                    Coding <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a class="item" href="{% url 'rpg:names' %}">Table Based Generators</a>
-                        <a class="item" href="{% url 'rpg_chargen:supers' %}">AI Hero/Villain Name Generator</a>
+                        <a class="item" href="{% url 'rpg:names' %}">Name Maker</a>
+                        <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
                     </div>
                 </div>
-
-                <a class="item" href="/search/">Search</a>
                 <div class="right item">
                     <form action="/search/" method="GET">
-                        <div class="ui inverted transparent icon input">
+                        <div class="ui transparent icon input">
                             <input type="search" placeholder="Search..." name="q" value="">
                             <i class="search link icon"></i>
                         </div>
                     </form>
                 </div>
             </div>
-            {% if current_tags %}<p id="currenttags">Entries tagged: {% tag_list current_tags %}</p>{% endif %}
-            {% if photo_tags %}<p id="currenttags">Photos tagged: {% phototag_list photo_tags %}</p>{% endif %}
         </div>
     </div>
     <div id="primary" class="ui container">
@@ -81,9 +75,9 @@
     <div id="thirdsection" class="ui container"></div>
 
     {% block footer %}
-    <div class="ui inverted vertical footer segment" style="margin-top: 1rem;">
+    <div class="ui vertical footer segment" style="margin-top: 1rem;">
         <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
+            <div class="ui large secondary pointing menu bottom">
                 <a class="item">&copy; Bruce Kroeze</a>
                 {% for year in years_with_content %}<a class="item" href="/{{ year|date:"Y" }}/">{{ year|date:"Y" }}</a>
                 {% endfor %}
