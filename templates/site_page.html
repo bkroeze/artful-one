@@ -5,46 +5,10 @@
 
 {% block body %}
 {% load blog_tags %}
-<!-- following menu -->
-<div class="ui large top fixed hidden menu transition">
-    <div class="ui container">
-        <a class="item" href="/">Artful.1</a>
-        <a class="item" href="/about/">About</a>
-        <a class="item" href="/art/">Art</a>
-        <div class="ui dropdown item">
-            Coding <i class="dropdown icon"></i>
-            <div class="menu">
-                <a class="item" href="{% url 'rpg:names' %}">Name Maker</a>
-                <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
-            </div>
-        </div>
-        <a class="item" href="/search/">Search</a>
-    </div>
-</div>
-<!-- sidebar menu -->
-<div class="ui vertical sidebar menu">
-    <a class="item" href="/">Artful.One</a>
-    <a class="item" href="/about/">About</a>
-    <a class="item" href="/art/">Art</a>
-    <div class="ui dropdown item">
-        Coding <i class="dropdown icon"></i>
-        <div class="menu">
-            <a class="item" href="{% url 'rpg:names' %}">Name Maker</a>
-            <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
-        </div>
-    </div>
-
-    <a class="item" href="/search/">Search</a>
-    <a class="item" href="/atom/everything/" title="My Atom feed">
-        <i class="rss icon"></i> Atom Feed
-    </a>
-</div>
-<!-- main content -->
 <div class="pusher">
-    <div class="ui vertical masthead center aligned segment" style="margin-bottom: 1rem;">
+    <div class="ui vertical center aligned segment" style="margin-bottom: 1rem;">
         <div class="ui container framed-lighter">
             <div class="ui large secondary pointing menu top">
-                <a class="toc item"><i class="sidebar icon"></i></a>
                 <a class="item" href="/">Artful.One</a>
                 <a class="item" href="/about/">About</a>
                 <a class="item" href="/art/">Art</a>
@@ -55,15 +19,23 @@
                         <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
                     </div>
                 </div>
-                <div class="right item">
+                <a class="item hidden-lg" href="/search/">
+                  <i class="search link icon"></i>
+                </a>
+                <div class="right item hidden-sm">
                     <form action="/search/" method="GET">
                         <div class="ui transparent icon input">
-                            <input type="search" placeholder="Search..." name="q" value="">
+                            <input 
+                               type="search" 
+                               placeholder="Search..." 
+                               name="q" 
+                               value=""
+                            >
                             <i class="search link icon"></i>
                         </div>
                     </form>
                 </div>
-            </div>
+           </div>
         </div>
     </div>
     <div id="primary" class="ui container">

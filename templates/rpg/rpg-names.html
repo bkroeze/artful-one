@@ -3,7 +3,7 @@
 {% block title %}RPG Name Generator{% endblock %}
 
 {% block extrahead %}
-<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+{% include "includes/htmx.html" %}
 <script language="javascript">
   $(document).on('htmx:afterSwap', function(event){
   var target = $(event.target);

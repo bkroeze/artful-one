@@ -1,8 +1,11 @@
 .artistic .pushable,
 .artistic .pusher,
 .artistic .masthead,
-.artistic .smallhead {
-  background: #f1d39d !important
+.artistic .smallhead,
+.artistic .ui.menu {
+  background: #f1d39d !important;
+  box-shadow: none;
+  border: none;
 }
 
 .artistic .ui.secondary.pointing.menu {
@@ -62,6 +65,19 @@
 
 .artistic .hero p {
   font-size: 1.1em;
+}
+
+@media only screen and (max-width: 767px) {
+    .hidden-sm {
+        display: none !important;
+    }
+}
+
+/* Hidden on large screens and up */
+@media (min-width: 768px) {
+    .hidden-lg {
+        display: none !important;
+    }
 }
 
 body h2,
