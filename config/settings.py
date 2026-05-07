@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "rpg_chargen",
     "sketches",
     "django_http_debug",
+    "pixelborders.apps.PixelbordersConfig"
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "blog.middleware.AmpersandRedirectMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
