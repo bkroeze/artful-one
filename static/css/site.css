@@ -8,6 +8,11 @@
   border: none;
 }
 
+.artistic .ui.segment {
+  background: #efc984;
+  box-shadow: none;
+}
+
 .artistic .ui.secondary.pointing.menu {
   border-bottom: none;
 }
