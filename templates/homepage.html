@@ -30,11 +30,28 @@
       <p>
         I have over 30 years experience as a full-stack engineer, in almost any language worth knowing.
       </p>
-      <p>
-        <i>To work with a multi-award-winning, creative, responsive and speedy professional, please contact me here.</i>
+      <p class="engage-button-row">
+        <a class="engage-button frm-riveted-outer-line" href="{% url 'contact' %}" aria-label="Engage A Project">
+          <span aria-hidden="true" style="--i: 0">E</span>
+          <span aria-hidden="true" style="--i: 1">n</span>
+          <span aria-hidden="true" style="--i: 2">g</span>
+          <span aria-hidden="true" style="--i: 3">a</span>
+          <span aria-hidden="true" style="--i: 4">g</span>
+          <span aria-hidden="true" style="--i: 5">e</span>
+          <span aria-hidden="true" class="engage-button-space" style="--i: 6">&nbsp;</span>
+          <span aria-hidden="true" style="--i: 7">A</span>
+          <span aria-hidden="true" class="engage-button-space" style="--i: 8">&nbsp;</span>
+          <span aria-hidden="true" style="--i: 9">P</span>
+          <span aria-hidden="true" style="--i: 10">r</span>
+          <span aria-hidden="true" style="--i: 11">o</span>
+          <span aria-hidden="true" style="--i: 12">j</span>
+          <span aria-hidden="true" style="--i: 13">e</span>
+          <span aria-hidden="true" style="--i: 14">c</span>
+          <span aria-hidden="true" style="--i: 15">t</span>
+        </a>
       </p>
-      <div style="text-align: center;">
-      <canvas id="dandelion" width="360" height="200"></canvas>
+      <div style="text-align: center;"> 
+      <canvas id="dandelion" width="360" height="200" class="frm-tufts-thin">></canvas>
       </div>
     </div>
     <div class="column">
@@ -70,4 +87,3 @@
 {% block onDomReady %}
 {% include "sketches/dandelion.js" %}
 {% endblock %}
-

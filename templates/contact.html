@@ -1,0 +1,53 @@
+{% extends "site_page.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block primary %}
+<div class="ui stackable two column grid hero contact-page">
+  <div class="row">
+    <div class="column contact-intro">
+      <h1>Engage me for a project</h1>
+      <div class="contact-statements frm-nested-corner">
+        <p class="title-font" style="font-weight: bold; font-size: 1.2em;">Bruce Kroeze</p>
+        <p class="title-font" style="font-weight: bold; font-size: 1.1em;">Artful.one Consulting</p>
+        <p>E-Commerce Specialist</p>
+        <p>Full-Stack-Development</p>
+        <p>32 years</p>
+        <p>Portland, Ore.</p>
+      </div>
+      <div style="text-align: center;">
+      <video class="contact-animation frm-sparkle" width="400" height="400" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="{% static 'contact/animation.mp4' %}" type="video/mp4">
+      </video>
+      </div>
+    </div>
+    <div class="column">
+      <form class="ui form contact-form" action="{% url 'contact' %}" method="post">
+        {% csrf_token %}
+        <div class="field required">
+          <label for="contact-name">First and Last Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="contact-social-url">LinkedIn or X URL</label>
+          <input id="contact-social-url" name="social_url" type="url" autocomplete="url">
+        </div>
+        <div class="field">
+          <label for="contact-company">Company Name</label>
+          <input id="contact-company" name="company" type="text" autocomplete="organization">
+        </div>
+        <div class="field required">
+          <label for="contact-email">Email Address</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field required">
+          <label for="contact-brief">Quick Project Brief</label>
+          <textarea id="contact-brief" name="brief" rows="7" required></textarea>
+        </div>
+        <button class="contact-submit frm-lined-bamboo" type="button">Engage A Project</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

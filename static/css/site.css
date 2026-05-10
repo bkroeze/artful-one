@@ -42,11 +42,16 @@
   background: #ffefc4;
 }
 
+.artistic .title-font,
 .artistic .masthead .ui.menu,
 .artistic .ui.input>input {
-  font-family: "Megrim", system-ui,
+  font-family: "Megrim", system-ui;
   font-weight: 400;
   font-style: normal;
+}
+
+.force-bg {
+  background-color: #f1d39d !important;
 }
 
 .artistic body {
@@ -58,7 +63,7 @@
 .artistic .hero h1 {
   font-family: "Antic Didone", serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 3.5em;
   text-align: center;
   color: #9c580d;
@@ -66,6 +71,171 @@
 
 .artistic .hero p {
   font-size: 1.1em;
+}
+
+.engage-button-row {
+  display: flex;
+  justify-content: center;
+  margin: 1.6rem 0;
+}
+
+.engage-button {
+  align-items: center;
+  background: #f1d39d;
+  color: #663809;
+  display: inline-flex;
+  font-family: "Antic Didone", serif;
+  font-weight: bold;
+  font-size: 1.15rem;
+  justify-content: center;
+  min-height: 3.1rem;
+  min-width: 15em;
+  overflow: hidden;
+  padding: 0.55rem 1.2rem 0.45rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.engage-button:hover,
+.engage-button:focus {
+  background: #efc984;
+  color: #663809;
+  transform: translateY(-1px);
+}
+
+.engage-button:focus-visible {
+  outline: 3px solid #9c580d;
+  outline-offset: 4px;
+}
+
+.contact-page {
+  align-items: flex-start;
+}
+
+.contact-intro h1 {
+  line-height: 1.05;
+}
+
+.contact-statements {
+  margin: 1.6rem auto 0;
+  max-width: 24rem;
+  padding: 1.4rem;
+  text-align: center;
+}
+
+.contact-statements p {
+  color: #663809;
+  font-family: "Antic Didone", serif;
+  font-size: 1.35rem;
+  font-weight: bold;
+  margin: 0.55rem 0;
+}
+
+.contact-animation {
+  display: block;
+  height: 400px;
+  margin: 1.8rem auto 0;
+  max-width: 100%;
+  object-fit: cover;
+  width: 400px;
+}
+
+.contact-form {
+  margin: 0 auto;
+  max-width: 30rem;
+  width: 100%;
+}
+
+.contact-form .field {
+  margin-bottom: 1rem;
+}
+
+.contact-form label {
+  color: #663809 !important;
+  font-family: "Crete Round", serif;
+  font-size: 1rem !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: #ffefc4 !important;
+  border: 2px solid #9c580d !important;
+  border-radius: 0 !important;
+  color: #2f2a22 !important;
+  font-family: "Crete Round", serif !important;
+  width: 100% !important;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-submit {
+  background: #f1d39d;
+  color: #663809;
+  cursor: pointer;
+  display: block;
+  font-family: "Antic Didone", serif;
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-top: 1.3rem;
+  min-height: 3.4rem;
+  padding: 0.55rem 1.2rem;
+  text-align: center;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  width: 100%;
+}
+
+.contact-submit:hover,
+.contact-submit:focus {
+  background: #efc984;
+  color: #663809;
+  transform: translateY(-1px);
+}
+
+.contact-submit:focus-visible {
+  outline: 3px solid #9c580d;
+  outline-offset: 4px;
+}
+
+.engage-button span {
+  animation: engage-letter-loop 3.8s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 90ms);
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.75em);
+}
+
+.engage-button-space {
+  width: 0.35em;
+}
+
+@keyframes engage-letter-loop {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translateY(0.75em);
+  }
+  22%,
+  62% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: translateY(-0.75em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .engage-button span {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -84,7 +254,7 @@
 body h2,
 body h3,
 body h3.ui.header {
-  font-family: "Special Elite", system-ui;
+  font-family: "Megrim", system-ui;
   font-weight: 400;
   font-style: normal;
 }

@@ -1,4 +1,4 @@
-{% extends "site_detail_page.html" %}{% load humanize %}
+{% extends "site_page.html" %}{% load humanize %}
 
 {% load pictures %}
 {% load blog_tags %}
@@ -109,7 +109,7 @@
         <a href="{% url 'sketch_detail' slug=sketch.slug %}" class="sketch-card">
             <div class="ui card">
                 {% if sketch.photo and sketch.photo.image %}
-                <div class="image">
+                <div class="image frm-double-v-lined force-bg" style="padding: 0.4em 0.1em 1.2em 0.1em;">
                     {% picture sketch.photo.image picture_id=sketch.photo.html_id img_alt=sketch.title|default:"Sketch" img_loading="lazy" picture_class="ui fluid image" %}
                 </div>
                 {% endif %}
@@ -145,7 +145,7 @@
         <a href="/photo-tags/{{ item.tag.slug }}/" class="tag-card">
             <div class="ui card">
                 {% if item.photo.image %}
-                <div class="image">
+                <div class="image frm-heavy-squares-dot force-bg" style="padding: 0.4em 0.1em 1.2em 0.1em;">
                     {% picture item.photo.image picture_id=item.photo.html_id img_alt=item.photo.title|default:"Photo" img_loading="lazy" picture_class="ui fluid image" %}
                 </div>
                 {% endif %}

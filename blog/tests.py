@@ -29,6 +29,40 @@ class TestBlog:
         assert [e.pk for e in entries] == [
             e.pk for e in sorted(db_entries, key=lambda e: e.created, reverse=True)
         ]
+        decoded_content = response.content.decode()
+        assert 'aria-label="Engage A Project"' in decoded_content
+        assert 'href="/contact/"' in decoded_content
+
+    def test_contact_page(self, client):
+        response = client.get("/contact/")
+        assert response.status_code == 200
+        assert "contact.html" in [template.name for template in response.templates]
+        decoded_content = response.content.decode()
+        for label in (
+            "First and Last Name",
+            "LinkedIn or X URL",
+            "Company Name",
+            "Email Address",
+            "Quick Project Brief",
+        ):
+            assert label in decoded_content
+        assert "Engage me for a project" in decoded_content
+        assert "Artful.one" in decoded_content
+        assert "Full-Stack-Development" in decoded_content
+        assert "32 years" in decoded_content
+        assert "<video" in decoded_content
+        assert 'class="contact-animation"' in decoded_content
+        assert 'width="400" height="400"' in decoded_content
+        assert "autoplay muted loop playsinline" in decoded_content
+        assert 'preload="metadata"' in decoded_content
+        assert 'aria-hidden="true"' in decoded_content
+        assert 'src="/static/contact/animation.mp4"' in decoded_content
+        assert 'type="video/mp4"' in decoded_content
+        assert 'class="contact-submit frm-lined-bamboo"' in decoded_content
+        assert 'type="button"' in decoded_content
+        assert 'id="contact-name" name="name" type="text" autocomplete="name" required' in decoded_content
+        assert 'id="contact-email" name="email" type="email" autocomplete="email" required' in decoded_content
+        assert 'id="contact-brief" name="brief" rows="7" required' in decoded_content
 
     def test_other_pages(self, client):
         entry = EntryFactory()
