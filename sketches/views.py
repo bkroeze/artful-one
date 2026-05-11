@@ -11,7 +11,7 @@ def sketch_landing(request):
     if Sketch is None:
         return render(request, "no_sketches.html")
 
-    sketches = Sketch.objects.all().order_by("name")
+    sketches = Sketch.objects.filter(visible=True).order_by("name")
     return render(request, "sketch_landing.html", {"sketches": sketches})
 
 

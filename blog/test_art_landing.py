@@ -66,3 +66,27 @@ def test_art_landing_shows_sketches_with_no_galleries(client):
     assert "No sketches found." not in content
     assert "Orbit Study" in content
     assert '/sketch/orbit-study/' in content
+
+
+@pytest.mark.django_db
+def test_art_landing_only_lists_visible_sketches_by_default(client):
+    visible_sketch = Sketch.objects.create(
+        name="Orbit Study",
+        slug="orbit-study",
+        description="Interactive orbit sketch",
+    )
+    hidden_sketch = Sketch.objects.create(
+        name="Hidden Study",
+        slug="hidden-study",
+        description="Draft sketch",
+        visible=False,
+    )
+
+    response = client.get("/art/")
+
+    assert response.status_code == 200
+    assert list(response.context["sketches"]) == [visible_sketch]
+    content = response.content.decode()
+    assert "Orbit Study" in content
+    assert "Hidden Study" not in content
+    assert hidden_sketch.visible is False

@@ -666,7 +666,7 @@ def photo_tag_landing(request):
                 }
             )
 
-    sketches = Sketch.objects.select_related("photo").all().order_by("name")
+    sketches = Sketch.objects.select_related("photo").filter(visible=True).order_by("name")
 
     return render(
         request,
