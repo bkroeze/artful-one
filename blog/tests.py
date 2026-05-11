@@ -2,12 +2,14 @@ import datetime
 import json
 import uuid
 import xml.etree.ElementTree as ET
+from unittest import mock
 
 import pytest
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.text import slugify
 
-from blog.models import PreviousTagName, Tag
+from blog.models import ContactMessage, PreviousTagName, Tag
 from blog.templatetags.entry_tags import do_typography_string
 
 from .factories import BlogmarkFactory, EntryFactory, NoteFactory, QuotationFactory
@@ -51,7 +53,7 @@ class TestBlog:
         assert "Full-Stack-Development" in decoded_content
         assert "32 years" in decoded_content
         assert "<video" in decoded_content
-        assert 'class="contact-animation"' in decoded_content
+        assert 'class="contact-animation frm-sparkle"' in decoded_content
         assert 'width="400" height="400"' in decoded_content
         assert "autoplay muted loop playsinline" in decoded_content
         assert 'preload="metadata"' in decoded_content
@@ -59,10 +61,75 @@ class TestBlog:
         assert 'src="/static/contact/animation.mp4"' in decoded_content
         assert 'type="video/mp4"' in decoded_content
         assert 'class="contact-submit frm-lined-bamboo"' in decoded_content
-        assert 'type="button"' in decoded_content
-        assert 'id="contact-name" name="name" type="text" autocomplete="name" required' in decoded_content
-        assert 'id="contact-email" name="email" type="email" autocomplete="email" required' in decoded_content
-        assert 'id="contact-brief" name="brief" rows="7" required' in decoded_content
+        assert 'type="submit"' in decoded_content
+        assert 'hx-post="/contact/"' in decoded_content
+        assert 'hx-target="#contact-form-panel"' in decoded_content
+        assert 'hx-swap="outerHTML"' in decoded_content
+        assert "htmx.org" in decoded_content
+        assert 'id="contact-name" name="name" type="text" autocomplete="name" maxlength="120" required' in decoded_content
+        assert 'id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required' in decoded_content
+        assert 'id="contact-brief" name="brief" rows="7" maxlength="4000" required' in decoded_content
+
+    def test_contact_page_htmx_post_saves_sends_and_clears_form(self, client, settings):
+        get_user_model().objects.create_user(
+            username="bruce", email="bruce@example.com"
+        )
+        settings.MAILGUN_API_KEY = "test-key"
+        settings.MAILGUN_DOMAIN = "mg.example.com"
+        settings.MAILGUN_API_URL = "https://api.mailgun.test/v3"
+        settings.MAILGUN_FROM_EMAIL = "Artful.One Contact <contact@example.com>"
+        response_mock = mock.Mock()
+        response_mock.json.return_value = {"id": "<mailgun-id>"}
+        with mock.patch(
+            "blog.views.requests.post", return_value=response_mock
+        ) as post_mock:
+            response = client.post(
+                "/contact/",
+                {
+                    "name": "Ada Lovelace",
+                    "social_url": "https://www.linkedin.com/in/ada",
+                    "company": "Analytical Engines",
+                    "email": "ada@example.com",
+                    "brief": "Please help with an ecommerce build.",
+                },
+                HTTP_HX_REQUEST="true",
+            )
+
+        assert response.status_code == 200
+        decoded_content = response.content.decode()
+        assert "I will get back to you within 2 business days" in decoded_content
+        assert 'id="contact-form-panel"' in decoded_content
+        assert 'value="Ada Lovelace"' not in decoded_content
+        assert "Please help with an ecommerce build." not in decoded_content
+        contact_message = ContactMessage.objects.get()
+        assert contact_message.name == "Ada Lovelace"
+        assert contact_message.email == "ada@example.com"
+        assert contact_message.brief == "Please help with an ecommerce build."
+        assert contact_message.mailgun_status == "sent"
+        assert contact_message.mailgun_message_id == "<mailgun-id>"
+        post_mock.assert_called_once()
+        _, kwargs = post_mock.call_args
+        assert kwargs["auth"] == ("api", "test-key")
+        assert kwargs["data"]["to"] == "bruce@example.com"
+        assert kwargs["data"]["h:Reply-To"] == "ada@example.com"
+        assert "Please help with an ecommerce build." in kwargs["data"]["text"]
+        response_mock.raise_for_status.assert_called_once()
+
+    def test_contact_page_post_enforces_brief_max_length(self, client):
+        with mock.patch("blog.views.requests.post") as post_mock:
+            response = client.post(
+                "/contact/",
+                {
+                    "name": "Ada Lovelace",
+                    "email": "ada@example.com",
+                    "brief": "x" * 4001,
+                },
+            )
+
+        assert response.status_code == 200
+        assert ContactMessage.objects.count() == 0
+        post_mock.assert_not_called()
+        assert "Ensure this value has at most 4000 characters" in response.content.decode()
 
     def test_other_pages(self, client):
         entry = EntryFactory()

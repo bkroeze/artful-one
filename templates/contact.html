@@ -3,6 +3,10 @@
 
 {% block title %}Contact{% endblock %}
 
+{% block extrahead %}
+  {% include "includes/htmx.html" %}
+{% endblock %}
+
 {% block primary %}
 <div class="ui stackable two column grid hero contact-page">
   <div class="row">
@@ -23,30 +27,7 @@
       </div>
     </div>
     <div class="column">
-      <form class="ui form contact-form" action="{% url 'contact' %}" method="post">
-        {% csrf_token %}
-        <div class="field required">
-          <label for="contact-name">First and Last Name</label>
-          <input id="contact-name" name="name" type="text" autocomplete="name" required>
-        </div>
-        <div class="field">
-          <label for="contact-social-url">LinkedIn or X URL</label>
-          <input id="contact-social-url" name="social_url" type="url" autocomplete="url">
-        </div>
-        <div class="field">
-          <label for="contact-company">Company Name</label>
-          <input id="contact-company" name="company" type="text" autocomplete="organization">
-        </div>
-        <div class="field required">
-          <label for="contact-email">Email Address</label>
-          <input id="contact-email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div class="field required">
-          <label for="contact-brief">Quick Project Brief</label>
-          <textarea id="contact-brief" name="brief" rows="7" required></textarea>
-        </div>
-        <button class="contact-submit frm-lined-bamboo" type="button">Engage A Project</button>
-      </form>
+      {% include "includes/contact_form.html" %}
     </div>
   </div>
 </div>

@@ -17,7 +17,6 @@
     justify-content: center;
     margin: 2rem 0;
     border: 1px solid #ddd;
-    background: #f9f9f9;
 }
 
 #canvas-container > div {
@@ -44,7 +43,9 @@
     {% endif %}
 
     <div id="canvas-container">
+      <div class="frm-corner-weave">
         <div id="{{ sketch.slug }}" data-height="600" data-width="800"></div>
+      </div>
     </div>
 
     <script src="{% static 'js/p5/p5.min.js' %}"></script>

@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup as Soup
 import cloudflare
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import get_user_model
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models import CharField, Value
@@ -21,8 +22,10 @@ import logging
 import pytz
 import requests
 
+from .forms import ContactMessageForm
 from .models import (
     Blogmark,
+    ContactMessage,
     Entry,
     Note,
     Photo,
@@ -798,8 +801,91 @@ def about(request):
     return render(request, "about.html")
 
 
+def _mailgun_contact_payload(contact_message, recipient_email):
+    social_url = contact_message.social_url or "(not provided)"
+    company = contact_message.company or "(not provided)"
+    text = "\n".join(
+        [
+            "New Artful.One contact form submission",
+            "",
+            f"Name: {contact_message.name}",
+            f"Email: {contact_message.email}",
+            f"Company: {company}",
+            f"Social URL: {social_url}",
+            "",
+            "Quick Project Brief:",
+            contact_message.brief,
+        ]
+    )
+    return {
+        "from": settings.MAILGUN_FROM_EMAIL,
+        "to": recipient_email,
+        "h:Reply-To": contact_message.email,
+        "subject": f"Artful.One contact: {contact_message.name}",
+        "text": text,
+    }
+
+
+def _send_contact_message(contact_message):
+    if not (
+        settings.MAILGUN_API_KEY
+        and settings.MAILGUN_DOMAIN
+        and settings.MAILGUN_FROM_EMAIL
+    ):
+        raise RuntimeError("Mailgun is not configured")
+
+    user = get_user_model().objects.get(username="bruce")
+    if not user.email:
+        raise RuntimeError("User bruce does not have an email address")
+
+    url = f"{settings.MAILGUN_API_URL.rstrip('/')}/{settings.MAILGUN_DOMAIN}/messages"
+    response = requests.post(
+        url,
+        auth=("api", settings.MAILGUN_API_KEY),
+        data=_mailgun_contact_payload(contact_message, user.email),
+        timeout=10,
+    )
+    response.raise_for_status()
+    try:
+        return response.json().get("id", "")
+    except ValueError:
+        return ""
+
+
 def contact(request):
-    return render(request, "contact.html")
+    template_name = (
+        "includes/contact_form.html" if request.htmx else "contact.html"
+    )
+    context = {}
+    if request.method == "POST":
+        form = ContactMessageForm(request.POST)
+        if form.is_valid():
+            contact_message = ContactMessage.objects.create(**form.cleaned_data)
+            try:
+                contact_message.mailgun_message_id = _send_contact_message(
+                    contact_message
+                )
+                contact_message.mailgun_status = "sent"
+                contact_message.save(
+                    update_fields=("mailgun_message_id", "mailgun_status")
+                )
+            except Exception as exc:
+                log.exception("Contact form Mailgun delivery failed")
+                contact_message.mailgun_status = "failed"
+                contact_message.mailgun_error = str(exc)
+                contact_message.save(update_fields=("mailgun_status", "mailgun_error"))
+                form.add_error(
+                    None,
+                    "I saved your message, but email delivery failed. Please try again later.",
+                )
+                context["contact_status"] = "error"
+            else:
+                form = ContactMessageForm()
+                context["contact_status"] = "success"
+    else:
+        form = ContactMessageForm()
+    context["form"] = form
+    return render(request, template_name, context)
 
 
 def custom_404(request, exception):
