@@ -1,9 +1,41 @@
 {% load static %}
-<div class="ui segment character-details-sidebar">
+<div class="ui segment character-details-sidebar frm-chain-link-thin" style="background: #fff">
   {% if character %}
   <h2 class="ui header">{{ character.name }}</h2>
   <p><strong>Tagline:</strong> {{ character.tagline }}</p>
   <p><strong>Description:</strong> {{ character.description }}</p>
+
+  <div class="ui tiny icon buttons" aria-label="Generated detail actions">
+    <button
+      type="button"
+      class="ui button"
+      title="Copy as Markdown"
+      aria-label="Copy character details as Markdown"
+      data-copy-markdown="#character-details-markdown"
+    >
+      <i class="copy outline icon"></i>
+    </button>
+    <button
+      type="button"
+      class="ui button"
+      title="Retry generation"
+      aria-label="Retry detail generation"
+      hx-post="{% url 'rpg_chargen:generate_details' %}"
+      hx-target="#character-details-panel"
+      hx-swap="innerHTML"
+      hx-include="#character-details-retry-values"
+      hx-indicator="#character-details"
+    >
+      <i class="redo icon"></i>
+    </button>
+  </div>
+
+  <div id="character-details-retry-values" hidden>
+    <input type="hidden" name="character_name" value="{{ character.name }}">
+    <input type="hidden" name="tagline" value="{{ character.tagline }}">
+    <input type="hidden" name="description" value="{{ character.description }}">
+    <input type="hidden" name="genre" value="{{ genre }}">
+  </div>
 
   <div class="ui divider"></div>
 
@@ -37,3 +69,15 @@
   <p class="text-muted">No character details available.</p>
   {% endif %}
 </div>
+{% if character %}
+<script type="text/plain" id="character-details-markdown">## {{ character.name }}
+
+**Tagline:** {{ character.tagline }}
+
+**Description:** {{ character.description }}
+
+{% for key, value in character.items %}{% if key not in 'name,tagline,description' %}**{{ key|title }}:** {% if value is iterable and value is not string %}{% for item in value %}
+- {% if item is iterable and item is not string %}{% for subkey, subval in item.items %}{{ subkey|title }}: {{ subval }}{% if not forloop.last %}; {% endif %}{% endfor %}{% else %}{{ item }}{% endif %}{% endfor %}{% else %}{{ value }}{% endif %}
+
+{% endif %}{% endfor %}</script>
+{% endif %}

@@ -14,25 +14,29 @@
         <tr>
           <td style="cursor: pointer;"
               hx-post="{% url 'rpg_chargen:generate_details' %}"
-              hx-target="#character-details"
+              hx-target="#character-details-panel"
               hx-swap="innerHTML"
-              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'
+              hx-include="closest tr"
               hx-indicator="#character-details">
+            <input type="hidden" name="character_name" value="{{ character.name }}">
+            <input type="hidden" name="tagline" value="{{ character.tagline }}">
+            <input type="hidden" name="description" value="{{ character.description }}">
+            <input type="hidden" name="genre" value="{{ genre }}">
             <strong>{{ character.name }}</strong>
           </td>
           <td style="cursor: pointer;"
               hx-post="{% url 'rpg_chargen:generate_details' %}"
-              hx-target="#character-details"
+              hx-target="#character-details-panel"
               hx-swap="innerHTML"
-              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'
+              hx-include="closest tr"
               hx-indicator="#character-details">
             {{ character.tagline }}
           </td>
           <td style="cursor: pointer;"
               hx-post="{% url 'rpg_chargen:generate_details' %}"
-              hx-target="#character-details"
+              hx-target="#character-details-panel"
               hx-swap="innerHTML"
-              hx-vals='{"character_name": "{{ character.name }}", "tagline": "{{ character.tagline }}", "description": "{{ character.description }}", "genre": "{{ genre }}"}'
+              hx-include="closest tr"
               hx-indicator="#character-details">
             {{ character.description }}
           </td>
@@ -44,5 +48,33 @@
         {% endfor %}
       </tbody>
     </table>
+    {% if characters %}
+    <div class="ui tiny icon buttons" aria-label="Generated name actions">
+      <button
+        type="button"
+        class="ui button"
+        title="Copy as Markdown"
+        aria-label="Copy generated names as Markdown"
+        data-copy-markdown="#generated-names-markdown"
+      >
+        <i class="copy outline icon"></i>
+      </button>
+      <button
+        type="button"
+        class="ui button"
+        title="Retry generation"
+        aria-label="Retry name generation"
+        hx-post="{% url 'rpg_chargen:generate_names' %}"
+        hx-target="#names-results-panel"
+        hx-swap="innerHTML"
+        hx-include="#supers-generator-form"
+        hx-indicator="#names-results"
+      >
+        <i class="redo icon"></i>
+      </button>
+    </div>
+    <script type="text/plain" id="generated-names-markdown">{% for character in characters %}- **{{ character.name }}**: {{ character.tagline }} — {{ character.description }}
+{% endfor %}</script>
+    {% endif %}
   </div>
 </div>

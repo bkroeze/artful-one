@@ -101,6 +101,7 @@ def htmx_generate_details(request):
 
         context = {
             "character": details,
+            "genre": genre,
         }
 
         return render(request, "rpg_chargen/partials/character_details.html", context)

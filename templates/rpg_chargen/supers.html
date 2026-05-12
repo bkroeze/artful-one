@@ -17,6 +17,13 @@
   border-radius: 0.2857rem;
   padding: 1.5rem;
 }
+.htmx-request .generation-idle {
+  display: none;
+}
+.htmx-request #names-results-panel,
+.htmx-request #character-details-panel {
+  display: none;
+}
 </style>
 {% endblock %}
 
@@ -30,8 +37,9 @@
 
   <div class="ui segment">
     <form
+      id="supers-generator-form"
       hx-post="{% url 'rpg_chargen:generate_names' %}"
-      hx-target="#names-results"
+      hx-target="#names-results-panel"
       hx-swap="innerHTML"
       hx-indicator="#names-results"
       class="ui form"
@@ -73,15 +81,19 @@
       <em>Click on any character to view detailed information in the sidebar below.</em>
     </p>
     <div id="names-results">
-      <p class="text-muted htmx-indicator">Generating...</p>
-      <p class="text-muted">Click "Generate Names" to see results.</p>
+      {% include "rpg_chargen/partials/botanical_spider_loader.html" %}
+      <div id="names-results-panel">
+        <p class="text-muted generation-idle">Click "Generate Names" to see results.</p>
+      </div>
     </div>
   </div>
 
   <div class="ui segment" id="character-details">
     <!-- Character details will be loaded here via HTMX -->
-    <p class="text-muted htmx-indicator">Generating...</p>
-    <p class="text-muted">Select a character to view detailed information.</p>
+    {% include "rpg_chargen/partials/robot_web_loader.html" %}
+    <div id="character-details-panel">
+      <p class="text-muted generation-idle">Select a character to view detailed information.</p>
+    </div>
   </div>
 </div>
 
@@ -92,6 +104,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Set document height to avoid jumping when HTMX content loads
   document.body.style.minHeight = window.innerHeight + 'px';
+});
+
+document.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-copy-markdown]');
+  if (!button) return;
+
+  const source = document.querySelector(button.dataset.copyMarkdown);
+  if (!source) return;
+
+  try {
+    await navigator.clipboard.writeText(source.textContent.trim());
+    button.classList.add('positive');
+    window.setTimeout(() => button.classList.remove('positive'), 900);
+  } catch (error) {
+    button.classList.add('negative');
+    window.setTimeout(() => button.classList.remove('negative'), 1200);
+  }
 });
 </script>
 {% endblock %}
