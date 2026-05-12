@@ -24,7 +24,9 @@ class PixelBorderDesignModelTests(TestCase):
             design.full_clean()
 
     def test_grid_shape_must_match_dimensions(self):
-        design = PixelBorderDesign(owner=self.user, name="Bad", width=5, height=5, pixels=default_pixels())
+        design = PixelBorderDesign(
+            owner=self.user, name="Bad", width=5, height=5, pixels=default_pixels()
+        )
         with self.assertRaises(ValidationError):
             design.full_clean()
 
@@ -43,13 +45,17 @@ class PixelBorderDesignModelTests(TestCase):
     def test_visibility_and_permissions(self):
         other = get_user_model().objects.create_user("viewer", password="pw")
         private = PixelBorderDesign.objects.create(owner=self.user, name="Private")
-        public = PixelBorderDesign.objects.create(owner=self.user, name="Public", is_public=True)
+        public = PixelBorderDesign.objects.create(
+            owner=self.user, name="Public", is_public=True
+        )
         self.assertFalse(private.is_visible_to(other))
         self.assertTrue(public.is_visible_to(other))
         self.assertFalse(public.can_edit(other))
 
     def test_css_generation(self):
-        design = PixelBorderDesign.objects.create(owner=self.user, name="Fancy Frame", border_repeat="round")
+        design = PixelBorderDesign.objects.create(
+            owner=self.user, name="Fancy Frame", border_repeat="round"
+        )
         css = generate_css(design, "data:image/png;base64,abc")
         self.assertIn(f".frm-{design.pk}-fancy-frame", css)
         self.assertIn("border-image-source", css)
@@ -66,13 +72,17 @@ class PixelBorderDesignModelTests(TestCase):
     def test_png_data_url_generation(self):
         pixels = default_pixels()
         pixels[0][0] = 0
-        design = PixelBorderDesign.objects.create(owner=self.user, name="Image Frame", pixels=pixels)
+        design = PixelBorderDesign.objects.create(
+            owner=self.user, name="Image Frame", pixels=pixels
+        )
         data_url = render_png_data_url(design)
         self.assertTrue(data_url.startswith("data:image/png;base64,"))
         self.assertIn(data_url, generate_css_with_image(design))
         self.assertNotIn("__PIXEL_BORDER_IMAGE__", generate_css_with_image(design))
 
     def test_border_repeat_is_limited_to_css_repeat_modes(self):
-        design = PixelBorderDesign(owner=self.user, name="Bad Repeat", border_repeat="space")
+        design = PixelBorderDesign(
+            owner=self.user, name="Bad Repeat", border_repeat="space"
+        )
         with self.assertRaises(ValidationError):
             design.full_clean()

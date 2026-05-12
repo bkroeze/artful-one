@@ -27,11 +27,10 @@ logger = logging.getLogger("blog")
 
 def health_check(request):
     return HttpResponse(
-        json.dumps({
-            "status": "ok",
-            "timestamp": datetime.now(timezone.utc).isoformat()
-        }),
-        content_type="application/json"
+        json.dumps(
+            {"status": "ok", "timestamp": datetime.now(timezone.utc).isoformat()}
+        ),
+        content_type="application/json",
     )
 
 

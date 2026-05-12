@@ -38,18 +38,33 @@ class PixelBorderDesignViewTests(TestCase):
             HTTP_HX_REQUEST="true",
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(PixelBorderDesign.objects.filter(owner=self.owner, name="Saved Border").exists())
-        self.assertEqual(PixelBorderDesign.objects.get(owner=self.owner, name="Saved Border").border_repeat, "round")
+        self.assertTrue(
+            PixelBorderDesign.objects.filter(
+                owner=self.owner, name="Saved Border"
+            ).exists()
+        )
+        self.assertEqual(
+            PixelBorderDesign.objects.get(
+                owner=self.owner, name="Saved Border"
+            ).border_repeat,
+            "round",
+        )
         self.assertContains(response, "Visible Designs")
 
     def test_save_defaults_blank_name(self):
         self.client.login(username="owner", password="pw")
         response = self.client.post(reverse("pixelborders:save"), self.payload(name=""))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(PixelBorderDesign.objects.filter(owner=self.owner, name="Untitled Border").exists())
+        self.assertTrue(
+            PixelBorderDesign.objects.filter(
+                owner=self.owner, name="Untitled Border"
+            ).exists()
+        )
 
     def test_save_updates_owned_design_when_name_is_unchanged(self):
-        design = PixelBorderDesign.objects.create(owner=self.owner, name="Owned", border_repeat="stretch")
+        design = PixelBorderDesign.objects.create(
+            owner=self.owner, name="Owned", border_repeat="stretch"
+        )
         self.client.login(username="owner", password="pw")
         response = self.client.post(
             reverse("pixelborders:save"),
@@ -61,27 +76,47 @@ class PixelBorderDesignViewTests(TestCase):
         self.assertEqual(design.border_repeat, "round")
 
     def test_save_creates_copy_when_owned_design_name_changes(self):
-        design = PixelBorderDesign.objects.create(owner=self.owner, name="Owned", border_repeat="stretch")
+        design = PixelBorderDesign.objects.create(
+            owner=self.owner, name="Owned", border_repeat="stretch"
+        )
         self.client.login(username="owner", password="pw")
         response = self.client.post(
             reverse("pixelborders:save"),
-            self.payload(design_id=str(design.pk), name="Renamed", border_repeat="round"),
+            self.payload(
+                design_id=str(design.pk), name="Renamed", border_repeat="round"
+            ),
         )
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(PixelBorderDesign.objects.filter(owner=self.owner, name="Owned", border_repeat="stretch").exists())
-        self.assertTrue(PixelBorderDesign.objects.filter(owner=self.owner, name="Renamed", border_repeat="round").exists())
+        self.assertTrue(
+            PixelBorderDesign.objects.filter(
+                owner=self.owner, name="Owned", border_repeat="stretch"
+            ).exists()
+        )
+        self.assertTrue(
+            PixelBorderDesign.objects.filter(
+                owner=self.owner, name="Renamed", border_repeat="round"
+            ).exists()
+        )
 
     def test_save_creates_user_copy_for_public_design_owned_by_someone_else(self):
-        design = PixelBorderDesign.objects.create(owner=self.owner, name="Public", is_public=True)
+        design = PixelBorderDesign.objects.create(
+            owner=self.owner, name="Public", is_public=True
+        )
         self.client.login(username="viewer", password="pw")
         response = self.client.post(
             reverse("pixelborders:save"),
-            self.payload(design_id=str(design.pk), name="Public", border_repeat="round"),
+            self.payload(
+                design_id=str(design.pk), name="Public", border_repeat="round"
+            ),
         )
         self.assertEqual(response.status_code, 302)
         design.refresh_from_db()
         self.assertEqual(design.border_repeat, "stretch")
-        self.assertTrue(PixelBorderDesign.objects.filter(owner=self.viewer, name="Public", border_repeat="round").exists())
+        self.assertTrue(
+            PixelBorderDesign.objects.filter(
+                owner=self.viewer, name="Public", border_repeat="round"
+            ).exists()
+        )
 
     def test_save_requires_square_design(self):
         self.client.login(username="owner", password="pw")
@@ -91,7 +126,11 @@ class PixelBorderDesignViewTests(TestCase):
             HTTP_HX_REQUEST="true",
         )
         self.assertEqual(response.status_code, 422)
-        self.assertFalse(PixelBorderDesign.objects.filter(owner=self.owner, name="Saved Border").exists())
+        self.assertFalse(
+            PixelBorderDesign.objects.filter(
+                owner=self.owner, name="Saved Border"
+            ).exists()
+        )
 
     @patch("pixelborders.views.generate_frame")
     def test_generate_design_returns_generated_pixels(self, generate_frame):
@@ -105,7 +144,9 @@ class PixelBorderDesignViewTests(TestCase):
         self.client.login(username="owner", password="pw")
         response = self.client.post(
             reverse("pixelborders:generate"),
-            data=json.dumps({"description": "mossy frame", "size": 21, "variation": False}),
+            data=json.dumps(
+                {"description": "mossy frame", "size": 21, "variation": False}
+            ),
             content_type="application/json",
         )
         self.assertEqual(response.status_code, 200)
@@ -122,8 +163,12 @@ class PixelBorderDesignViewTests(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_public_design_visible_in_list(self):
-        PixelBorderDesign.objects.create(owner=self.owner, name="Public", is_public=True)
-        PixelBorderDesign.objects.create(owner=self.owner, name="Private", is_public=False)
+        PixelBorderDesign.objects.create(
+            owner=self.owner, name="Public", is_public=True
+        )
+        PixelBorderDesign.objects.create(
+            owner=self.owner, name="Private", is_public=False
+        )
         self.client.login(username="viewer", password="pw")
         response = self.client.get(reverse("pixelborders:editor"))
         self.assertContains(response, "Public")

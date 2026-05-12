@@ -66,7 +66,9 @@ class PixelBorderDesignForm(forms.ModelForm):
         self.fields["name"].required = False
 
     def _post_clean(self):
-        self.instance = construct_instance(self, self.instance, self._meta.fields, self._meta.exclude)
+        self.instance = construct_instance(
+            self, self.instance, self._meta.fields, self._meta.exclude
+        )
 
     def save(self, commit=True):
         instance = super().save(commit=False)

@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -13,11 +12,9 @@ class RpgChargenPageTests(TestCase):
         self.assertTemplateUsed(
             response, "rpg_chargen/partials/botanical_spider_loader.html"
         )
-        self.assertTemplateUsed(
-            response, "rpg_chargen/partials/robot_web_loader.html"
-        )
-        self.assertContains(response, 'data-spider-loader')
-        self.assertContains(response, 'data-robot-loader')
+        self.assertTemplateUsed(response, "rpg_chargen/partials/robot_web_loader.html")
+        self.assertContains(response, "data-spider-loader")
+        self.assertContains(response, "data-robot-loader")
         self.assertContains(response, 'hx-target="#names-results-panel"')
         self.assertContains(response, 'id="character-details-panel"')
         self.assertContains(response, 'id="supers-generator-form"')

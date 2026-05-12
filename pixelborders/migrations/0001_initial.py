@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,23 +15,48 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='PixelBorderDesign',
+            name="PixelBorderDesign",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=80)),
-                ('slug', models.SlugField(max_length=96)),
-                ('is_public', models.BooleanField(default=False)),
-                ('width', models.PositiveSmallIntegerField(default=21)),
-                ('height', models.PositiveSmallIntegerField(default=21)),
-                ('palette', models.JSONField(default=pixelborders.models.default_palette)),
-                ('pixels', models.JSONField(default=pixelborders.models.default_pixels)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pixel_border_designs', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=80)),
+                ("slug", models.SlugField(max_length=96)),
+                ("is_public", models.BooleanField(default=False)),
+                ("width", models.PositiveSmallIntegerField(default=21)),
+                ("height", models.PositiveSmallIntegerField(default=21)),
+                (
+                    "palette",
+                    models.JSONField(default=pixelborders.models.default_palette),
+                ),
+                (
+                    "pixels",
+                    models.JSONField(default=pixelborders.models.default_pixels),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="pixel_border_designs",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-updated_at', 'name'],
-                'constraints': [models.UniqueConstraint(fields=('owner', 'slug'), name='unique_design_slug_per_owner')],
+                "ordering": ["-updated_at", "name"],
+                "constraints": [
+                    models.UniqueConstraint(
+                        fields=("owner", "slug"), name="unique_design_slug_per_owner"
+                    )
+                ],
             },
         ),
     ]

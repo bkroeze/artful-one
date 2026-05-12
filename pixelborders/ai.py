@@ -37,7 +37,11 @@ def _normalize_palette(palette):
 
 def _normalize_pixels(pixels, size):
     if not isinstance(pixels, list):
-        return default_pixels() if size == 21 else [[None for _ in range(size)] for _ in range(size)]
+        return (
+            default_pixels()
+            if size == 21
+            else [[None for _ in range(size)] for _ in range(size)]
+        )
     normalized = []
     for y in range(size):
         source = pixels[y] if y < len(pixels) and isinstance(pixels[y], list) else []
@@ -53,7 +57,9 @@ def generate_frame(description, size, current=None, variation=False):
     try:
         import llm
     except ImportError as exc:
-        raise RuntimeError("The llm package is not installed in this environment.") from exc
+        raise RuntimeError(
+            "The llm package is not installed in this environment."
+        ) from exc
 
     size = max(5, min(100, int(size)))
     prompt = {

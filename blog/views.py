@@ -668,7 +668,9 @@ def photo_tag_landing(request):
                 }
             )
 
-    sketches = Sketch.objects.select_related("photo").filter(visible=True).order_by("name")
+    sketches = (
+        Sketch.objects.select_related("photo").filter(visible=True).order_by("name")
+    )
 
     return render(
         request,
@@ -705,6 +707,7 @@ def photo_detail(request, slug):
             "photo": photo,
         },
     )
+
 
 @never_cache
 @staff_member_required
@@ -849,9 +852,7 @@ def _send_contact_message(contact_message):
 
 
 def contact(request):
-    template_name = (
-        "includes/contact_form.html" if request.htmx else "contact.html"
-    )
+    template_name = "includes/contact_form.html" if request.htmx else "contact.html"
     context = {}
     if request.method == "POST":
         form = ContactMessageForm(request.POST)

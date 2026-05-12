@@ -15,7 +15,11 @@ from .models import DEFAULT_PALETTE, PixelBorderDesign, default_pixels
 
 
 def _visible_designs(user):
-    return PixelBorderDesign.objects.filter(Q(is_public=True) | Q(owner=user)).select_related("owner").order_by("name", "pk")
+    return (
+        PixelBorderDesign.objects.filter(Q(is_public=True) | Q(owner=user))
+        .select_related("owner")
+        .order_by("name", "pk")
+    )
 
 
 def _blank_state(user):
@@ -77,7 +81,9 @@ def save_design(request):
         instance = get_object_or_404(PixelBorderDesign, pk=design_id)
         if not instance.is_visible_to(request.user):
             raise PermissionDenied
-        if not instance.can_edit(request.user) or instance.name != request.POST.get("name"):
+        if not instance.can_edit(request.user) or instance.name != request.POST.get(
+            "name"
+        ):
             instance = None
 
     form = PixelBorderDesignForm(request.POST, owner=request.user, instance=instance)
@@ -92,7 +98,9 @@ def save_design(request):
     design = form.save()
     messages.success(request, "Design saved.")
     if request.htmx:
-        return render(request, "pixelborders/_workspace.html", _editor_context(request, design))
+        return render(
+            request, "pixelborders/_workspace.html", _editor_context(request, design)
+        )
     return redirect("pixelborders:editor")
 
 
@@ -103,7 +111,9 @@ def load_design(request, pk):
     if not design.is_visible_to(request.user):
         raise PermissionDenied
     if request.htmx:
-        return render(request, "pixelborders/_workspace.html", _editor_context(request, design))
+        return render(
+            request, "pixelborders/_workspace.html", _editor_context(request, design)
+        )
     return render(request, "pixelborders/editor.html", _editor_context(request, design))
 
 
@@ -135,7 +145,9 @@ def design_list(request):
 @login_required
 @require_http_methods(["GET"])
 def visible_designs_css(request):
-    response = HttpResponse(generate_css_bundle(_visible_designs(request.user)), content_type="text/css")
+    response = HttpResponse(
+        generate_css_bundle(_visible_designs(request.user)), content_type="text/css"
+    )
     response["Content-Disposition"] = 'attachment; filename="pixel-border-designs.css"'
     return response
 

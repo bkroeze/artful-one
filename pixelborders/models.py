@@ -45,7 +45,9 @@ class PixelBorderDesign(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["owner", "slug"], name="unique_design_slug_per_owner")
+            models.UniqueConstraint(
+                fields=["owner", "slug"], name="unique_design_slug_per_owner"
+            )
         ]
         ordering = ["-updated_at", "name"]
 
@@ -92,7 +94,9 @@ class PixelBorderDesign(models.Model):
             errors["border_repeat"] = "Border repeat must be stretch, repeat, or round."
         if not isinstance(self.palette, list) or len(self.palette) != 3:
             errors["palette"] = "Palette must contain exactly three colors."
-        elif not all(isinstance(color, str) and color.startswith("#") for color in self.palette):
+        elif not all(
+            isinstance(color, str) and color.startswith("#") for color in self.palette
+        ):
             errors["palette"] = "Palette colors must be CSS hex color strings."
         if not isinstance(self.pixels, list) or len(self.pixels) != self.height:
             errors["pixels"] = "Pixel grid height must match the design height."
@@ -122,6 +126,6 @@ class PixelBorderDesign(models.Model):
         candidate = slug
         while queryset.filter(slug=candidate).exists():
             suffix_text = f"-{suffix}"
-            candidate = f"{slug[:96 - len(suffix_text)]}{suffix_text}"
+            candidate = f"{slug[: 96 - len(suffix_text)]}{suffix_text}"
             suffix += 1
         return candidate

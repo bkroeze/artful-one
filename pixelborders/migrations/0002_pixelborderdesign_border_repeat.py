@@ -4,15 +4,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('pixelborders', '0001_initial'),
+        ("pixelborders", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='pixelborderdesign',
-            name='border_repeat',
-            field=models.CharField(choices=[('stretch', 'Stretch'), ('repeat', 'Repeat'), ('round', 'Round')], default='stretch', max_length=10),
+            model_name="pixelborderdesign",
+            name="border_repeat",
+            field=models.CharField(
+                choices=[
+                    ("stretch", "Stretch"),
+                    ("repeat", "Repeat"),
+                    ("round", "Round"),
+                ],
+                default="stretch",
+                max_length=10,
+            ),
         ),
     ]

@@ -48,9 +48,7 @@ MAILGUN_DOMAIN = os.environ.get("MAILGUN_DOMAIN", "")
 MAILGUN_API_URL = os.environ.get("MAILGUN_API_URL", "https://api.mailgun.net/v3")
 MAILGUN_FROM_EMAIL = os.environ.get(
     "MAILGUN_FROM_EMAIL",
-    f"Artful.One Contact <postmaster@{MAILGUN_DOMAIN}>"
-    if MAILGUN_DOMAIN
-    else "",
+    f"Artful.One Contact <postmaster@{MAILGUN_DOMAIN}>" if MAILGUN_DOMAIN else "",
 )
 CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
 
@@ -83,7 +81,7 @@ INSTALLED_APPS = [
     "rpg_chargen",
     "sketches",
     "django_http_debug",
-    "pixelborders.apps.PixelbordersConfig"
+    "pixelborders.apps.PixelbordersConfig",
 ]
 
 MIDDLEWARE = [

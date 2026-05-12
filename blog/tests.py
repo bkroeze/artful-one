@@ -66,9 +66,18 @@ class TestBlog:
         assert 'hx-target="#contact-form-panel"' in decoded_content
         assert 'hx-swap="outerHTML"' in decoded_content
         assert "htmx.org" in decoded_content
-        assert 'id="contact-name" name="name" type="text" autocomplete="name" maxlength="120" required' in decoded_content
-        assert 'id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required' in decoded_content
-        assert 'id="contact-brief" name="brief" rows="7" maxlength="4000" required' in decoded_content
+        assert (
+            'id="contact-name" name="name" type="text" autocomplete="name" maxlength="120" required'
+            in decoded_content
+        )
+        assert (
+            'id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required'
+            in decoded_content
+        )
+        assert (
+            'id="contact-brief" name="brief" rows="7" maxlength="4000" required'
+            in decoded_content
+        )
 
     def test_contact_page_htmx_post_saves_sends_and_clears_form(self, client, settings):
         settings.MAILGUN_API_KEY = "test-key"
@@ -127,7 +136,9 @@ class TestBlog:
         assert response.status_code == 200
         assert ContactMessage.objects.count() == 0
         post_mock.assert_not_called()
-        assert "Ensure this value has at most 4000 characters" in response.content.decode()
+        assert (
+            "Ensure this value has at most 4000 characters" in response.content.decode()
+        )
 
     def test_other_pages(self, client):
         entry = EntryFactory()
@@ -545,7 +556,6 @@ class TestBlog:
         assert "3 posts:" in response.content.decode()
         assert ">1 note</a>" in response.content.decode()
         assert "/search/?type=note&year=2025&month=7" in response.content.decode()
-
 
     def test_health_check(self, client):
         response = client.get("/health/")

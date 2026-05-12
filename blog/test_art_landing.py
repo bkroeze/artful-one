@@ -25,9 +25,9 @@ def test_art_landing_renders_sketches_and_galleries(client):
     assert "Live Art Code" in content
     assert "Galleries" in content
     assert "Orbit Study" in content
-    assert '/sketch/orbit-study/' in content
+    assert "/sketch/orbit-study/" in content
     assert "Paintings" in content
-    assert '/photo-tags/paintings/' in content
+    assert "/photo-tags/paintings/" in content
 
 
 @pytest.mark.django_db
@@ -45,12 +45,12 @@ def test_art_landing_shows_galleries_with_no_sketches(client):
     assert "No sketches found." in content
     assert "No photo collections found." not in content
     assert "Paintings" in content
-    assert '/photo-tags/paintings/' in content
+    assert "/photo-tags/paintings/" in content
 
 
 @pytest.mark.django_db
 def test_art_landing_shows_sketches_with_no_galleries(client):
-    sketch = Sketch.objects.create(
+    Sketch.objects.create(
         name="Orbit Study",
         slug="orbit-study",
         description="Interactive orbit sketch",
@@ -65,7 +65,7 @@ def test_art_landing_shows_sketches_with_no_galleries(client):
     assert "No photo collections found." in content
     assert "No sketches found." not in content
     assert "Orbit Study" in content
-    assert '/sketch/orbit-study/' in content
+    assert "/sketch/orbit-study/" in content
 
 
 @pytest.mark.django_db
