@@ -26,10 +26,15 @@ def env_bool(name: str, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def env_list(name: str, default: list[str] | None = None) -> list[str]:
+    value = os.environ.get(name)
+    if value is None:
+        return default or []
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
 # CSRF trusted origins
-CSRF_TRUSTED_ORIGINS = []
-if os.environ.get("CSRF_TRUSTED_ORIGINS"):
-    CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(",")
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env_bool("DJANGO_DEBUG")
@@ -175,13 +180,12 @@ if "DISABLE_AUTOCOMMIT" in os.environ:
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Allow all host headers
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", ["*"])
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.environ.get("STATIC_ROOT", os.path.join(BASE_DIR, "staticfiles"))
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (
@@ -190,7 +194,7 @@ STATICFILES_DIRS = (
 )
 
 # Media files (user-uploaded content)
-MEDIA_ROOT = BASE_DIR
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT", BASE_DIR)
 MEDIA_URL = "/"
 
 # Simplified static file serving.
@@ -277,7 +281,9 @@ PICTURES = {
 }
 
 # Filedrop configuration
-FILEDROP_BASE_DIR = os.path.join(BASE_DIR, "filedrop_files")
+FILEDROP_BASE_DIR = os.environ.get(
+    "FILEDROP_BASE_DIR", os.path.join(BASE_DIR, "filedrop_files")
+)
 
 # Django Tasks configuration for django-pictures
 TASKS = {
