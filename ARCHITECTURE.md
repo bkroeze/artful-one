@@ -53,7 +53,7 @@ Model types:
 
 - Designs are owner-scoped, may be public, and store dimensions, repeat mode, palette, and pixel grid JSON.
 - CSS is generated from saved designs as `border-image` rules with embedded PNG data URLs for export/use elsewhere.
-- AI frame generation is centralized in `pixelborders.ai.generate_frame()`.
+- AI frame generation is centralized in `pixelborders.ai.generate_frame()` and uses the `llm` package with `PIXELBORDERS_LLM_MODEL` (default: `gpt-5-mini`); configure the matching provider credentials in the runtime environment.
 
 ## Contact Form
 
