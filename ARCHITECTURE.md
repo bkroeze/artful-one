@@ -55,6 +55,14 @@ Model types:
 - CSS is generated from saved designs as `border-image` rules with embedded PNG data URLs for export/use elsewhere.
 - AI frame generation is centralized in `pixelborders.ai.generate_frame()`.
 
+## Contact Form
+
+The site-level `/contact/` route is handled by `blog.views.contact`.
+
+- Submissions are validated by `ContactMessageForm` and persisted as `ContactMessage` records before email delivery.
+- HTMX requests render `templates/includes/contact_form.html`; full-page requests render `templates/contact.html`.
+- Mailgun delivery uses `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL`, and `CONTACT_EMAIL`, and records delivery status/error fields on the saved message.
+
 ## Draft Behavior
 
 All content supports `is_draft`.
