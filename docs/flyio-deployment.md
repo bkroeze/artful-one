@@ -54,11 +54,14 @@ Create a local SQLite backup from the current deployment source:
 sqlite3 artful-one.db ".backup 'artful-one-pre-fly.db'"
 ```
 
-Upload the migrated database to the Fly volume:
+Upload the migrated database to the Fly volume and restore it into the mounted
+SQLite database:
 
 ```bash
 fly ssh console --app artful-one -C "mkdir -p /data"
-fly ssh sftp put --app artful-one artful-one-pre-fly.db /data/artful-one.db
+fly ssh sftp put --app artful-one artful-one-pre-fly.db /data/artful-one-pre-fly.db
+fly ssh console --app artful-one -C \
+  "sqlite3 /data/artful-one.db \".restore '/data/artful-one-pre-fly.db'\" && rm /data/artful-one-pre-fly.db"
 ```
 
 Restart the app. The entrypoint creates volume directories, runs migrations, and
@@ -77,7 +80,7 @@ curl -fsS https://artful-one.fly.dev/health/
 ```
 
 Also check the homepage, admin login, search, feeds, photo pages, filedrop, and
-contact form.
+contact form at `https://artful-one.fly.dev`.
 
 ## Cloudflare Cutover
 
@@ -140,13 +143,16 @@ sqlite3 /path/to/backup.db "pragma integrity_check;"
 
 ## Restore
 
-Freeze writes, upload the chosen backup as `/data/artful-one.db`, restart the
-machine, and run the same smoke checks from the cutover section.
+Freeze writes, upload the chosen backup to the Fly volume, restore it into the
+mounted SQLite database, restart the machine, and run the same smoke checks from
+the cutover section.
 
 ```bash
 fly ssh sftp put --app artful-one \
   /srv/backups/artful-one/artful-one-YYYYMMDDTHHMMSSZ.db \
-  /data/artful-one.db
+  /data/artful-one-restore.db
+fly ssh console --app artful-one -C \
+  "sqlite3 /data/artful-one.db \".restore '/data/artful-one-restore.db'\" && rm /data/artful-one-restore.db"
 fly machine restart --app artful-one
 curl -fsS https://artful.one/health/
 ```
