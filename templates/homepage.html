@@ -56,9 +56,18 @@
     </div>
     <div class="column">
       <div class="frm-bricky" style="padding: .5em;">
+        {% if site_photoset and site_photoset.primary and site_photoset.primary.image %}
         {% with site_photoset.primary as photo %}
         {% picture photo.image picture_id=photo.html_id picture_class="ui fluid image" %}
         {% endwith %}
+        {% else %}
+        <div class="ui placeholder segment">
+          <div class="ui icon header">
+            <i class="image outline icon"></i>
+            Artful.One
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>

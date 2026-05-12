@@ -1,5 +1,6 @@
 import datetime
 import json
+import re
 import uuid
 import xml.etree.ElementTree as ET
 from unittest import mock
@@ -198,7 +199,9 @@ class TestBlog:
         response = client.get(entry.get_absolute_url())
         decoded_content = response.content.decode()
         assert "Hello &amp; goodbye" in decoded_content
-        assert "<p>First paragraph</p><p>Second paragraph</p>" in decoded_content
+        assert re.search(
+            r"<p>First paragraph</p>\s*<p>Second paragraph</p>", decoded_content
+        )
 
     def test_update_blogmark_runs_commit_hooks(self):
         # This was throwing errors on upgrade Django 2.2 to 2.2.1

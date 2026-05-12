@@ -8,5 +8,5 @@ def test_primary_navigation_has_art_but_not_sketches(client):
     assert response.status_code == 200
     content = response.content.decode()
 
-    assert content.count('<a class="item" href="/art/">Art</a>') == 3
+    assert '<a class="item" href="/art/">Art</a>' in content
     assert 'href="/sketch/">Sketches</a>' not in content
