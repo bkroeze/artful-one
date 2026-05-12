@@ -15,6 +15,7 @@ Concise conventions for working in this Django repository.
   - `blog/` for content, tags, search indexing glue, RSS feeds
   - `monthly/` for archive behavior
   - `feedstats/` for feed subscriber tracking
+  - `pixelborders/` for pixel border designs, editor fragments, generated CSS, and AI frame generation
   - `config/` for settings/URL/WSGI
 - **Don't** cross-modify unrelated apps for logic that belongs to another domain.
 

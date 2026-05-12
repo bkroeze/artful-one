@@ -76,6 +76,7 @@ uv run manage.py import_blog_xml --xmldir <path>
   - All content types inherit from `BaseModel` (created, tags, slug, metadata, series, is_draft)
 - `monthly/` - Monthly archives functionality
 - `feedstats/` - Feed subscriber tracking
+- `pixelborders/` - Pixel border editor, saved designs, generated CSS, and AI-assisted frame generation
 - `photos/` - Photo storage directory (contains AVIF/JPG files)
 - `templates/` - Django templates
 - `static/` - Static assets (CSS, JS)
@@ -178,6 +179,7 @@ Photos use `PictureField` from django-pictures with:
 - Pixel densities: [1, 2]
 
 ### Middleware
+- `django_htmx.middleware.HtmxMiddleware` - Adds `request.htmx` for HTMX fragment responses
 - `blog.middleware.AmpersandRedirectMiddleware` - Custom URL handling
 - WhiteNoise for static files
 - django-hosts for subdomain routing
@@ -191,6 +193,8 @@ Key environment variables (loaded via python-dotenv):
 - `CSRF_TRUSTED_ORIGINS` - Comma-separated list
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
 - `STAGING` - Staging environment flag
+- `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL` - Contact form Mailgun delivery
+- `CONTACT_EMAIL` - Contact form recipient email
 - `PICTURES_LOG_LEVEL`, `BLOG_LOG_LEVEL`, `DJANGO_LOG_LEVEL` - Logging levels
 
 ## Database

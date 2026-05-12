@@ -14,6 +14,7 @@ Artful.One is a Django personal blog site. It manages multiple content types (en
 - `blog/` — Core models, views, feeds, templates context, and content behavior.
 - `monthly/` — Monthly archive app.
 - `feedstats/` — Feed subscriber tracking and analytics.
+- `pixelborders/` — Authenticated pixel border editor, saved border designs, generated CSS, and AI-assisted frame generation.
 - `templates/` — Shared and app templates.
 - `static/` — Source assets.
 - `staticfiles/` — Collected/static build output.
@@ -44,6 +45,15 @@ Model types:
 
 - Canonical date URL: `/{YYYY}/{Mon}/{D}/{slug}/` (for example `/2024/Oct/15/my-blog-post/`).
 - Short aliases for quick access: `/e/{id}/`, `/b/{id}/`, `/q/{id}/`, `/n/{id}/`.
+- Pixel border editor routes live under `/borders/`.
+
+## Pixel Borders
+
+`pixelborders/` owns `PixelBorderDesign`, editor views, HTMX fragments, and CSS export for saved border-image frames.
+
+- Designs are owner-scoped, may be public, and store dimensions, repeat mode, palette, and pixel grid JSON.
+- CSS is generated from saved designs as `border-image` rules with embedded PNG data URLs for export/use elsewhere.
+- AI frame generation is centralized in `pixelborders.ai.generate_frame()`.
 
 ## Draft Behavior
 
@@ -72,6 +82,7 @@ All content supports `is_draft`.
 
 ## Middleware/Helpers to Know
 
+- `django_htmx.middleware.HtmxMiddleware` adds `request.htmx`; use it for HTMX fragment responses instead of manual HTMX header parsing.
 - `blog.middleware.AmpersandRedirectMiddleware`
 - `blog.context_processors.all`
 - Custom tag renaming: `Tag.rename_tag(new_name)` creates `PreviousTagName` records/redirect support.
