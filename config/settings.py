@@ -42,6 +42,16 @@ CLOUDFLARE_EMAIL = os.environ.get("CLOUDFLARE_EMAIL", "")
 CLOUDFLARE_TOKEN = os.environ.get("CLOUDFLARE_TOKEN", "")
 CLOUDFLARE_ZONE_ID = os.environ.get("CLOUDFLARE_ZONE_ID", "")
 
+# Mailgun contact form delivery
+MAILGUN_API_KEY = os.environ.get("MAILGUN_API_KEY", "")
+MAILGUN_DOMAIN = os.environ.get("MAILGUN_DOMAIN", "")
+MAILGUN_API_URL = os.environ.get("MAILGUN_API_URL", "https://api.mailgun.net/v3")
+MAILGUN_FROM_EMAIL = os.environ.get(
+    "MAILGUN_FROM_EMAIL",
+    f"Artful.One Contact <postmaster@{MAILGUN_DOMAIN}>" if MAILGUN_DOMAIN else "",
+)
+CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
+
 # https://github.com/simonw/simonwillisonblog/issues/498
 SECURE_CROSS_ORIGIN_OPENER_POLICY = False
 
@@ -71,6 +81,7 @@ INSTALLED_APPS = [
     "rpg_chargen",
     "sketches",
     "django_http_debug",
+    "pixelborders.apps.PixelbordersConfig",
 ]
 
 MIDDLEWARE = [
@@ -83,6 +94,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "blog.middleware.AmpersandRedirectMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
 ]

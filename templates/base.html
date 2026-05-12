@@ -1,5 +1,5 @@
 <!DOCTYPE html>{% load static %}
-<html lang="en-gb">
+<html lang="en-us" {% block html_class %}class="artistic"{% endblock %}>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +10,14 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/site.css" %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/semantic.min.js"></script>
-<meta name="author" content="Bruce Kroeze">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Crete+Round:ital@0;1&family=Megrim&display=swap" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
 <meta property="og:site_name" content="Bruce Kroeze's Weblog">
 <style>
   :root {
     --site-accent-color: #8b8383;
-    --site-accent-light: rgba(139, 131, 131, 0.1);
+    --site-accent-light: #f1d39d; 
     --site-accent-shadow: rgba(139, 131, 131, 0.3);
   }
 </style>
@@ -65,22 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 </script>
-{% if request.user.is_authenticated %}
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.edit-page-link').forEach(el => {
-      const url = el.getAttribute('data-admin-url');
-      if (url) {
-        const a = document.createElement('a');
-        a.href = url;
-        a.innerText = 'Edit this page';
-        el.appendChild(a);
-        el.style.display = 'block';
-      }
-    });
-  });
-</script>
-{% endif %}
 </div>
 </body>
 </html>

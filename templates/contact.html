@@ -1,0 +1,34 @@
+{% extends "site_page.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block extrahead %}
+  {% include "includes/htmx.html" %}
+{% endblock %}
+
+{% block primary %}
+<div class="ui stackable two column grid hero contact-page">
+  <div class="row">
+    <div class="column contact-intro">
+      <h1>Engage me for a project</h1>
+      <div class="contact-statements frm-nested-corner">
+        <p class="title-font" style="font-weight: bold; font-size: 1.2em;">Bruce Kroeze</p>
+        <p class="title-font" style="font-weight: bold; font-size: 1.1em;">Artful.one Consulting</p>
+        <p>E-Commerce Specialist</p>
+        <p>Full-Stack-Development</p>
+        <p>32 years</p>
+        <p>Portland, Ore.</p>
+      </div>
+      <div style="text-align: center;">
+      <video class="contact-animation frm-sparkle" width="400" height="400" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="{% static 'contact/animation.mp4' %}" type="video/mp4">
+      </video>
+      </div>
+    </div>
+    <div class="column">
+      {% include "includes/contact_form.html" %}
+    </div>
+  </div>
+</div>
+{% endblock %}

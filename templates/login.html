@@ -1,0 +1,30 @@
+{% extends "site_page.html" %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block primary %}
+<div class="ui centered grid">
+    <div class="sixteen wide mobile ten wide tablet six wide computer column">
+        <h1 class="ui header">Sign in</h1>
+        <form class="ui form segment" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="ui error message" style="display: block;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <div class="field{% if form.username.errors %} error{% endif %}">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+            <div class="field{% if form.password.errors %} error{% endif %}">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+            <button class="ui primary button" type="submit">Sign in</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

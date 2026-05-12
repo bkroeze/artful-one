@@ -37,6 +37,7 @@ dependencies = [
     "rich>=13.0.0",
     "llm>=0.28",
     "llm-openrouter>=0.5",
+    "django-htmx>=1.27.0",
 ]
 
 [tool.pyright]

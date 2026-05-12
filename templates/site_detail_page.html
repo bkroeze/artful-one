@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+{% block html_class %}class="artistic"{% endblock %}
 {% block body_class %} class="smallhead"{% endblock %}
 
 {% block body %}
-<div class="ui inverted vertical masthead center aligned segment" style="margin-bottom: 1rem;">
+<div class="ui vertical masthead center aligned segment" style="margin-bottom: 1rem;">
   <div class="ui container">
-      <div class="ui large secondary inverted pointing menu">
+      <div class="ui large secondary pointing menu top">
           <a class="item" href="/">Artful.One</a>
       </div>      
   </div>
@@ -20,9 +21,9 @@
 </div>
 
 {% block footer %}
-    <div class="ui inverted vertical footer segment" style="margin-top: 1rem;">
+    <div class="ui vertical footer segment" style="margin-top: 1rem;">
         <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
+            <div class="ui large secondary pointing menu bottom">
                 <a class="item">&copy; Bruce Kroeze</a>
                 {% for year in years_with_content %}<a class="item" href="/{{ year|date:"Y" }}/">{{ year|date:"Y" }}</a>
                 {% endfor %}

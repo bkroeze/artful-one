@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retro Robot Thinking Loader</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #ffefc4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    .demo-wrap {
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+      padding: 18px;
+    }
+
+    canvas.robot-loader {
+      width: min(90vw, 720px);
+      height: 360px;
+      background: #ffefc4;
+      border: 2px solid rgba(40, 35, 25, 0.25);
+      border-radius: 12px;
+      display: block;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      font: 14px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      padding: 8px 12px;
+      border: 2px solid #29251c;
+      border-radius: 8px;
+      background: #fff8df;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #fff3cf;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-wrap">
+    <canvas id="robotLoader" class="robot-loader" width="400" height="200" aria-label="Robot thinking animation"></canvas>
+
+    <div class="controls">
+      <button id="toggleRobot">Stop</button>
+      <button id="speakNow">Next Thought</button>
+    </div>
+  </div>
+
+  <script>
+    class RobotThinkingLoader {
+      constructor(canvas, options = {}) {
+        if (!(canvas instanceof HTMLCanvasElement)) {
+          throw new Error("RobotThinkingLoader requires a canvas element.");
+        }
+
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d");
+
+        this.background = options.background || "#ffefc4";
+        this.line = options.line || "#2b271f";
+        this.accent = options.accent || "#6a5d3f";
+
+        this.isRunning = false;
+        this.rafId = null;
+        this.startTime = 0;
+        this.lastTime = 0;
+        this.lastBubbleChange = 0;
+        this.bubbleIndex = 0;
+
+        this.direction = 1;
+        this.robotX = 0;
+
+        this.scratchUntil = 0;
+        this.nextScratchTime = 0;
+        this.headScratchSide = 1;
+
+        this.sayings = options.sayings || [
+          "Usually this takes 30 seconds to 2 minutes. Please stand by, human.",
+          "Clanking through possible ideas...",
+          "Consulting ancient robot memory drums...",
+          "Re-aligning my notion circuits...",
+          "Searching for excellent and/or weird options...",
+          "Rehearsing a dramatic reveal...",
+          "Sorting the practical from the delightful...",
+          "Engaging deep thunk mode...",
+          "Assembling concepts with precision-ish...",
+          "Running anti-boring calibration...",
+          "Comparing inspiration vectors...",
+          "Please ignore the harmless internal rattling..."
+        ];
+
+        this.resizeObserver = new ResizeObserver(() => this.resize());
+        this.resizeObserver.observe(this.canvas);
+
+        this.resize();
+      }
+
+      resize() {
+        const rect = this.canvas.getBoundingClientRect();
+
+        const cssWidth = Math.round(rect.width || 0);
+        const cssHeight = Math.round(rect.height || 0);
+
+        this.width = cssWidth || this.canvas.width || 400;
+        this.height = cssHeight || this.canvas.height || 200;
+
+        const dpr = window.devicePixelRatio || 1;
+        const pixelWidth = Math.round(this.width * dpr);
+        const pixelHeight = Math.round(this.height * dpr);
+
+        if (this.canvas.width !== pixelWidth || this.canvas.height !== pixelHeight) {
+          this.canvas.width = pixelWidth;
+          this.canvas.height = pixelHeight;
+        }
+
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        if (!this.robotX) {
+          this.robotX = this.width * 0.25;
+        }
+      }
+
+      start() {
+        if (this.isRunning) return;
+
+        this.isRunning = true;
+        this.startTime = performance.now();
+        this.lastTime = this.startTime;
+        this.lastBubbleChange = this.startTime;
+
+        this.scratchUntil = 0;
+        this.nextScratchTime = this.startTime + 2500 + Math.random() * 2500;
+        this.headScratchSide = Math.random() > 0.5 ? 1 : -1;
+
+        this.loop(this.startTime);
+      }
+
+      stop() {
+        this.isRunning = false;
+        if (this.rafId) {
+          cancelAnimationFrame(this.rafId);
+          this.rafId = null;
+        }
+        this.drawStopped();
+      }
+
+      destroy() {
+        this.stop();
+        this.resizeObserver.disconnect();
+      }
+
+      nextThought() {
+        let next = this.bubbleIndex;
+        while (next === this.bubbleIndex && this.sayings.length > 1) {
+          next = Math.floor(Math.random() * this.sayings.length);
+        }
+        this.bubbleIndex = next;
+      }
+
+      loop = (now) => {
+        if (!this.isRunning) return;
+
+        const dt = Math.min(0.05, (now - this.lastTime) / 1000);
+        const elapsed = (now - this.startTime) / 1000;
+        this.lastTime = now;
+
+        if (now - this.lastBubbleChange > 3600) {
+          this.lastBubbleChange = now;
+          this.nextThought();
+        }
+
+        this.update(dt, now);
+        this.draw(elapsed, now);
+
+        this.rafId = requestAnimationFrame(this.loop);
+      };
+
+      update(dt, now) {
+        const margin = this.width * 0.18;
+        const minX = margin;
+        const maxX = this.width - margin;
+        const speed = Math.max(24, this.width * 0.095);
+
+        this.robotX += this.direction * speed * dt;
+
+        if (this.robotX > maxX) {
+          this.robotX = maxX;
+          this.direction = -1;
+        } else if (this.robotX < minX) {
+          this.robotX = minX;
+          this.direction = 1;
+        }
+
+        if (now >= this.nextScratchTime && now >= this.scratchUntil) {
+          this.scratchUntil = now + 900 + Math.random() * 500;
+          this.nextScratchTime = this.scratchUntil + 2500 + Math.random() * 3500;
+          this.headScratchSide = Math.random() > 0.5 ? 1 : -1;
+        }
+      }
+
+      clear() {
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.width, this.height);
+        ctx.fillStyle = this.background;
+        ctx.fillRect(0, 0, this.width, this.height);
+      }
+
+      draw(elapsed, now) {
+        this.clear();
+        this.drawGround(elapsed);
+        this.drawBubble(elapsed);
+        this.drawRobot(elapsed, now, false);
+      }
+
+      drawStopped() {
+        this.clear();
+        this.drawGround(0);
+        this.drawBubble(0, "Generation complete. Robot entering snack mode.");
+        this.drawRobot(0, 0, true);
+      }
+
+      drawGround(elapsed) {
+        const ctx = this.ctx;
+        const groundY = this.height * 0.78;
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(43, 39, 31, 0.35)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([8, 8]);
+        ctx.lineDashOffset = -elapsed * 14;
+
+        ctx.beginPath();
+        ctx.moveTo(this.width * 0.06, groundY);
+        ctx.lineTo(this.width * 0.94, groundY);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      drawBubble(elapsed, overrideText) {
+        const ctx = this.ctx;
+        const text = overrideText || this.sayings[this.bubbleIndex];
+        const padding = 10;
+        const fontSize = Math.max(11, Math.min(15, this.width / 35));
+        const maxBubbleWidth = Math.min(this.width * 0.58, 360);
+
+        const lines = this.wrapText(text, maxBubbleWidth - padding * 2, fontSize);
+        const lineHeight = fontSize * 1.35;
+        const bubbleW = Math.max(160, Math.min(maxBubbleWidth, this.longestLine(lines, fontSize) + padding * 2));
+        const bubbleH = padding * 2 + lines.length * lineHeight;
+
+        let bubbleX = this.robotX + this.direction * 38;
+        if (this.direction < 0) bubbleX -= bubbleW;
+
+        bubbleX = Math.max(10, Math.min(this.width - bubbleW - 10, bubbleX));
+        const bubbleY = Math.max(10, this.height * 0.09 + Math.sin(elapsed * 2) * 2);
+
+        ctx.save();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = this.line;
+        ctx.fillStyle = "rgba(255, 248, 223, 0.95)";
+        ctx.fillRect(bubbleX, bubbleY, bubbleW, bubbleH);
+        ctx.strokeRect(bubbleX, bubbleY, bubbleW, bubbleH);
+
+        const tailBaseX = bubbleX + bubbleW * (this.direction > 0 ? 0.22 : 0.78);
+        const tailBaseY = bubbleY + bubbleH;
+        const tailTipX = this.robotX + this.direction * 10;
+        const tailTipY = this.height * 0.34;
+
+        ctx.beginPath();
+        ctx.moveTo(tailBaseX - 8, tailBaseY);
+        ctx.lineTo(tailTipX, tailTipY);
+        ctx.lineTo(tailBaseX + 8, tailBaseY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = this.line;
+        ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+        ctx.textBaseline = "top";
+
+        lines.forEach((line, i) => {
+          ctx.fillText(line, bubbleX + padding, bubbleY + padding + i * lineHeight);
+        });
+
+        ctx.restore();
+      }
+
+      drawRobot(elapsed, now, stopped) {
+        const ctx = this.ctx;
+        const scale = Math.min(this.width / 400, this.height / 200);
+        const groundY = this.height * 0.78;
+        const x = this.robotX;
+        const y = groundY - 60 * scale;
+
+        const bob = stopped ? 0 : Math.sin(elapsed * 7) * 1.8 * scale;
+        const walk = stopped ? 0 : Math.sin(elapsed * 7.2);
+        const lookAtViewer = stopped || Math.sin(elapsed * 0.72) > 0.8;
+        const dir = this.direction;
+
+        const scratching = !stopped && now < this.scratchUntil;
+        const scratchPhase = scratching ? Math.sin(elapsed * 20) : 0;
+
+        ctx.save();
+        ctx.translate(x, y + bob);
+        ctx.scale(scale, scale);
+        ctx.lineCap = "square";
+        ctx.lineJoin = "miter";
+        ctx.strokeStyle = this.line;
+        ctx.fillStyle = "rgba(255, 248, 223, 0.22)";
+        ctx.lineWidth = 2.2;
+
+        // antenna
+        ctx.beginPath();
+        ctx.moveTo(0, -50);
+        ctx.lineTo(0, -64);
+        ctx.stroke();
+        ctx.strokeRect(-3, -70, 6, 6);
+
+        // head
+        ctx.fillRect(-26, -48, 52, 38);
+        ctx.strokeRect(-26, -48, 52, 38);
+
+        // head panel line
+        ctx.beginPath();
+        ctx.moveTo(-26, -28);
+        ctx.lineTo(26, -28);
+        ctx.stroke();
+
+        // rivets
+        ctx.strokeRect(-23, -45, 3, 3);
+        ctx.strokeRect(20, -45, 3, 3);
+        ctx.strokeRect(-23, -16, 3, 3);
+        ctx.strokeRect(20, -16, 3, 3);
+
+        // face
+        ctx.fillStyle = this.line;
+        if (lookAtViewer) {
+          ctx.fillRect(-13, -40, 6, 6);
+          ctx.fillRect(7, -40, 6, 6);
+
+          ctx.strokeStyle = this.line;
+          ctx.strokeRect(-12, -23, 24, 8);
+          ctx.beginPath();
+          ctx.moveTo(-8, -23); ctx.lineTo(-8, -15);
+          ctx.moveTo(-4, -23); ctx.lineTo(-4, -15);
+          ctx.moveTo(0, -23);  ctx.lineTo(0, -15);
+          ctx.moveTo(4, -23);  ctx.lineTo(4, -15);
+          ctx.moveTo(8, -23);  ctx.lineTo(8, -15);
+          ctx.stroke();
+        } else {
+          const eyeX = dir > 0 ? 9 : -15;
+          ctx.fillRect(eyeX, -40, 7, 6);
+
+          ctx.strokeStyle = this.line;
+          const mx = dir > 0 ? 4 : -16;
+          ctx.strokeRect(mx, -23, 16, 7);
+          ctx.beginPath();
+          ctx.moveTo(mx + 4, -23);  ctx.lineTo(mx + 4, -16);
+          ctx.moveTo(mx + 8, -23);  ctx.lineTo(mx + 8, -16);
+          ctx.moveTo(mx + 12, -23); ctx.lineTo(mx + 12, -16);
+          ctx.stroke();
+        }
+
+        // neck
+        ctx.strokeRect(-6, -10, 12, 10);
+
+        // torso
+        ctx.fillStyle = "rgba(255, 248, 223, 0.18)";
+        ctx.fillRect(-22, 0, 44, 46);
+        ctx.strokeRect(-22, 0, 44, 46);
+
+        // central panel
+        ctx.strokeRect(-12, 9, 24, 18);
+        ctx.strokeRect(-16, 31, 32, 8);
+
+        // internal panel details (X removed)
+        ctx.beginPath();
+        ctx.moveTo(-18, 14); ctx.lineTo(18, 14);
+        ctx.moveTo(-18, 30); ctx.lineTo(18, 30);
+        ctx.stroke();
+
+        // blinking lights
+        ctx.fillStyle = this.accent;
+        const led = Math.floor(elapsed * 4) % 3;
+        for (let i = 0; i < 3; i++) {
+          const lx = -7 + i * 7;
+          if (i === led && !stopped) ctx.fillRect(lx, 13, 4, 4);
+          else ctx.strokeRect(lx, 13, 4, 4);
+        }
+
+        // arms
+        ctx.strokeStyle = this.line;
+
+        // left arm
+        if (scratching && this.headScratchSide < 0) {
+          this.segment(-22, 10, -31, -2, -20, -20 + scratchPhase * 2);
+          ctx.strokeRect(-23, -23 + scratchPhase * 2, 7, 7);
+        } else {
+          this.segment(-22, 10, -36, 17 + walk * 4, -31, 36 - walk * 5);
+          ctx.strokeRect(-34, 35 - walk * 5, 7, 7);
+        }
+
+        // right arm
+        if (scratching && this.headScratchSide > 0) {
+          this.segment(22, 10, 31, -2, 20, -20 + scratchPhase * 2);
+          ctx.strokeRect(16, -23 + scratchPhase * 2, 7, 7);
+        } else {
+          this.segment(22, 10, 36, 17 - walk * 4, 31, 36 + walk * 5);
+          ctx.strokeRect(27, 35 + walk * 5, 7, 7);
+        }
+
+        // legs
+        this.segment(-11, 46, -18 + walk * 7, 64, -28 + walk * 11, 79);
+        this.segment(11, 46, 18 - walk * 7, 64, 28 - walk * 11, 79);
+
+        // feet
+        ctx.strokeRect(-35 + walk * 11, 78, 18, 6);
+        ctx.strokeRect(17 - walk * 11, 78, 18, 6);
+
+        ctx.restore();
+      }
+
+      segment(x1, y1, x2, y2, x3, y3) {
+        const ctx = this.ctx;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.stroke();
+      }
+
+      wrapText(text, maxWidth, fontSize) {
+        const ctx = this.ctx;
+        ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+
+        const words = text.split(/\s+/);
+        const lines = [];
+        let line = "";
+
+        for (const word of words) {
+          const test = line ? `${line} ${word}` : word;
+          if (ctx.measureText(test).width > maxWidth && line) {
+            lines.push(line);
+            line = word;
+          } else {
+            line = test;
+          }
+        }
+
+        if (line) lines.push(line);
+        return lines;
+      }
+
+      longestLine(lines, fontSize) {
+        const ctx = this.ctx;
+        ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+        return Math.max(...lines.map(line => ctx.measureText(line).width), 0);
+      }
+    }
+
+    const loader = new RobotThinkingLoader(document.querySelector("#robotLoader"));
+    loader.start();
+
+    const toggleButton = document.querySelector("#toggleRobot");
+    const speakButton = document.querySelector("#speakNow");
+
+    toggleButton.addEventListener("click", () => {
+      if (loader.isRunning) {
+        loader.stop();
+        toggleButton.textContent = "Start";
+      } else {
+        loader.start();
+        toggleButton.textContent = "Stop";
+      }
+    });
+
+    speakButton.addEventListener("click", () => {
+      loader.nextThought();
+      loader.lastBubbleChange = performance.now();
+      if (!loader.isRunning) loader.drawStopped();
+    });
+
+    window.robotThinkingLoader = loader;
+  </script>
+</body>
+</html>

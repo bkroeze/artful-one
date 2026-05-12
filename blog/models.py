@@ -305,6 +305,24 @@ class LiveUpdate(models.Model):
         return "{}: {}".format(self.created, self.content)
 
 
+class ContactMessage(models.Model):
+    created = models.DateTimeField(default=timezone.now)
+    name = models.CharField(max_length=120)
+    social_url = models.URLField(max_length=300, blank=True)
+    company = models.CharField(max_length=160, blank=True)
+    email = models.EmailField(max_length=254)
+    brief = models.TextField(max_length=4000)
+    mailgun_status = models.CharField(max_length=24, blank=True)
+    mailgun_message_id = models.CharField(max_length=255, blank=True)
+    mailgun_error = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.name} <{self.email}>"
+
+    class Meta:
+        ordering = ("-created",)
+
+
 class Quotation(BaseModel):
     quotation = models.TextField()
     source = models.CharField(max_length=255)

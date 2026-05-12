@@ -1,5 +1,6 @@
 from django.urls import path, re_path, include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.http import (
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
@@ -26,11 +27,10 @@ logger = logging.getLogger("blog")
 
 def health_check(request):
     return HttpResponse(
-        json.dumps({
-            "status": "ok",
-            "timestamp": datetime.now(timezone.utc).isoformat()
-        }),
-        content_type="application/json"
+        json.dumps(
+            {"status": "ok", "timestamp": datetime.now(timezone.utc).isoformat()}
+        ),
+        content_type="application/json",
     )
 
 
@@ -118,6 +118,7 @@ urlpatterns = [
     path("rpg/", include("rpg_chargen.urls")),
     path("monthly/", include("monthly.urls")),
     path("filedrop/", include("filedrop.urls")),
+    path("borders/", include("pixelborders.urls")),
     re_path(r"^$", blog_views.index),
     re_path(r"^(\d{4})/$", blog_views.archive_year),
     re_path(r"^(\d{4})/(\w{3})/$", blog_views.archive_month),
@@ -148,6 +149,7 @@ urlpatterns = [
     re_path(r"^favicon\.ico$", favicon_ico),
     re_path(r"^search/$", search_views.search),
     re_path(r"^about/$", blog_views.about),
+    re_path(r"^contact/$", blog_views.contact, name="contact"),
     path("top-tags/", blog_views.top_tags),
     re_path(r"^tags/$", blog_views.tag_index),
     re_path(r"^tags/(.*?)/$", blog_views.archive_tag),
@@ -172,6 +174,12 @@ urlpatterns = [
     path("admin/bulk-tag/", blog_views.bulk_tag, name="bulk_tag"),
     path("api/add-tag/", blog_views.api_add_tag, name="api_add_tag"),
     re_path(r"^admin/", admin.site.urls),
+    path(
+        "accounts/login/",
+        auth_views.LoginView.as_view(template_name="login.html"),
+        name="login",
+    ),
+    path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     # re_path(r"^static/", static_redirect),
     path("user-from-cookies/", blog_views.user_from_cookies),
     path("tags-autocomplete/", tag_views.tags_autocomplete),

@@ -21,8 +21,10 @@ import logging
 import pytz
 import requests
 
+from .forms import ContactMessageForm
 from .models import (
     Blogmark,
+    ContactMessage,
     Entry,
     Note,
     Photo,
@@ -639,13 +641,9 @@ def archive_series_atom(request, slug):
 
 
 def photo_tag_landing(request):
-    """Display landing page with a grid of photo tags.
-
-    Each tag shows one random photo from that set, along with the tag name,
-    photo name, and count of photos in the set.
-    """
-    # Get all photo tags with their photo counts
+    """Display unified art landing page with live code sketches and photo galleries."""
     from django.db.models import Count
+    from sketches.models import Sketch
 
     photo_tags = (
         PhotoTag.objects.annotate(photo_count=Count("photo"))
@@ -653,17 +651,14 @@ def photo_tag_landing(request):
         .order_by("name")
     )
 
-    # For each tag, get a random photo
     tag_data = []
     total_photos = 0
     for photo_tag in photo_tags:
-        # Get all photos for this tag
         photos = Photo.objects.filter(photo_tags=photo_tag)
         photo_count = photos.count()
         total_photos += photo_count
 
         if photo_count > 0:
-            # Get a random photo
             random_photo = photos.order_by("?").first()
             tag_data.append(
                 {
@@ -673,10 +668,18 @@ def photo_tag_landing(request):
                 }
             )
 
+    sketches = (
+        Sketch.objects.select_related("photo").filter(visible=True).order_by("name")
+    )
+
     return render(
         request,
         "photo_tag_landing.html",
-        {"tag_data": tag_data, "total_photos": total_photos},
+        {
+            "sketches": sketches,
+            "tag_data": tag_data,
+            "total_photos": total_photos,
+        },
     )
 
 
@@ -704,6 +707,7 @@ def photo_detail(request, slug):
             "photo": photo,
         },
     )
+
 
 @never_cache
 @staff_member_required
@@ -799,6 +803,88 @@ def about(request):
     return render(request, "about.html")
 
 
+def _mailgun_contact_payload(contact_message, recipient_email):
+    social_url = contact_message.social_url or "(not provided)"
+    company = contact_message.company or "(not provided)"
+    text = "\n".join(
+        [
+            "New Artful.One contact form submission",
+            "",
+            f"Name: {contact_message.name}",
+            f"Email: {contact_message.email}",
+            f"Company: {company}",
+            f"Social URL: {social_url}",
+            "",
+            "Quick Project Brief:",
+            contact_message.brief,
+        ]
+    )
+    return {
+        "from": settings.MAILGUN_FROM_EMAIL,
+        "to": recipient_email,
+        "h:Reply-To": contact_message.email,
+        "subject": f"Artful.One contact: {contact_message.name}",
+        "text": text,
+    }
+
+
+def _send_contact_message(contact_message):
+    if not (
+        settings.MAILGUN_API_KEY
+        and settings.MAILGUN_DOMAIN
+        and settings.MAILGUN_FROM_EMAIL
+        and settings.CONTACT_EMAIL
+    ):
+        raise RuntimeError("Contact email delivery is not configured")
+
+    url = f"{settings.MAILGUN_API_URL.rstrip('/')}/{settings.MAILGUN_DOMAIN}/messages"
+    response = requests.post(
+        url,
+        auth=("api", settings.MAILGUN_API_KEY),
+        data=_mailgun_contact_payload(contact_message, settings.CONTACT_EMAIL),
+        timeout=10,
+    )
+    response.raise_for_status()
+    try:
+        return response.json().get("id", "")
+    except ValueError:
+        return ""
+
+
+def contact(request):
+    template_name = "includes/contact_form.html" if request.htmx else "contact.html"
+    context = {}
+    if request.method == "POST":
+        form = ContactMessageForm(request.POST)
+        if form.is_valid():
+            contact_message = ContactMessage.objects.create(**form.cleaned_data)
+            try:
+                contact_message.mailgun_message_id = _send_contact_message(
+                    contact_message
+                )
+                contact_message.mailgun_status = "sent"
+                contact_message.save(
+                    update_fields=("mailgun_message_id", "mailgun_status")
+                )
+            except Exception as exc:
+                log.exception("Contact form Mailgun delivery failed")
+                contact_message.mailgun_status = "failed"
+                contact_message.mailgun_error = str(exc)
+                contact_message.save(update_fields=("mailgun_status", "mailgun_error"))
+                form.add_error(
+                    None,
+                    "I saved your message, but email delivery failed. Please try again later.",
+                )
+                context["contact_status"] = "error"
+            else:
+                form = ContactMessageForm()
+                context["contact_status"] = "success"
+    else:
+        form = ContactMessageForm()
+    context["form"] = form
+    return render(request, template_name, context)
+
+
 def custom_404(request, exception):
     return render(
         request,
@@ -858,4 +944,3 @@ def api_add_tag(request):
     obj.tags.add(tag)
 
     return JsonResponse({"success": True, "tag": tag_name})
-

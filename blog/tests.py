@@ -1,13 +1,15 @@
 import datetime
 import json
+import re
 import uuid
 import xml.etree.ElementTree as ET
+from unittest import mock
 
 import pytest
 from django.utils import timezone
 from django.utils.text import slugify
 
-from blog.models import PreviousTagName, Tag
+from blog.models import ContactMessage, PreviousTagName, Tag
 from blog.templatetags.entry_tags import do_typography_string
 
 from .factories import BlogmarkFactory, EntryFactory, NoteFactory, QuotationFactory
@@ -29,6 +31,114 @@ class TestBlog:
         assert [e.pk for e in entries] == [
             e.pk for e in sorted(db_entries, key=lambda e: e.created, reverse=True)
         ]
+        decoded_content = response.content.decode()
+        assert 'aria-label="Engage A Project"' in decoded_content
+        assert 'href="/contact/"' in decoded_content
+
+    def test_contact_page(self, client):
+        response = client.get("/contact/")
+        assert response.status_code == 200
+        assert "contact.html" in [template.name for template in response.templates]
+        decoded_content = response.content.decode()
+        for label in (
+            "First and Last Name",
+            "LinkedIn or X URL",
+            "Company Name",
+            "Email Address",
+            "Quick Project Brief",
+        ):
+            assert label in decoded_content
+        assert "Engage me for a project" in decoded_content
+        assert "Artful.one" in decoded_content
+        assert "Full-Stack-Development" in decoded_content
+        assert "32 years" in decoded_content
+        assert "<video" in decoded_content
+        assert 'class="contact-animation frm-sparkle"' in decoded_content
+        assert 'width="400" height="400"' in decoded_content
+        assert "autoplay muted loop playsinline" in decoded_content
+        assert 'preload="metadata"' in decoded_content
+        assert 'aria-hidden="true"' in decoded_content
+        assert 'src="/static/contact/animation.mp4"' in decoded_content
+        assert 'type="video/mp4"' in decoded_content
+        assert 'class="contact-submit frm-lined-bamboo"' in decoded_content
+        assert 'type="submit"' in decoded_content
+        assert 'hx-post="/contact/"' in decoded_content
+        assert 'hx-target="#contact-form-panel"' in decoded_content
+        assert 'hx-swap="outerHTML"' in decoded_content
+        assert "htmx.org" in decoded_content
+        assert (
+            'id="contact-name" name="name" type="text" autocomplete="name" maxlength="120" required'
+            in decoded_content
+        )
+        assert (
+            'id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required'
+            in decoded_content
+        )
+        assert (
+            'id="contact-brief" name="brief" rows="7" maxlength="4000" required'
+            in decoded_content
+        )
+
+    def test_contact_page_htmx_post_saves_sends_and_clears_form(self, client, settings):
+        settings.MAILGUN_API_KEY = "test-key"
+        settings.MAILGUN_DOMAIN = "mg.example.com"
+        settings.MAILGUN_API_URL = "https://api.mailgun.test/v3"
+        settings.MAILGUN_FROM_EMAIL = "Artful.One Contact <contact@example.com>"
+        settings.CONTACT_EMAIL = "bruce@example.com"
+        response_mock = mock.Mock()
+        response_mock.json.return_value = {"id": "<mailgun-id>"}
+        with mock.patch(
+            "blog.views.requests.post", return_value=response_mock
+        ) as post_mock:
+            response = client.post(
+                "/contact/",
+                {
+                    "name": "Ada Lovelace",
+                    "social_url": "https://www.linkedin.com/in/ada",
+                    "company": "Analytical Engines",
+                    "email": "ada@example.com",
+                    "brief": "Please help with an ecommerce build.",
+                },
+                HTTP_HX_REQUEST="true",
+            )
+
+        assert response.status_code == 200
+        decoded_content = response.content.decode()
+        assert "I will get back to you within 2 business days" in decoded_content
+        assert 'id="contact-form-panel"' in decoded_content
+        assert 'value="Ada Lovelace"' not in decoded_content
+        assert "Please help with an ecommerce build." not in decoded_content
+        contact_message = ContactMessage.objects.get()
+        assert contact_message.name == "Ada Lovelace"
+        assert contact_message.email == "ada@example.com"
+        assert contact_message.brief == "Please help with an ecommerce build."
+        assert contact_message.mailgun_status == "sent"
+        assert contact_message.mailgun_message_id == "<mailgun-id>"
+        post_mock.assert_called_once()
+        _, kwargs = post_mock.call_args
+        assert kwargs["auth"] == ("api", "test-key")
+        assert kwargs["data"]["to"] == "bruce@example.com"
+        assert kwargs["data"]["h:Reply-To"] == "ada@example.com"
+        assert "Please help with an ecommerce build." in kwargs["data"]["text"]
+        response_mock.raise_for_status.assert_called_once()
+
+    def test_contact_page_post_enforces_brief_max_length(self, client):
+        with mock.patch("blog.views.requests.post") as post_mock:
+            response = client.post(
+                "/contact/",
+                {
+                    "name": "Ada Lovelace",
+                    "email": "ada@example.com",
+                    "brief": "x" * 4001,
+                },
+            )
+
+        assert response.status_code == 200
+        assert ContactMessage.objects.count() == 0
+        post_mock.assert_not_called()
+        assert (
+            "Ensure this value has at most 4000 characters" in response.content.decode()
+        )
 
     def test_other_pages(self, client):
         entry = EntryFactory()
@@ -97,7 +207,9 @@ class TestBlog:
         response = client.get(entry.get_absolute_url())
         decoded_content = response.content.decode()
         assert "Hello &amp; goodbye" in decoded_content
-        assert "<p>First paragraph</p><p>Second paragraph</p>" in decoded_content
+        assert re.search(
+            r"<p>First paragraph</p>\s*<p>Second paragraph</p>", decoded_content
+        )
 
     def test_update_blogmark_runs_commit_hooks(self):
         # This was throwing errors on upgrade Django 2.2 to 2.2.1
@@ -444,7 +556,6 @@ class TestBlog:
         assert "3 posts:" in response.content.decode()
         assert ">1 note</a>" in response.content.decode()
         assert "/search/?type=note&year=2025&month=7" in response.content.decode()
-
 
     def test_health_check(self, client):
         response = client.get("/health/")

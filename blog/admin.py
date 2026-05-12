@@ -10,6 +10,7 @@ from .models import (
     Quotation,
     Blogmark,
     Comment,
+    ContactMessage,
     Note,
     Series,
     PreviousTagName,
@@ -65,6 +66,25 @@ class EntryAdmin(BaseAdmin):
 @admin.register(LiveUpdate)
 class LiveUpdateAdmin(admin.ModelAdmin):
     raw_id_fields = ("entry",)
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    date_hierarchy = "created"
+    list_display = ("name", "email", "company", "created", "mailgun_status")
+    list_filter = ("created", "mailgun_status")
+    readonly_fields = (
+        "created",
+        "name",
+        "social_url",
+        "company",
+        "email",
+        "brief",
+        "mailgun_status",
+        "mailgun_message_id",
+        "mailgun_error",
+    )
+    search_fields = ("name", "email", "company", "brief")
 
 
 @admin.register(Quotation)

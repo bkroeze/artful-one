@@ -1,0 +1,31 @@
+{% extends "site_page.html" %}
+{% load static %}
+
+{% block title %}Pixel Border Creator{% endblock %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'pixelborders/app.css' %}?v=6">
+  {% include "includes/htmx.html" %}
+{% endblock %}
+
+{% block primary %}
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">CSS border-image studio</p>
+      <h1>Pixel Border Creator</h1>
+    </div>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="ui icon button" type="submit" title="Sign out">
+        <i class="sign-out icon"></i>
+      </button>
+    </form>
+  </header>
+
+  <main class="app-shell">
+    {% include "pixelborders/_workspace.html" %}
+  </main>
+
+  <footer class="credit">Inspired by and thanks to Broider by Max Bittker.</footer>
+  <script src="{% static 'pixelborders/editor.js' %}?v=6"></script>
+{% endblock %}

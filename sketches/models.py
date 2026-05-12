@@ -13,6 +13,7 @@ class Sketch(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     description = models.TextField(blank=True, default="")
+    visible = models.BooleanField(default=True)
     photo = models.ForeignKey(
         Photo,
         on_delete=models.SET_NULL,

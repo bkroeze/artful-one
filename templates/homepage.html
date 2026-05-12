@@ -2,23 +2,81 @@
 
 {% block title %}Artful.One{% endblock %}
 
-{% block body_class %} class="pushable"{% endblock %}
-
 {% block extrahead %}
-<link href="https://github.com/0xbeedao" rel="me">
+<link href="https://github.com/bkroeze" rel="me">
 <link href="https://twitter.com/bkroeze" rel="me">
-<link href="https://fedi.artful.one/@bruce" rel="me">
-<link rel="authorization_endpoint" href="https://indieauth.com/auth">
 {% for entry in entries %}{{ entry.extra_head_html|default:""|safe }}{% endfor %}
+<style>
+   canvas#dandelion {
+      width: 360px;
+      height: 200px;
+      image-rendering: auto;
+    }
+</style>
+
 {% endblock %}
+
 
 {% block primary %}
 {% load carousel_tags %}
-{% carousel site_photoset %}
-{% endblock %}
+{% load pictures %}
+<div class="ui stackable two column grid hero">
+  <div class="row">
+    <div class="column" style="min-width: 360px;">
+      <h1>Artful.One</h1>
+      <p>
+        Welcome to my portfolio site, where I share some of my favorite art, coding, and combinations of the two.
+      </p>
+      <p>
+        I have over 30 years experience as a full-stack engineer, in almost any language worth knowing.
+      </p>
+      <p class="engage-button-row">
+        <a class="engage-button frm-riveted-outer-line" href="{% url 'contact' %}" aria-label="Engage A Project">
+          <span aria-hidden="true" style="--i: 0">E</span>
+          <span aria-hidden="true" style="--i: 1">n</span>
+          <span aria-hidden="true" style="--i: 2">g</span>
+          <span aria-hidden="true" style="--i: 3">a</span>
+          <span aria-hidden="true" style="--i: 4">g</span>
+          <span aria-hidden="true" style="--i: 5">e</span>
+          <span aria-hidden="true" class="engage-button-space" style="--i: 6">&nbsp;</span>
+          <span aria-hidden="true" style="--i: 7">A</span>
+          <span aria-hidden="true" class="engage-button-space" style="--i: 8">&nbsp;</span>
+          <span aria-hidden="true" style="--i: 9">P</span>
+          <span aria-hidden="true" style="--i: 10">r</span>
+          <span aria-hidden="true" style="--i: 11">o</span>
+          <span aria-hidden="true" style="--i: 12">j</span>
+          <span aria-hidden="true" style="--i: 13">e</span>
+          <span aria-hidden="true" style="--i: 14">c</span>
+          <span aria-hidden="true" style="--i: 15">t</span>
+        </a>
+      </p>
+      <div style="text-align: center;"> 
+      <canvas id="dandelion" width="360" height="200" class="frm-tufts-thin">></canvas>
+      </div>
+    </div>
+    <div class="column">
+      <div class="frm-bricky" style="padding: .5em;">
+        {% if site_photoset and site_photoset.primary and site_photoset.primary.image %}
+        {% with site_photoset.primary as photo %}
+        {% picture photo.image picture_id=photo.html_id picture_class="ui fluid image" %}
+        {% endwith %}
+        {% else %}
+        <div class="ui placeholder segment">
+          <div class="ui icon header">
+            <i class="image outline icon"></i>
+            Artful.One
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+ {% endblock %}
 
+ {% block secondary_class %}class="ui container frm-nested-corner" style="margin-top: 2rem; padding: 20px;"{% endblock %}
 {% block secondary %}
-<h2 class="overband" style="margin-top: 2rem;"><i class="sun icon"></i> Recent Writing</h2>
+<h2 class="overband"><i class="sun icon"></i> Recent Writing</h2>
 
 {% load blog_tags %}
 {% blog_mixed_list_with_dates items day_headers=1 %}
@@ -30,6 +88,11 @@
 <ul>
 {% for entry in entries %}
   <li><a href="{{ entry.get_absolute_url }}">{{ entry }}</a> - {{ entry.created.date }}</li>
+
 {% endfor %}
 </ul>
+{% endblock %}
+
+{% block onDomReady %}
+{% include "sketches/dandelion.js" %}
 {% endblock %}
