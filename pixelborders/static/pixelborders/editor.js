@@ -226,7 +226,7 @@
 
     function updateCss() {
       const imageUrl = renderCanvas();
-      const currentClass = `frm-${slugify(nameInput.value)}`;
+      const currentClass = state.id ? `frm-${state.id}-${slugify(nameInput.value)}` : `frm-${slugify(nameInput.value)}`;
       const css = cssWithImage(state.css, imageUrl).replace(/\.frm-[a-z0-9-]+ \{/, `.${currentClass} {`);
       cssPreview.textContent = css;
       cssPreview.style.borderStyle = "solid";

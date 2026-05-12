@@ -6,7 +6,6 @@ import xml.etree.ElementTree as ET
 from unittest import mock
 
 import pytest
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -72,13 +71,11 @@ class TestBlog:
         assert 'id="contact-brief" name="brief" rows="7" maxlength="4000" required' in decoded_content
 
     def test_contact_page_htmx_post_saves_sends_and_clears_form(self, client, settings):
-        get_user_model().objects.create_user(
-            username="bruce", email="bruce@example.com"
-        )
         settings.MAILGUN_API_KEY = "test-key"
         settings.MAILGUN_DOMAIN = "mg.example.com"
         settings.MAILGUN_API_URL = "https://api.mailgun.test/v3"
         settings.MAILGUN_FROM_EMAIL = "Artful.One Contact <contact@example.com>"
+        settings.CONTACT_EMAIL = "bruce@example.com"
         response_mock = mock.Mock()
         response_mock.json.return_value = {"id": "<mailgun-id>"}
         with mock.patch(

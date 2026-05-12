@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup as Soup
 import cloudflare
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import get_user_model
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models import CharField, Value
@@ -831,18 +830,15 @@ def _send_contact_message(contact_message):
         settings.MAILGUN_API_KEY
         and settings.MAILGUN_DOMAIN
         and settings.MAILGUN_FROM_EMAIL
+        and settings.CONTACT_EMAIL
     ):
-        raise RuntimeError("Mailgun is not configured")
-
-    user = get_user_model().objects.get(username="bruce")
-    if not user.email:
-        raise RuntimeError("User bruce does not have an email address")
+        raise RuntimeError("Contact email delivery is not configured")
 
     url = f"{settings.MAILGUN_API_URL.rstrip('/')}/{settings.MAILGUN_DOMAIN}/messages"
     response = requests.post(
         url,
         auth=("api", settings.MAILGUN_API_KEY),
-        data=_mailgun_contact_payload(contact_message, user.email),
+        data=_mailgun_contact_payload(contact_message, settings.CONTACT_EMAIL),
         timeout=10,
     )
     response.raise_for_status()

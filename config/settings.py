@@ -52,6 +52,7 @@ MAILGUN_FROM_EMAIL = os.environ.get(
     if MAILGUN_DOMAIN
     else "",
 )
+CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
 
 # https://github.com/simonw/simonwillisonblog/issues/498
 SECURE_CROSS_ORIGIN_OPENER_POLICY = False

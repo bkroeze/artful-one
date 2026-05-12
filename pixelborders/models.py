@@ -54,6 +54,8 @@ class PixelBorderDesign(models.Model):
 
     @property
     def css_class_name(self):
+        if self.pk:
+            return f"frm-{self.pk}-{self.slug}"
         return f"frm-{self.slug}"
 
     @property

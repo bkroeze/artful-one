@@ -145,13 +145,13 @@ class PixelBorderDesignViewTests(TestCase):
         self.assertContains(response, reverse("pixelborders:visible_css"))
 
     def test_visible_designs_css_endpoint_includes_data_urls(self):
-        PixelBorderDesign.objects.create(owner=self.owner, name="Copy Me")
+        design = PixelBorderDesign.objects.create(owner=self.owner, name="Copy Me")
         self.client.login(username="owner", password="pw")
         response = self.client.get(reverse("pixelborders:visible_css"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "text/css")
         content = response.content.decode()
-        self.assertIn("frm-copy-me", content)
+        self.assertIn(f"frm-{design.pk}-copy-me", content)
         self.assertIn("data:image/png;base64,", content)
         self.assertNotIn("__PIXEL_BORDER_IMAGE__", content)
 

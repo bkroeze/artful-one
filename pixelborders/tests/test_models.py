@@ -51,10 +51,17 @@ class PixelBorderDesignModelTests(TestCase):
     def test_css_generation(self):
         design = PixelBorderDesign.objects.create(owner=self.user, name="Fancy Frame", border_repeat="round")
         css = generate_css(design, "data:image/png;base64,abc")
-        self.assertIn(".frm-fancy-frame", css)
+        self.assertIn(f".frm-{design.pk}-fancy-frame", css)
         self.assertIn("border-image-source", css)
         self.assertIn("border-image-slice: 7 fill", css)
         self.assertIn("border-image-repeat: round", css)
+
+    def test_css_class_name_is_globally_unique_for_saved_designs(self):
+        other = get_user_model().objects.create_user("other", password="pw")
+        first = PixelBorderDesign.objects.create(owner=self.user, name="Shared")
+        second = PixelBorderDesign.objects.create(owner=other, name="Shared")
+        self.assertEqual(first.slug, second.slug)
+        self.assertNotEqual(first.css_class_name, second.css_class_name)
 
     def test_png_data_url_generation(self):
         pixels = default_pixels()
