@@ -109,7 +109,7 @@ Settings are in `config/settings.py` with environment variable support via `.env
 
 ### Key Settings
 - Uses SQLite by default (`artful-one.db`)
-- Supports PostgreSQL via `DATABASE_URL` environment variable
+- `DATABASE_URL` can point to PostgreSQL or a mounted SQLite path such as Fly's `/data/artful-one.db`
 - Static files served by WhiteNoise with compression
 - Debug toolbar enabled in DEBUG mode
 - django-pictures for responsive images
@@ -138,9 +138,9 @@ Test markers:
 
 ## Static Files and Media
 
-- `STATIC_ROOT`: `staticfiles/` directory
+- `STATIC_ROOT`: defaults to `staticfiles/`; Fly uses `/data/staticfiles`
 - `STATIC_URL`: `/static/`
-- `MEDIA_ROOT`: Project base directory
+- `MEDIA_ROOT`: defaults to project base directory; Fly uses `/data`
 - `MEDIA_URL`: `/`
 - Uses WhiteNoise for static file serving with compression
 
