@@ -224,6 +224,19 @@ class BaseModel(models.Model):
 class Entry(BaseModel):
     title = models.CharField(max_length=255)
     body = models.TextField()
+    photo = models.ForeignKey(
+        "Photo",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="entries",
+        help_text="Optional uploaded photo to display floated at the top of the entry.",
+    )
+    picture_size = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        help_text="Optional django-pictures container width in pixels for the entry photo.",
+    )
     tweet_html = models.TextField(
         blank=True,
         null=True,

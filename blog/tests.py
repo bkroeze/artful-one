@@ -164,6 +164,23 @@ class TestBlog:
         assert "entry.html" in [template.name for template in response.templates]
         assert response.context["entry"].pk == entry.pk
 
+    def test_entry_markdown_tables_render(self, client):
+        entry = EntryFactory(
+            body=(
+                "| Person | Calories |\n"
+                "| --- | --- |\n"
+                "| Bruce | 2,080 |\n"
+                "| Jessica | 1,500 |"
+            ),
+            is_markdown=True,
+        )
+        response = client.get(entry.get_absolute_url())
+        decoded_content = response.content.decode()
+        assert "<table>" in decoded_content
+        assert "<th>Person</th>" in decoded_content
+        assert "<td>Bruce</td>" in decoded_content
+        assert "| Person | Calories |" not in decoded_content
+
     def test_blogmark(self, client):
         blogmark = BlogmarkFactory()
         response = client.get(blogmark.get_absolute_url())
