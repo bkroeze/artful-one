@@ -83,8 +83,8 @@ All content supports `is_draft`.
 
 ## Static, Media, and Images
 
-- `STATIC_ROOT` → `staticfiles/`, `STATIC_URL` = `/static/`
-- `MEDIA_ROOT` is project root, `MEDIA_URL` = `/`
+- `STATIC_ROOT` defaults to `staticfiles/`; Fly sets it to `/data/staticfiles`. `STATIC_URL` = `/static/`.
+- `MEDIA_ROOT` defaults to project root; Fly sets it to `/data`. `MEDIA_URL` = `/`.
 - Static served with WhiteNoise (compressed).
 - Photos are generated via `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities.
 

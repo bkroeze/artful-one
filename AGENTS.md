@@ -109,7 +109,7 @@ Settings are in `config/settings.py` with environment variable support via `.env
 
 ### Key Settings
 - Uses SQLite by default (`artful-one.db`)
-- Supports PostgreSQL via `DATABASE_URL` environment variable
+- `DATABASE_URL` can point to PostgreSQL or a mounted SQLite path such as Fly's `/data/artful-one.db`
 - Static files served by WhiteNoise with compression
 - Debug toolbar enabled in DEBUG mode
 - django-pictures for responsive images
@@ -138,9 +138,9 @@ Test markers:
 
 ## Static Files and Media
 
-- `STATIC_ROOT`: `staticfiles/` directory
+- `STATIC_ROOT`: defaults to `staticfiles/`; Fly uses `/data/staticfiles`
 - `STATIC_URL`: `/static/`
-- `MEDIA_ROOT`: Project base directory
+- `MEDIA_ROOT`: defaults to project base directory; Fly uses `/data`
 - `MEDIA_URL`: `/`
 - Uses WhiteNoise for static file serving with compression
 
@@ -189,9 +189,16 @@ Photos use `PictureField` from django-pictures with:
 Key environment variables (loaded via python-dotenv):
 - `DJANGO_SECRET` - Secret key (uses dev default if not set)
 - `DJANGO_DEBUG` - Enable debug mode
-- `DATABASE_URL` - PostgreSQL connection string (optional)
+- `DATABASE_URL` - Database URL; defaults to SQLite in project root and may point to PostgreSQL or a mounted SQLite path
+- `ALLOWED_HOSTS` - Comma-separated host allowlist
 - `CSRF_TRUSTED_ORIGINS` - Comma-separated list
+- `STATIC_ROOT` - Static collection directory (defaults to `staticfiles/`)
+- `MEDIA_ROOT` - Media file root (defaults to project root)
+- `FILEDROP_BASE_DIR` - Filedrop storage directory (defaults to `filedrop_files/`)
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
+- `SESSION_COOKIE_SECURE` - Require secure session cookies in production
+- `PORT` - Bind port for the Fly/runtime entrypoint (defaults to 8000)
+- `WEB_CONCURRENCY` - Gunicorn worker count for Fly/runtime entrypoint (defaults to 3)
 - `STAGING` - Staging environment flag
 - `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL` - Contact form Mailgun delivery
 - `CONTACT_EMAIL` - Contact form recipient email

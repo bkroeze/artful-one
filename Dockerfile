@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
+    sqlite3 \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,16 +28,17 @@ RUN uv sync --frozen
 # Copy project
 COPY . .
 
-# Collect static files
-RUN uv run manage.py collectstatic --noinput
 RUN uv run llm install llm-openrouter
 
 # Create a non-root user
-RUN useradd -m appuser && chown -R appuser:appuser /app
+RUN chmod +x /app/bin/fly-entrypoint.sh \
+    && useradd -m appuser \
+    && mkdir -p /data \
+    && chown -R appuser:appuser /app /data
 USER appuser
 
 # Expose port
 EXPOSE 8000
 
-# Run gunicorn
-CMD ["uv", "run", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+# Run migrations, collect static files onto the mounted volume, then start gunicorn.
+CMD ["/app/bin/fly-entrypoint.sh"]
