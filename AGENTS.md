@@ -196,6 +196,8 @@ Key environment variables (loaded via python-dotenv):
 - `MEDIA_ROOT` - Media file root (defaults to project root)
 - `FILEDROP_BASE_DIR` - Filedrop storage directory (defaults to `filedrop_files/`)
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
+- `SESSION_COOKIE_SECURE` - Require secure session cookies in production
+- `PORT` - Bind port for the Fly/runtime entrypoint (defaults to 8000)
 - `WEB_CONCURRENCY` - Gunicorn worker count for Fly/runtime entrypoint (defaults to 3)
 - `STAGING` - Staging environment flag
 - `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL` - Contact form Mailgun delivery
