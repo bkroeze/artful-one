@@ -42,8 +42,8 @@ Concise conventions for working in this Django repository.
   - `/atom/entries/`, `/atom/links/`, `/atom/everything/`, `/sitemap.xml`
 - **Do** leave `feedstats.utils.count_subscribers` wrapping feed views.
 - **Do** respect static/media settings:
-  - static: `STATIC_URL=/static/`, `STATIC_ROOT=staticfiles/`
-  - media root at project base, media URL `/`
+  - static: `STATIC_URL=/static/`, `STATIC_ROOT` defaults to `staticfiles/` and may be overridden by environment
+  - media: `MEDIA_ROOT` defaults to project base and may be overridden by environment, `MEDIA_URL=/`
 - **Don't** invent alternate feed/search URLs for existing routes.
 
 ## Testing style
