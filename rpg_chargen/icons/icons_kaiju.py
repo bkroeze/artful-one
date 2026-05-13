@@ -74,10 +74,10 @@ def make_random_kaiju() -> Monster:
     abilities = icons_random_abilities("kaiju")
     stamina = abilities.willpower.level + abilities.strength.level
     features = icons_random_kaiju_features()
-    
+
     power_count = len(features) + len(types)
     powers = icons_random_kaiju_powers(power_count)
-    
+
     return Monster(
         name="Kaiju: ???",
         abilities=abilities,

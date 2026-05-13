@@ -5,20 +5,30 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0012_contactmessage'),
+        ("blog", "0012_contactmessage"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='entry',
-            name='photo',
-            field=models.ForeignKey(blank=True, help_text='Optional uploaded photo to display floated at the top of the entry.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='entries', to='blog.photo'),
+            model_name="entry",
+            name="photo",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Optional uploaded photo to display floated at the top of the entry.",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="entries",
+                to="blog.photo",
+            ),
         ),
         migrations.AddField(
-            model_name='entry',
-            name='picture_size',
-            field=models.PositiveIntegerField(blank=True, help_text='Optional django-pictures container width in pixels for the entry photo.', null=True),
+            model_name="entry",
+            name="picture_size",
+            field=models.PositiveIntegerField(
+                blank=True,
+                help_text="Optional django-pictures container width in pixels for the entry photo.",
+                null=True,
+            ),
         ),
     ]

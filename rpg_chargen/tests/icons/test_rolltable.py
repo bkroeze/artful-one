@@ -1,6 +1,5 @@
 """Tests for the rolltable module."""
 
-
 from rpg_chargen.icons.rolltable import (
     RollTable,
     rolltable_factory,
@@ -49,7 +48,7 @@ def test_rolltable_lookups_dual_die():
         ],
         dice=2,
     )
-    
+
     expected = [
         ["1-2", "1-2", "1-3", "1-6", "1-6", "1-6"],
         ["2-6", "2-6", "2-6", "2-6", "2-6", "2-6"],
@@ -58,7 +57,7 @@ def test_rolltable_lookups_dual_die():
         ["6-1", "6-6", "6-6", "6-6", "6-6", "6-6"],
         ["6-1", "6-6", "6-6", "6-6", "6-6", "6-6"],
     ]
-    
+
     results = [
         [rolltable_lookup(table, (roll1, roll2)) for roll2 in range(1, 7)]
         for roll1 in range(1, 7)

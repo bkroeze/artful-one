@@ -80,7 +80,7 @@ def test_download_expired_token(client, drop_with_file, test_file):
     """Test download with expired token."""
     base_dir = os.path.dirname(test_file)
 
-    token = Token.objects.create(
+    Token.objects.create(
         drop=drop_with_file,
         token_value="expired-token",
         expiration_date=timezone.now() - timedelta(days=1),
@@ -101,7 +101,7 @@ def test_download_usage_exceeded(client, drop_with_file, test_file):
     """Test download when usage limit exceeded."""
     base_dir = os.path.dirname(test_file)
 
-    token = Token.objects.create(
+    Token.objects.create(
         drop=drop_with_file,
         token_value="exceeded-token",
         expiration_date=timezone.now() + timedelta(days=1),
@@ -123,7 +123,7 @@ def test_download_file_not_found(client, drop_with_file):
     """Test download when file doesn't exist on filesystem."""
     base_dir = os.path.dirname(os.path.dirname(drop_with_file.get_full_path()))
 
-    token = Token.objects.create(
+    Token.objects.create(
         drop=drop_with_file,
         token_value="valid-token",
         expiration_date=timezone.now() + timedelta(days=1),
@@ -171,7 +171,7 @@ def test_path_traversal_protection(client):
     """Test that path traversal attacks are blocked."""
     drop = Drop.objects.create(shortname="malicious", filename="../../../etc/passwd")
 
-    token = Token.objects.create(
+    Token.objects.create(
         drop=drop,
         token_value="valid-token",
         expiration_date=timezone.now() + timedelta(days=1),

@@ -2,7 +2,15 @@
 
 import random
 
-from .data.power_tables import NAMES1, NAMES2, NAMES3, NAMES4, NAMES5, NAMES6, NAMES_TYPE_TABLE
+from .data.power_tables import (
+    NAMES1,
+    NAMES2,
+    NAMES3,
+    NAMES4,
+    NAMES5,
+    NAMES6,
+    NAMES_TYPE_TABLE,
+)
 
 
 def random_super_name_type_a() -> str:
@@ -25,7 +33,7 @@ def random_super_name() -> str:
     """Generate a random superhero name."""
     roll = random.randint(1, 10)
     name_type = NAMES_TYPE_TABLE.lookup(roll)
-    
+
     if name_type == "NAMES_A":
         return random_super_name_type_a()
     elif name_type == "NAMES_B":
