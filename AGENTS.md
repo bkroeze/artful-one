@@ -189,8 +189,12 @@ Photos use `PictureField` from django-pictures with:
 Key environment variables (loaded via python-dotenv):
 - `DJANGO_SECRET` - Secret key (uses dev default if not set)
 - `DJANGO_DEBUG` - Enable debug mode
-- `DATABASE_URL` - PostgreSQL connection string (optional)
+- `DATABASE_URL` - Database URL; defaults to SQLite in project root and may point to PostgreSQL or a mounted SQLite path
+- `ALLOWED_HOSTS` - Comma-separated host allowlist
 - `CSRF_TRUSTED_ORIGINS` - Comma-separated list
+- `STATIC_ROOT` - Static collection directory (defaults to `staticfiles/`)
+- `MEDIA_ROOT` - Media file root (defaults to project root)
+- `FILEDROP_BASE_DIR` - Filedrop storage directory (defaults to `filedrop_files/`)
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
 - `STAGING` - Staging environment flag
 - `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL` - Contact form Mailgun delivery
