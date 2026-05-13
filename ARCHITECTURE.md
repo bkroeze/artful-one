@@ -36,10 +36,12 @@ Content models under `blog/` inherit from `BaseModel`, which centralizes common 
 
 Model types:
 
-- `Entry`: standard post with title/body and optional custom template.
+- `Entry`: standard post with title/body, optional custom template, and optional uploaded `Photo` displayed floated at the top with a nullable `picture_size` container width.
 - `Blogmark`: link + title + URL + commentary.
 - `Quotation`: quote + source + optional context.
 - `Note`: short-form, optional title.
+
+Markdown rendering is centralized through the shared `markdownify` filters in `blog.templatetags.blog_tags`, including pipe table support for entry pages and list excerpts.
 
 ## URL Conventions
 
@@ -86,7 +88,7 @@ All content supports `is_draft`.
 - `STATIC_ROOT` defaults to `staticfiles/`; Fly sets it to `/data/staticfiles`. `STATIC_URL` = `/static/`.
 - `MEDIA_ROOT` defaults to project root; Fly sets it to `/data`. `MEDIA_URL` = `/`.
 - Static served with WhiteNoise (compressed).
-- Photos are generated via `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities.
+- Photos are generated via `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities. Entries may reference an uploaded `Photo` and pass `picture_size` as the rendered container width.
 
 ## Middleware/Helpers to Know
 

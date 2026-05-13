@@ -93,10 +93,12 @@ All blog content inherits from `BaseModel` which provides:
 - `series` - Optional ForeignKey to Series
 - `is_draft` - Boolean flag for draft status
 
-**Entry**: Blog posts with title, body, optional custom template
+**Entry**: Blog posts with title, body, optional custom template, and optional uploaded `Photo` displayed floated at the top with nullable `picture_size` width
 **Blogmark**: Links with commentary (title, URL, commentary)
 **Quotation**: Quotes with source and optional context
 **Note**: Short-form content with optional title
+
+Markdown entries render through the shared `markdownify` filters, including pipe table support on entry pages and list excerpts.
 
 ### URL Structure
 Content URLs follow the pattern: `/{YYYY}/{Mon}/{D}/{slug}/`
@@ -144,7 +146,7 @@ Test markers:
 - `MEDIA_URL`: `/`
 - Uses WhiteNoise for static file serving with compression
 
-Photos are stored in the `photos/` directory with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities).
+Photos are stored in the `photos/` directory with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Entries can reference uploaded photos and use `picture_size` as the rendered container width.
 
 ## Feeds and Syndication
 
@@ -177,6 +179,7 @@ Photos use `PictureField` from django-pictures with:
 - Multiple aspect ratios: [None, "1/1", "3/2", "16/9"]
 - AVIF format output
 - Pixel densities: [1, 2]
+- Optional entry-level photo rendering via `Entry.photo` and `Entry.picture_size`
 
 ### Middleware
 - `django_htmx.middleware.HtmxMiddleware` - Adds `request.htmx` for HTMX fragment responses
