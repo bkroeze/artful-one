@@ -58,7 +58,7 @@ MAILGUN_FROM_EMAIL = os.environ.get(
 CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
 
 # https://github.com/simonw/simonwillisonblog/issues/498
-SECURE_CROSS_ORIGIN_OPENER_POLICY = False
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "unsafe-none"
 
 # SESSION_COOKIE_DOMAIN
 if os.environ.get("SESSION_COOKIE_DOMAIN"):

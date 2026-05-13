@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
+    gosu \
     sqlite3 \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
@@ -35,7 +36,6 @@ RUN chmod +x /app/bin/fly-entrypoint.sh \
     && useradd -m appuser \
     && mkdir -p /data \
     && chown -R appuser:appuser /app /data
-USER appuser
 
 # Expose port
 EXPOSE 8000

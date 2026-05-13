@@ -12,9 +12,10 @@ primary_region = "lax"
   FILEDROP_BASE_DIR = "/data/filedrop_files"
   CSRF_TRUSTED_ORIGINS = "https://artful.one,https://artful-one.fly.dev"
   SESSION_COOKIE_SECURE = "true"
-  ALLOWED_HOSTS = "artful.one,artful-one.fly.dev"
+  ALLOWED_HOSTS = "artful.one,artful-one.fly.dev,*"
   PORT = "8000"
   PYTHONUNBUFFERED = "1"
+  WEB_CONCURRENCY = "1"
 
 [[mounts]]
   source = "artful_one_data"
@@ -34,3 +35,8 @@ primary_region = "lax"
     grace_period = "20s"
     method = "GET"
     path = "/health/"
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
