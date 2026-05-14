@@ -42,10 +42,14 @@
   background: #ffefc4;
 }
 
-.artistic .title-font,
+.artistic .title-font {
+  font-family: "Megrim", serif;
+  font-weight: 400;
+  font-style: normal;
+}
 .artistic .masthead .ui.menu,
 .artistic .ui.input>input {
-  font-family: "Megrim", system-ui;
+  font-family: "Antic Didone", serif;
   font-weight: 400;
   font-style: normal;
 }
