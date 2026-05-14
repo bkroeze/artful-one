@@ -76,6 +76,7 @@ dependencies = [
     { name = "llm" },
     { name = "llm-openrouter" },
     { name = "markdown" },
+    { name = "pixel-borders" },
     { name = "psycopg2-binary" },
     { name = "pyspellchecker" },
     { name = "pytest" },
@@ -120,6 +121,7 @@ requires-dist = [
     { name = "llm", specifier = ">=0.28" },
     { name = "llm-openrouter", specifier = ">=0.5" },
     { name = "markdown", specifier = "==3.7" },
+    { name = "pixel-borders", git = "https://github.com/bkroeze/pixel-border-creator.git?rev=v0.1.1" },
     { name = "psycopg2-binary", specifier = ">=2.9.11" },
     { name = "pyspellchecker", specifier = "==0.8.2" },
     { name = "pytest", specifier = "==8.3.4" },
@@ -987,16 +989,16 @@ wheels = [
 
 [[package]]
 name = "llm-openrouter"
-version = "0.5"
+version = "0.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
     { name = "llm" },
     { name = "openai" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/36/bd3fd40317982b4405a855f236582ca5f7834f8bf42b004b328bb31514bc/llm_openrouter-0.5.tar.gz", hash = "sha256:9edc30cb104ab482ab55cd6922715860405a2900e8b51190facf0b7747051a7b", size = 12934, upload-time = "2025-09-20T23:44:22.239Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f1/84/2ecd67f3e139029aebb467e91803c7c257293fa99491576fdb7e6a97f64f/llm_openrouter-0.6.tar.gz", hash = "sha256:0deed08952559f13dfa0685eb74f08cf18f351efc903717aeca941777f813c6b", size = 13139, upload-time = "2026-04-20T18:01:25.127Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/3c/3f4cc507dfb3ef6639b5e25db22aee7a51372c461cfe7d4bccb4d4ac7e92/llm_openrouter-0.5-py3-none-any.whl", hash = "sha256:293b74486ccac3763706baeabde82886625503bd1d5f86ba09fda33016eda3c7", size = 12211, upload-time = "2025-09-20T23:44:20.933Z" },
+    { url = "https://files.pythonhosted.org/packages/a4/c1/d734602cc40c619aaf6c0b7ff7c149d569eef4f07c669c08a46d6d60fdf9/llm_openrouter-0.6-py3-none-any.whl", hash = "sha256:8246be2f69031b17a1eae5e8893a75dcaf4cf7a77b82204cdfd6ed010c3ce5a8", size = 12350, upload-time = "2026-04-20T18:01:23.627Z" },
 ]
 
 [[package]]
@@ -1219,6 +1221,17 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/48/83/0d7d4e9efe3344b8e2fe25d93be44f64b65364d3c8d7bc6dc90198d5422e/pip-26.0.1.tar.gz", hash = "sha256:c4037d8a277c89b320abe636d59f91e6d0922d08a05b60e85e53b296613346d8", size = 1812747, upload-time = "2026-02-05T02:20:18.702Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/de/f0/c81e05b613866b76d2d1066490adf1a3dbc4ee9d9c839961c3fc8a6997af/pip-26.0.1-py3-none-any.whl", hash = "sha256:bdb1b08f4274833d62c1aa29e20907365a2ceb950410df15fc9521bad440122b", size = 1787723, upload-time = "2026-02-05T02:20:16.416Z" },
+]
+
+[[package]]
+name = "pixel-borders"
+version = "0.1.1"
+source = { git = "https://github.com/bkroeze/pixel-border-creator.git?rev=v0.1.1#a6f439d60197eaf05d7e5b8a0761efe83d435d2b" }
+dependencies = [
+    { name = "django" },
+    { name = "django-htmx" },
+    { name = "llm" },
+    { name = "llm-openrouter" },
 ]
 
 [[package]]

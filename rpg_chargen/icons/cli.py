@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
+from typing import Any, Callable, Optional
 
 import typer
 from jinja2 import Environment, FileSystemLoader
@@ -55,7 +55,7 @@ console = Console()
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 
-CREATURE_REGISTRY: dict[str, callable] = {
+CREATURE_REGISTRY: dict[str, Callable[[], Any]] = {
     "bear": make_bear,
     "cat": make_cat,
     "cheetah": make_cheetah,

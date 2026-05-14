@@ -1,6 +1,8 @@
-from django.test import TestCase
-from django.template.loader import render_to_string
-from django.urls import reverse
+from unittest import mock
+
+from django.test import TestCase  # type: ignore[import-untyped]
+from django.template.loader import render_to_string  # type: ignore[import-untyped]
+from django.urls import reverse  # type: ignore[import-untyped]
 
 
 class RpgChargenPageTests(TestCase):
@@ -77,3 +79,52 @@ class RpgChargenPageTests(TestCase):
         self.assertIn('hx-include="#character-details-retry-values"', rendered)
         self.assertIn('name="character_name" value="Moon Loom"', rendered)
         self.assertIn("## Moon Loom", rendered)
+
+    @mock.patch("rpg_chargen.views.NameGenerator.generate_with_llm")
+    def test_generate_names_llm_failure_returns_clean_error(self, generate_mock):
+        generate_mock.side_effect = RuntimeError(
+            "OpenRouter rejected key sk-secret-example"
+        )
+
+        with self.assertLogs("rpg_chargen.views", level="ERROR") as logs:
+            response = self.client.post(
+                reverse("rpg_chargen:generate_names"),
+                {"num_names": "3", "genre": "Superhero"},
+                HTTP_HX_REQUEST="true",
+            )
+
+        content = response.content.decode()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Could not generate names", content)
+        self.assertIn("Error reference:", content)
+        self.assertNotIn("sk-secret-example", content)
+        self.assertIn("RPG chargen name generation failed", "\n".join(logs.output))
+        self.assertNotIn("sk-secret-example", "\n".join(logs.output))
+        self.assertIn("exception_type=RuntimeError", "\n".join(logs.output))
+
+    @mock.patch("rpg_chargen.views.CharacterGenerator.generate")
+    def test_generate_details_llm_failure_returns_clean_error(self, generate_mock):
+        generate_mock.side_effect = TimeoutError("provider timeout after 30s")
+
+        with self.assertLogs("rpg_chargen.views", level="ERROR") as logs:
+            response = self.client.post(
+                reverse("rpg_chargen:generate_details"),
+                {
+                    "character_name": "Moon Loom",
+                    "tagline": "Weaves moonlight",
+                    "description": "A nocturnal defender",
+                    "genre": "Superhero",
+                },
+                HTTP_HX_REQUEST="true",
+            )
+
+        content = response.content.decode()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Could not generate character details", content)
+        self.assertIn("Error reference:", content)
+        self.assertNotIn("provider timeout after 30s", content)
+        self.assertIn(
+            "RPG chargen character detail generation failed", "\n".join(logs.output)
+        )
+        self.assertNotIn("provider timeout after 30s", "\n".join(logs.output))
+        self.assertIn("exception_type=TimeoutError", "\n".join(logs.output))

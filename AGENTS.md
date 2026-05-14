@@ -76,7 +76,7 @@ uv run manage.py import_blog_xml --xmldir <path>
   - All content types inherit from `BaseModel` (created, tags, slug, metadata, series, is_draft)
 - `monthly/` - Monthly archives functionality
 - `feedstats/` - Feed subscriber tracking
-- `pixelborders/` - Pixel border editor, saved designs, generated CSS, and AI-assisted frame generation
+- Pixel border editor - Provided by the external `pixel-borders` dependency, with site-level template overrides under `templates/pixelborders/`
 - `photos/` - Photo storage directory (contains AVIF/JPG files)
 - `templates/` - Django templates
 - `static/` - Static assets (CSS, JS)

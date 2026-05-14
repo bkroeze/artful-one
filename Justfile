@@ -31,3 +31,10 @@ compile-sketches-clear:
 
 icons *args:
   uv run python -m rpg_chargen.icons.cli {{args}}
+
+fly-deploy:
+    flyctl deploy --app artful-one --remote-only
+
+fly-logs:
+    fly logs --app artful-one
+

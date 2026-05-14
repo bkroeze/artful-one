@@ -14,7 +14,7 @@ Artful.One is a Django personal blog site. It manages multiple content types (en
 - `blog/` — Core models, views, feeds, templates context, and content behavior.
 - `monthly/` — Monthly archive app.
 - `feedstats/` — Feed subscriber tracking and analytics.
-- `pixelborders/` — Authenticated pixel border editor, saved border designs, generated CSS, and AI-assisted frame generation.
+- Pixel border editor — Provided by the external `pixel-borders` dependency and mounted into the site.
 - `templates/` — Shared and app templates.
 - `static/` — Source assets.
 - `staticfiles/` — Collected/static build output.
@@ -51,11 +51,7 @@ Markdown rendering is centralized through the shared `markdownify` filters in `b
 
 ## Pixel Borders
 
-`pixelborders/` owns `PixelBorderDesign`, editor views, HTMX fragments, and CSS export for saved border-image frames.
-
-- Designs are owner-scoped, may be public, and store dimensions, repeat mode, palette, and pixel grid JSON.
-- CSS is generated from saved designs as `border-image` rules with embedded PNG data URLs for export/use elsewhere.
-- AI frame generation is centralized in `pixelborders.ai.generate_frame()` and uses the `llm` package with `PIXELBORDERS_LLM_MODEL` (default: `gpt-5-mini`); configure the matching provider credentials in the runtime environment.
+The `/borders/` editor is supplied by the external `pixel-borders` package. This project keeps only site-level integration such as URL mounting, dependency pinning, and template overrides.
 
 ## Contact Form
 

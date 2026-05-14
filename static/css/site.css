@@ -251,8 +251,17 @@
     }
 }
 
+.heavy-header h2,
+.heavy-header h3,
+.heavy-header h4,
+.heavy-header strong {
+  font-family: "Antic Didone";
+  font-weight: bold;
+}
+
 body h2,
 body h3,
+body h4,
 body h3.ui.header {
   font-family: "Antic Didone";
   font-weight: 400;
