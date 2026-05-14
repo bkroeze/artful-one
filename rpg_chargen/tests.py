@@ -1,8 +1,8 @@
 from unittest import mock
 
-from django.test import TestCase
-from django.template.loader import render_to_string
-from django.urls import reverse
+from django.test import TestCase  # type: ignore[import-untyped]
+from django.template.loader import render_to_string  # type: ignore[import-untyped]
+from django.urls import reverse  # type: ignore[import-untyped]
 
 
 class RpgChargenPageTests(TestCase):
