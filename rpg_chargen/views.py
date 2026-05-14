@@ -25,7 +25,7 @@ def _generation_error_response(action, error_id):
     return HttpResponse(
         (
             '<div class="ui error message" role="alert">'
-            f"<div class=\"header\">Could not {escape(action)}</div>"
+            f'<div class="header">Could not {escape(action)}</div>'
             "<p>The model request failed before a usable result was returned. "
             "Please try again in a moment.</p>"
             f"<p><small>Error reference: {escape(error_id)}</small></p>"
