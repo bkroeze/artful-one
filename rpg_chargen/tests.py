@@ -99,9 +99,8 @@ class RpgChargenPageTests(TestCase):
         self.assertIn("Error reference:", content)
         self.assertNotIn("sk-secret-example", content)
         self.assertIn("RPG chargen name generation failed", "\n".join(logs.output))
-        self.assertIn(
-            "OpenRouter rejected key sk-secret-example", "\n".join(logs.output)
-        )
+        self.assertNotIn("sk-secret-example", "\n".join(logs.output))
+        self.assertIn("exception_type=RuntimeError", "\n".join(logs.output))
 
     @mock.patch("rpg_chargen.views.CharacterGenerator.generate")
     def test_generate_details_llm_failure_returns_clean_error(self, generate_mock):
@@ -127,4 +126,5 @@ class RpgChargenPageTests(TestCase):
         self.assertIn(
             "RPG chargen character detail generation failed", "\n".join(logs.output)
         )
-        self.assertIn("provider timeout after 30s", "\n".join(logs.output))
+        self.assertNotIn("provider timeout after 30s", "\n".join(logs.output))
+        self.assertIn("exception_type=TimeoutError", "\n".join(logs.output))

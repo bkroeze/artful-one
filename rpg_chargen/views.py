@@ -15,13 +15,8 @@ log = logging.getLogger(__name__)
 
 
 def _summarize_exception(exc):
-    """Return a concise exception summary for logs without traceback text."""
-    message = str(exc).strip()
-    if len(message) > 500:
-        message = message[:497] + "..."
     return {
         "type": exc.__class__.__name__,
-        "message": message or repr(exc),
     }
 
 
@@ -49,12 +44,11 @@ def _log_generation_exception(action, request, exc, **context):
         "user_agent": request.headers.get("User-Agent", "")[:200],
         **context,
     }
-    log.exception(
-        "RPG chargen %s failed error_id=%s exception_type=%s exception_message=%r context=%r",
+    log.error(
+        "RPG chargen %s failed error_id=%s exception_type=%s context=%r",
         action,
         error_id,
         exc_summary["type"],
-        exc_summary["message"],
         request_context,
     )
     return error_id
