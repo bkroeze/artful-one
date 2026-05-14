@@ -2,14 +2,62 @@
 
 import logging
 import os
+import uuid
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.utils.html import escape
 from django.views.decorators.csrf import csrf_exempt
 
 from rpg_chargen.generator import NameGenerator, CharacterGenerator, GENRES
 
 log = logging.getLogger(__name__)
+
+
+def _summarize_exception(exc):
+    """Return a concise exception summary for logs without traceback text."""
+    message = str(exc).strip()
+    if len(message) > 500:
+        message = message[:497] + "..."
+    return {
+        "type": exc.__class__.__name__,
+        "message": message or repr(exc),
+    }
+
+
+def _generation_error_response(action, error_id):
+    """HTML fragment HTMX can swap into the target panel."""
+    return HttpResponse(
+        (
+            '<div class="ui error message" role="alert">'
+            f"<div class=\"header\">Could not {escape(action)}</div>"
+            "<p>The model request failed before a usable result was returned. "
+            "Please try again in a moment.</p>"
+            f"<p><small>Error reference: {escape(error_id)}</small></p>"
+            "</div>"
+        ),
+        status=200,
+    )
+
+
+def _log_generation_exception(action, request, exc, **context):
+    error_id = uuid.uuid4().hex[:12]
+    exc_summary = _summarize_exception(exc)
+    request_context = {
+        "path": request.path,
+        "is_htmx": request.headers.get("HX-Request") == "true",
+        "user_agent": request.headers.get("User-Agent", "")[:200],
+        **context,
+    }
+    log.exception(
+        "RPG chargen %s failed error_id=%s exception_type=%s exception_message=%r context=%r",
+        action,
+        error_id,
+        exc_summary["type"],
+        exc_summary["message"],
+        request_context,
+    )
+    return error_id
 
 
 def supers_page(request):
@@ -61,10 +109,15 @@ def htmx_generate_names(request):
         return render(request, "rpg_chargen/partials/characters_table.html", context)
 
     except Exception as e:
-        return HttpResponse(
-            f'<div class="ui error message">Error generating names: {str(e)}</div>',
-            status=500,
+        error_id = _log_generation_exception(
+            "name generation",
+            request,
+            e,
+            endpoint="htmx_generate_names",
+            num_names=request.POST.get("num_names"),
+            genre=request.POST.get("genre"),
         )
+        return _generation_error_response("generate names", error_id)
 
 
 @csrf_exempt
@@ -107,10 +160,17 @@ def htmx_generate_details(request):
         return render(request, "rpg_chargen/partials/character_details.html", context)
 
     except Exception as e:
-        return HttpResponse(
-            f'<div class="ui error message">Error generating character details: {str(e)}</div>',
-            status=500,
+        error_id = _log_generation_exception(
+            "character detail generation",
+            request,
+            e,
+            endpoint="htmx_generate_details",
+            character_name=request.POST.get("character_name"),
+            genre=request.POST.get("genre"),
+            tagline_length=len(request.POST.get("tagline", "")),
+            description_length=len(request.POST.get("description", "")),
         )
+        return _generation_error_response("generate character details", error_id)
 
 
 def icons_page(request):
