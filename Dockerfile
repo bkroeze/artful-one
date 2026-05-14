@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
+    git \
     gosu \
     sqlite3 \
     postgresql-client \
