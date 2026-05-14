@@ -15,10 +15,11 @@ def pair_equal_or_less(a: tuple[int, int], b: tuple[int, int]) -> bool:
 @dataclass
 class RollTable:
     """A lookup table for dice rolls.
-    
+
     For single die (dice=1): keys are max values (e.g., key=3 matches rolls 1-3)
     For dual die (dice=2): keys are (x,y) pairs, matches using pair_equal_or_less
     """
+
     table: dict[RollValue, Any] = field(default_factory=dict)
     dice: int = 2
     roller: Optional[Callable[[], RollValue]] = None
@@ -33,12 +34,12 @@ class RollTable:
 
     def lookup(self, roll: RollValue) -> Any:
         """Get the table entry for a roll.
-        
+
         For single die: finds first key >= roll
         For dual die: finds first key where pair_equal_or_less(roll, key)
         """
         sorted_keys = self._sorted_keys()
-        
+
         if self.dice == 1:
             for key in sorted_keys:
                 if roll <= key:  # type: ignore
@@ -47,7 +48,7 @@ class RollTable:
             for key in sorted_keys:
                 if pair_equal_or_less(roll, key):  # type: ignore
                     return self.table[key]
-        
+
         return None
 
     def multiple_lookup(self, rolls: Sequence[RollValue]) -> list[Any]:

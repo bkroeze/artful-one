@@ -100,15 +100,17 @@ def get_ability_modifier(origin: str, key: str) -> Optional[Modifier]:
     return None
 
 
-def make_ability(level: int, origin: Optional[str] = None, key: Optional[str] = None) -> Ability:
+def make_ability(
+    level: int, origin: Optional[str] = None, key: Optional[str] = None
+) -> Ability:
     effective = min(10, level)
     ability = Ability(base=effective, level=effective)
-    
+
     if origin and key:
         mod = get_ability_modifier(origin, key)
         if mod:
             ability.add_modifier(mod)
-    
+
     return ability
 
 
@@ -158,15 +160,25 @@ class Super:
 
     def __post_init__(self) -> None:
         if self.stamina == 0:
-            self.stamina = self.abilities.willpower.level + self.abilities.strength.level
+            self.stamina = (
+                self.abilities.willpower.level + self.abilities.strength.level
+            )
 
     def __repr__(self) -> str:
         return f"Super({self.name}, Origin: {self.origin})"
 
 
 LEVELS_DESCRIPTIONS = [
-    "Weak", "Poor", "Average", "Fair", "Good",
-    "Great", "Incredible", "Amazing", "Fantastic", "Supreme",
+    "Weak",
+    "Poor",
+    "Average",
+    "Fair",
+    "Good",
+    "Great",
+    "Incredible",
+    "Amazing",
+    "Fantastic",
+    "Supreme",
 ]
 
 
@@ -306,10 +318,10 @@ def icons_random_gender() -> str:
 def icons_random_ethnicity(recursing: bool = False) -> str | list[str]:
     roll = two_d6()
     ethnicity: str = BG_ETHNICITY.lookup(roll)
-    
+
     if recursing or roll < 12:
         return ethnicity
-    
+
     results: list[str] = []
     while True:
         next_eth = icons_random_ethnicity(True)
@@ -362,19 +374,19 @@ def icons_random_tragedy_result() -> str:
 def icons_random_tragedy() -> Optional[str]:
     if d6() > 3:
         return None
-    
+
     scope_roll = d6()
     roll1 = d6()
     roll2 = d6()
-    
+
     tragedy: str = BG_FAMILY_TRAGEDIES.lookup((roll1, roll2))
-    
+
     prefix = (
         "The character's entire family was "
         if scope_roll > 4
         else "One or more family members were "
     )
-    
+
     if roll1 > 3 and roll2 == 1:
         return prefix + tragedy + icons_random_tragedy_result()
     return prefix + tragedy
@@ -404,7 +416,7 @@ def icons_random_bad_experience() -> PastExperience:
 
 def icons_random_past_experience() -> PastExperience:
     exp_type = BG_PAST_EXPERIENCE_TYPE.lookup(d6())
-    
+
     if exp_type == "friend_foe":
         return icons_random_friend_foe()
     elif exp_type == "good_experience":
@@ -429,10 +441,10 @@ def icons_random_super() -> Super:
     powers = icons_random_powerset(origin)
     abilities = icons_random_abilities(origin)
     age = icons_random_age()
-    
+
     stamina = abilities.willpower.level + abilities.strength.level
     determination = calculate_determination(powers, abilities)
-    
+
     return Super(
         name=random_super_name(),
         origin=origin,

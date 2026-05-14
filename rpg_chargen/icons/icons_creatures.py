@@ -8,7 +8,9 @@ def _ability(val: int) -> Ability:
     return Ability(base=val, level=val)
 
 
-def _abilities(pro: int, coo: int, strength: int, intellect: int, awa: int, wil: int) -> Abilities:
+def _abilities(
+    pro: int, coo: int, strength: int, intellect: int, awa: int, wil: int
+) -> Abilities:
     return Abilities(
         prowess=_ability(pro),
         coordination=_ability(coo),

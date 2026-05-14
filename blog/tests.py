@@ -6,10 +6,11 @@ import xml.etree.ElementTree as ET
 from unittest import mock
 
 import pytest
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
 from django.utils.text import slugify
 
-from blog.models import ContactMessage, PreviousTagName, Tag
+from blog.models import ContactMessage, Photo, PreviousTagName, Tag
 from blog.templatetags.entry_tags import do_typography_string
 
 from .factories import BlogmarkFactory, EntryFactory, NoteFactory, QuotationFactory
@@ -163,6 +164,46 @@ class TestBlog:
         response = client.get(entry.get_absolute_url())
         assert "entry.html" in [template.name for template in response.templates]
         assert response.context["entry"].pk == entry.pk
+
+    def test_entry_markdown_tables_render(self, client):
+        entry = EntryFactory(
+            body=(
+                "| Person | Calories |\n"
+                "| --- | --- |\n"
+                "| Bruce | 2,080 |\n"
+                "| Jessica | 1,500 |"
+            ),
+            is_markdown=True,
+        )
+        response = client.get(entry.get_absolute_url())
+        decoded_content = response.content.decode()
+        assert "<table>" in decoded_content
+        assert "<th>Person</th>" in decoded_content
+        assert "<td>Bruce</td>" in decoded_content
+        assert "| Person | Calories |" not in decoded_content
+
+    def test_entry_photo_renders_floated_picture(self, client):
+        photo = Photo.objects.create(
+            title="Kiln Shelf",
+            image=SimpleUploadedFile(
+                "kiln.gif",
+                (
+                    b"GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00"
+                    b"\xff\xff\xff,\x00\x00\x00\x00\x01\x00\x01\x00"
+                    b"\x00\x02\x02D\x01\x00;"
+                ),
+                content_type="image/gif",
+            ),
+        )
+        entry = EntryFactory(photo=photo, picture_size=320)
+
+        response = client.get(entry.get_absolute_url())
+        decoded_content = response.content.decode()
+
+        assert 'class="entry-photo frm-blocky-picture"' in decoded_content
+        assert 'style="--entry-photo-width: 320px;"' in decoded_content
+        assert f'id="{photo.html_id}"' in decoded_content
+        assert 'alt="Kiln Shelf"' in decoded_content
 
     def test_blogmark(self, client):
         blogmark = BlogmarkFactory()

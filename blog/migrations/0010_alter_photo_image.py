@@ -6,15 +6,30 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0009_entry_is_markdown_alter_photo_image'),
+        ("blog", "0009_entry_is_markdown_alter_photo_image"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='photo',
-            name='image',
-            field=pictures.models.PictureField(aspect_ratios=[None, '1/1', '3/2', '16/9'], blank=True, breakpoints={'l': 1200, 'm': 992, 's': 768, 'xl': 1400, 'xs': 576}, container_width=1200, file_types=['AVIF'], grid_columns=12, height_field='height', null=True, pixel_densities=[1, 2], storage=django.contrib.staticfiles.storage.StaticFilesStorage(base_url='/static/', location='/home/bruce/Documents/projects/artful-one-django/config/../staticfiles'), upload_to='photos', width_field='width'),
+            model_name="photo",
+            name="image",
+            field=pictures.models.PictureField(
+                aspect_ratios=[None, "1/1", "3/2", "16/9"],
+                blank=True,
+                breakpoints={"l": 1200, "m": 992, "s": 768, "xl": 1400, "xs": 576},
+                container_width=1200,
+                file_types=["AVIF"],
+                grid_columns=12,
+                height_field="height",
+                null=True,
+                pixel_densities=[1, 2],
+                storage=django.contrib.staticfiles.storage.StaticFilesStorage(
+                    base_url="/static/",
+                    location="/home/bruce/Documents/projects/artful-one-django/config/../staticfiles",
+                ),
+                upload_to="photos",
+                width_field="width",
+            ),
         ),
     ]

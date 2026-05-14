@@ -61,6 +61,7 @@ class EntryAdmin(BaseAdmin):
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "body")
     list_filter = ("created", "series")
+    autocomplete_fields = BaseAdmin.autocomplete_fields + ("photo",)
 
 
 @admin.register(LiveUpdate)

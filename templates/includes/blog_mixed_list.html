@@ -1,4 +1,4 @@
-{% load entry_tags %}{% load humanize %}
+{% load entry_tags %}{% load humanize %}{% load blog_tags %}
 <div class="ui items">
 {% for item in items %}
 <div class="item-stripe{% if not forloop.first %}-bottom{% endif %}">
@@ -27,12 +27,16 @@
     <a class="header" href="{{ item.obj.get_absolute_url }}" rel="bookmark">{{ item.obj.title|typography }}</a>
     <div class="description">
       <p>
-        {{ item.obj.body|split_cutoff|xhtml|remove_context_paragraph|first_paragraph|typography|xhtml2html }}
-        {% if item.obj.multi_paragraph %}<span style="font-size: 0.9em">[... <a href="{{ item.obj.get_absolute_url }}">{{ item.obj.body|wordcount|intcomma }} word{{ item.obj.body|wordcount|pluralize }}</a>]</span>{% endif %}
+        {% if item.obj.is_markdown %}
+          {{ item.obj.body|split_cutoff|markdownify|xhtml|typography|xhtml2html }}
+        {% else %}
+          {{ item.obj.body|split_cutoff|xhtml|remove_context_paragraph|first_paragraph|typography|xhtml2html }}
+        {% endif %}
+        <p><a href="{{ item.obj.get_absolute_url }}">Read more &hellip;</a></p>
+        {% if item.obj.multi_paragraph %}
+        <span style="font-size: 0.9em">[... <a href="{{ item.obj.get_absolute_url }}">{{ item.obj.body|wordcount|intcomma }} word{{ item.obj.body|wordcount|pluralize }}</a>]</span>
+        {% endif %}
       </p>
-    </div>
-    <div class="extra">
-      {% if showdate %}{% entry_footer item.obj %}{% else %}{% entry_footer_no_date item.obj %}{% endif %}
     </div>
   </div>
 </div>

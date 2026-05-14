@@ -41,13 +41,13 @@ class Command(BaseCommand):
         ts_files = [
             f
             for f in sketches_dir.rglob("*.ts")
-            if "lib" not in f.parts and "node_modules" not in f.parts and not f.name.endswith(".d.ts")
+            if "lib" not in f.parts
+            and "node_modules" not in f.parts
+            and not f.name.endswith(".d.ts")
         ]
 
         if not ts_files:
-            self.stdout.write(
-                self.style.WARNING("No TypeScript sketch files found")
-            )
+            self.stdout.write(self.style.WARNING("No TypeScript sketch files found"))
             return
 
         self.stdout.write(f"Found {len(ts_files)} sketch(es) to compile")
@@ -62,9 +62,7 @@ class Command(BaseCommand):
                 ts_mtime = ts_file.stat().st_mtime
                 js_mtime = js_file.stat().st_mtime
                 if ts_mtime <= js_mtime:
-                    self.stdout.write(
-                        f"  Skipping {slug} (already up to date)"
-                    )
+                    self.stdout.write(f"  Skipping {slug} (already up to date)")
                     continue
 
             # Compile using esbuild
@@ -72,14 +70,10 @@ class Command(BaseCommand):
                 compiled += 1
                 self.stdout.write(f"  Compiled {slug}")
             else:
-                self.stdout.write(
-                    self.style.ERROR(f"  Failed to compile {slug}")
-                )
+                self.stdout.write(self.style.ERROR(f"  Failed to compile {slug}"))
 
         self.stdout.write(
-            self.style.SUCCESS(
-                f"\nDone! Compiled {compiled} sketch(es)."
-            )
+            self.style.SUCCESS(f"\nDone! Compiled {compiled} sketch(es).")
         )
         if watch:
             self.stdout.write("\nWatch mode not fully implemented yet.")
@@ -101,11 +95,7 @@ class Command(BaseCommand):
         try:
             from subprocess import check_output, CalledProcessError
         except ImportError:
-            self.stdout.write(
-                self.style.ERROR(
-                    "subprocess module not available"
-                )
-            )
+            self.stdout.write(self.style.ERROR("subprocess module not available"))
             return False
 
         # Ensure output directory exists

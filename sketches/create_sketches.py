@@ -1,4 +1,5 @@
 """One-off script to create initial Sketch objects."""
+
 from sketches.models import Sketch
 
 
@@ -11,7 +12,7 @@ def create_initial_sketches():
         ("neural-claude", "Neural Claude"),
         ("lins-with-patterns", "Lins with Patterns"),
     ]
-    
+
     created_count = 0
     for slug, name in sketches_data:
         if not Sketch.objects.filter(slug=slug).exists():

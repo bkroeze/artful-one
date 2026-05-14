@@ -11,7 +11,6 @@ def set_existing_entries_to_false(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("blog", "0008_photo_slug_maker"),
     ]

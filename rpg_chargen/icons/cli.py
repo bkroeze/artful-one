@@ -115,22 +115,26 @@ def render_monster(monster_obj: object) -> str:
 
 @app.command("character")
 def generate_character(
-    count: int = typer.Option(1, "--count", "-n", help="Number of characters to generate"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file path"),
+    count: int = typer.Option(
+        1, "--count", "-n", help="Number of characters to generate"
+    ),
+    output: Optional[Path] = typer.Option(
+        None, "--output", "-o", help="Output file path"
+    ),
 ) -> None:
     """Generate random ICONS superhero character(s)."""
     results: list[str] = []
-    
+
     for i in range(count):
         character = icons_random_super()
         rendered = render_character(character)
         results.append(rendered)
-        
+
         if count > 1 and i < count - 1:
             results.append("\n" + "=" * 40 + "\n")
-    
+
     output_text = "".join(results)
-    
+
     if output:
         output.write_text(output_text)
         console.print(f"[green]Generated {count} character(s) to {output}[/green]")
@@ -144,9 +148,15 @@ def generate_monster(
         "kaiju",
         help="Type of monster: 'kaiju' or a creature name (e.g., 'bear', 'wolf', 'tyrannosaur')",
     ),
-    count: int = typer.Option(1, "--count", "-n", help="Number of monsters to generate"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file path"),
-    list_creatures: bool = typer.Option(False, "--list", "-l", help="List available creature types"),
+    count: int = typer.Option(
+        1, "--count", "-n", help="Number of monsters to generate"
+    ),
+    output: Optional[Path] = typer.Option(
+        None, "--output", "-o", help="Output file path"
+    ),
+    list_creatures: bool = typer.Option(
+        False, "--list", "-l", help="List available creature types"
+    ),
 ) -> None:
     """Generate ICONS monsters (kaiju or predefined creatures)."""
     if list_creatures:
@@ -155,9 +165,9 @@ def generate_monster(
             console.print(f"  - {name}")
         console.print("\n  - kaiju (random)")
         return
-    
+
     results: list[str] = []
-    
+
     for i in range(count):
         if monster_type == "kaiju":
             monster = make_random_kaiju()
@@ -167,15 +177,15 @@ def generate_monster(
             console.print(f"[red]Unknown monster type: {monster_type}[/red]")
             console.print("Use --list to see available creature types")
             raise typer.Exit(1)
-        
+
         rendered = render_monster(monster)
         results.append(rendered)
-        
+
         if count > 1 and i < count - 1:
             results.append("\n" + "=" * 40 + "\n")
-    
+
     output_text = "".join(results)
-    
+
     if output:
         output.write_text(output_text)
         console.print(f"[green]Generated {count} monster(s) to {output}[/green]")
@@ -187,17 +197,46 @@ def generate_monster(
 def list_creatures() -> None:
     """List all available predefined creatures."""
     console.print("[bold]Available creatures:[/bold]\n")
-    
+
     categories = {
-        "Mammals": ["bear", "cat", "cheetah", "dog", "guard-dog", "elephant", "gorilla", 
-                   "hippo", "horse", "human", "lion", "monkey", "rhino", "wolf", "wolverine"],
-        "Aquatic": ["crocodile", "dolphin", "electric-eel", "orca", "python", "shark", 
-                   "giant-squid", "whale"],
+        "Mammals": [
+            "bear",
+            "cat",
+            "cheetah",
+            "dog",
+            "guard-dog",
+            "elephant",
+            "gorilla",
+            "hippo",
+            "horse",
+            "human",
+            "lion",
+            "monkey",
+            "rhino",
+            "wolf",
+            "wolverine",
+        ],
+        "Aquatic": [
+            "crocodile",
+            "dolphin",
+            "electric-eel",
+            "orca",
+            "python",
+            "shark",
+            "giant-squid",
+            "whale",
+        ],
         "Birds": ["eagle"],
         "Reptiles/Other": ["swarm", "viper"],
-        "Dinosaurs": ["apatosaurus", "deinonychus", "pterodactyl", "triceratops", "tyrannosaur"],
+        "Dinosaurs": [
+            "apatosaurus",
+            "deinonychus",
+            "pterodactyl",
+            "triceratops",
+            "tyrannosaur",
+        ],
     }
-    
+
     for category, creatures in categories.items():
         console.print(f"[bold cyan]{category}:[/bold cyan]")
         for creature in creatures:
