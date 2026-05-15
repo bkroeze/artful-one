@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 import logging
 
@@ -33,13 +34,14 @@ def sketch_detail(request, slug):
 
 def animation_detail(request, slug):
     """Display detail page for a single animation."""
-    animation = get_object_or_404(Animation, slug=slug)
-    template_name = f"animations/{animation.slug}.html"
+    animation = get_object_or_404(Animation, slug=slug, is_draft=False)
+    if not animation.has_template():
+        raise Http404("Animation template not found")
     return render(
         request,
         "animation_detail.html",
         {
             "animation": animation,
-            "animation_template": template_name,
+            "animation_template": animation.template_name,
         },
     )

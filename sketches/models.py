@@ -1,6 +1,8 @@
 """Django models for sketches app."""
 
 from django.db import models
+from django.template import TemplateDoesNotExist
+from django.template.loader import get_template
 from django.urls import reverse
 
 try:
@@ -60,3 +62,14 @@ class Animation(models.Model):
 
     def get_absolute_url(self):
         return reverse("animation_detail", kwargs={"slug": self.slug})
+
+    @property
+    def template_name(self):
+        return f"animations/{self.slug}.html"
+
+    def has_template(self):
+        try:
+            get_template(self.template_name)
+        except TemplateDoesNotExist:
+            return False
+        return True

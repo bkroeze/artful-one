@@ -676,6 +676,7 @@ def photo_tag_landing(request):
         .filter(is_draft=False)
         .order_by("name")
     )
+    animations = [animation for animation in animations if animation.has_template()]
 
     return render(
         request,

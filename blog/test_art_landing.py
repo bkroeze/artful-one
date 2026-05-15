@@ -116,3 +116,48 @@ def test_art_landing_only_lists_non_draft_animations(client):
     assert "/animations/scorpion" in content
     assert "Private Animation" not in content
     assert draft_animation.is_draft is True
+
+
+@pytest.mark.django_db
+def test_art_landing_only_lists_animations_with_templates(client):
+    visible_animation = Animation.objects.get(slug="scorpion")
+    missing_template_animation = Animation.objects.create(
+        name="Missing Template",
+        slug="missing-template",
+        is_draft=False,
+    )
+
+    response = client.get("/art/")
+
+    assert response.status_code == 200
+    assert list(response.context["animations"]) == [visible_animation]
+    content = response.content.decode()
+    assert "Scorpion" in content
+    assert "Missing Template" not in content
+    assert missing_template_animation.has_template() is False
+
+
+@pytest.mark.django_db
+def test_animation_detail_404s_for_draft_animation(client):
+    Animation.objects.create(
+        name="Private Animation",
+        slug="private-animation",
+        is_draft=True,
+    )
+
+    response = client.get("/animations/private-animation")
+
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_animation_detail_404s_for_missing_template(client):
+    Animation.objects.create(
+        name="Missing Template",
+        slug="missing-template",
+        is_draft=False,
+    )
+
+    response = client.get("/animations/missing-template")
+
+    assert response.status_code == 404
