@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 import logging
 
-from .models import Sketch
+from .models import Animation, Sketch
 
 log = logging.getLogger(__name__)
 
@@ -27,5 +27,19 @@ def sketch_detail(request, slug):
         {
             "sketch": sketch,
             "script_url": f"art/{sketch.slug}.js",
+        },
+    )
+
+
+def animation_detail(request, slug):
+    """Display detail page for a single animation."""
+    animation = get_object_or_404(Animation, slug=slug)
+    template_name = f"animations/{animation.slug}.html"
+    return render(
+        request,
+        "animation_detail.html",
+        {
+            "animation": animation,
+            "animation_template": template_name,
         },
     )

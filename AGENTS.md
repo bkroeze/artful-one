@@ -181,6 +181,15 @@ Photos use `PictureField` from django-pictures with:
 - Pixel densities: [1, 2]
 - Optional entry-level photo rendering via `Entry.photo` and `Entry.picture_size`
 
+### Sketch Loading
+Sketches are JS/P5 artifacts loaded by naming convention:
+- Source sketches live in `sketches/art/<slug>.ts`; shared TS helpers live under `sketches/art/lib/`
+- `uv run manage.py compile_sketches` bundles each non-lib `.ts` file to `static/art/<slug>.js`
+- `Sketch.slug` must match the compiled JS basename
+- `sketch_detail` passes `script_url = "art/{sketch.slug}.js"` and renders `<div id="{{ sketch.slug }}" data-height="600" data-width="800"></div>`
+- Each sketch module should use the same slug as its DOM id, e.g. `const NAME = "lotus"; new p5(sketch, document.getElementById(NAME))`
+- The detail template loads `/static/js/p5/p5.min.js` first, then the compiled `/static/art/<slug>.js`
+
 ### Middleware
 - `django_htmx.middleware.HtmxMiddleware` - Adds `request.htmx` for HTMX fragment responses
 - `blog.middleware.AmpersandRedirectMiddleware` - Custom URL handling

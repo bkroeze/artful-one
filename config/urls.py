@@ -12,6 +12,7 @@ from blog import views as blog_views
 from blog import search as search_views
 from blog import tag_views
 from blog import feeds
+from sketches import views as sketch_views
 from feedstats.utils import count_subscribers
 import os
 import importlib.metadata
@@ -159,6 +160,12 @@ urlpatterns = [
     re_path(r"^series/(.*?)/$", blog_views.archive_series),
     re_path(r"^series/(.*?).atom$", blog_views.archive_series_atom),
     re_path(r"^art/$", blog_views.photo_tag_landing),
+    path(
+        "animations/<slug:slug>",
+        sketch_views.animation_detail,
+        name="animation_detail",
+    ),
+    path("animations/<slug:slug>/", sketch_views.animation_detail),
     re_path(r"^photo-tags/(.*?)/$", blog_views.photo_tag_detail),
     re_path(r"^photos/(.*?)/$", blog_views.photo_detail),
     path("sketch/", include("sketches.urls")),

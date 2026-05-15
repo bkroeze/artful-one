@@ -97,14 +97,31 @@
     Browse live generative art sketches and photo galleries.
 </p>
 
-<section class="art-section" aria-labelledby="live-art-code-heading">
-    <h2 id="live-art-code-heading" class="archive-h2 art-section-header">Live Art Code</h2>
+<section class="art-section" aria-labelledby="live-animations-heading">
+    <h2 id="live-animations-heading" class="archive-h2 art-section-header">Live Animations</h2>
     <p class="text-muted">
-        Browse {{ sketches|length }} interactive sketch{{ sketches|pluralize }} created with P5.js.
+        Browse live animations and {{ sketches|length }} interactive sketch{{ sketches|pluralize }} created with P5.js.
     </p>
 
-    {% if sketches %}
+    {% if animations or sketches %}
     <div class="sketches-grid">
+        {% for animation in animations %}
+        <a href="{% url 'animation_detail' slug=animation.slug %}" class="sketch-card">
+            <div class="ui card">
+                {% if animation.thumbnail and animation.thumbnail.image %}
+                <div class="image frm-double-v-lined force-bg" style="padding: 0.4em 0.1em 1.2em 0.1em;">
+                    {% picture animation.thumbnail.image picture_id=animation.thumbnail.html_id img_alt=animation.name|default:"Animation" img_loading="lazy" picture_class="ui fluid image" %}
+                </div>
+                {% endif %}
+                <div class="content">
+                    <div class="header">{{ animation.name }}</div>
+                    <div class="meta">
+                        <span class="date">Created {{ animation.created_at|date:"F j, Y" }}</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
         {% for sketch in sketches %}
         <a href="{% url 'sketch_detail' slug=sketch.slug %}" class="sketch-card">
             <div class="ui card">

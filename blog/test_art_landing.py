@@ -1,11 +1,12 @@
 import pytest
 
 from blog.models import Photo, PhotoTag
-from sketches.models import Sketch
+from sketches.models import Animation, Sketch
 
 
 @pytest.mark.django_db
 def test_art_landing_renders_sketches_and_galleries(client):
+    animation = Animation.objects.get(slug="scorpion")
     sketch = Sketch.objects.create(
         name="Orbit Study",
         slug="orbit-study",
@@ -18,14 +19,18 @@ def test_art_landing_renders_sketches_and_galleries(client):
     response = client.get("/art/")
 
     assert response.status_code == 200
+    assert list(response.context["animations"]) == [animation]
     assert list(response.context["sketches"]) == [sketch]
     assert response.context["total_photos"] == 1
 
     content = response.content.decode()
-    assert "Live Art Code" in content
+    assert "Live Animations" in content
     assert "Galleries" in content
+    assert "Scorpion" in content
+    assert "/animations/scorpion" in content
     assert "Orbit Study" in content
     assert "/sketch/orbit-study/" in content
+    assert content.index("Scorpion") < content.index("Orbit Study")
     assert "Paintings" in content
     assert "/photo-tags/paintings/" in content
 
@@ -40,9 +45,10 @@ def test_art_landing_shows_galleries_with_no_sketches(client):
 
     assert response.status_code == 200
     content = response.content.decode()
-    assert "Live Art Code" in content
+    assert "Live Animations" in content
     assert "Galleries" in content
-    assert "No sketches found." in content
+    assert "Scorpion" in content
+    assert "No sketches found." not in content
     assert "No photo collections found." not in content
     assert "Paintings" in content
     assert "/photo-tags/paintings/" in content
@@ -60,7 +66,7 @@ def test_art_landing_shows_sketches_with_no_galleries(client):
 
     assert response.status_code == 200
     content = response.content.decode()
-    assert "Live Art Code" in content
+    assert "Live Animations" in content
     assert "Galleries" in content
     assert "No photo collections found." in content
     assert "No sketches found." not in content
@@ -90,3 +96,23 @@ def test_art_landing_only_lists_visible_sketches_by_default(client):
     assert "Orbit Study" in content
     assert "Hidden Study" not in content
     assert hidden_sketch.visible is False
+
+
+@pytest.mark.django_db
+def test_art_landing_only_lists_non_draft_animations(client):
+    visible_animation = Animation.objects.get(slug="scorpion")
+    draft_animation = Animation.objects.create(
+        name="Private Animation",
+        slug="private-animation",
+        is_draft=True,
+    )
+
+    response = client.get("/art/")
+
+    assert response.status_code == 200
+    assert list(response.context["animations"]) == [visible_animation]
+    content = response.content.decode()
+    assert "Scorpion" in content
+    assert "/animations/scorpion" in content
+    assert "Private Animation" not in content
+    assert draft_animation.is_draft is True
