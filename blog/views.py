@@ -643,7 +643,7 @@ def archive_series_atom(request, slug):
 def photo_tag_landing(request):
     """Display unified art landing page with live code sketches and photo galleries."""
     from django.db.models import Count
-    from sketches.models import Sketch
+    from sketches.models import Animation, Sketch
 
     photo_tags = (
         PhotoTag.objects.annotate(photo_count=Count("photo"))
@@ -671,11 +671,18 @@ def photo_tag_landing(request):
     sketches = (
         Sketch.objects.select_related("photo").filter(visible=True).order_by("name")
     )
+    animations = (
+        Animation.objects.select_related("thumbnail")
+        .filter(is_draft=False)
+        .order_by("name")
+    )
+    animations = [animation for animation in animations if animation.has_template()]
 
     return render(
         request,
         "photo_tag_landing.html",
         {
+            "animations": animations,
             "sketches": sketches,
             "tag_data": tag_data,
             "total_photos": total_photos,

@@ -12,6 +12,7 @@ Artful.One is a Django personal blog site. It manages multiple content types (en
   - `hosts.py`
   - `wsgi.py`
 - `blog/` — Core models, views, feeds, templates context, and content behavior.
+- `sketches/` — Live code sketches and template-backed animations.
 - `monthly/` — Monthly archive app.
 - `feedstats/` — Feed subscriber tracking and analytics.
 - Pixel border editor — Provided by the external `pixel-borders` dependency and mounted into the site.
@@ -48,10 +49,20 @@ Markdown rendering is centralized through the shared `markdownify` filters in `b
 - Canonical date URL: `/{YYYY}/{Mon}/{D}/{slug}/` (for example `/2024/Oct/15/my-blog-post/`).
 - Short aliases for quick access: `/e/{id}/`, `/b/{id}/`, `/q/{id}/`, `/n/{id}/`.
 - Pixel border editor routes live under `/borders/`.
+- Art landing route: `/art/`; animation detail pages: `/animations/{slug}`.
 
 ## Pixel Borders
 
 The `/borders/` editor is supplied by the external `pixel-borders` package. This project keeps only site-level integration such as URL mounting, dependency pinning, and template overrides.
+
+## Live Art
+
+The `/art/` landing page lists non-draft `Animation` records with existing templates before visible `Sketch` records.
+
+- `Animation.slug` maps to `templates/animations/<slug>.html`; missing templates are treated as not publishable.
+- Animation detail pages render through `/animations/<slug>` using `sketches/templates/animation_detail.html`.
+- Animations can reference a `Photo` thumbnail, which `/art/` uses as the animation card image.
+- Animation-specific assets may live under `static/art/<slug>/`.
 
 ## Contact Form
 

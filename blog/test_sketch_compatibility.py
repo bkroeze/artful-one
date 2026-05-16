@@ -1,6 +1,6 @@
 import pytest
 
-from sketches.models import Sketch
+from sketches.models import Animation, Sketch
 
 
 @pytest.mark.django_db
@@ -48,3 +48,24 @@ def test_sketches_alias_remains_unrouted_because_it_was_not_present(client):
     response = client.get("/sketches/")
 
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_animation_detail_route_renders_scorpion_partial(client):
+    Animation.objects.get_or_create(
+        slug="scorpion",
+        defaults={"name": "Scorpion", "is_draft": False},
+    )
+
+    response = client.get("/animations/scorpion")
+
+    assert response.status_code == 200
+    assert "animation_detail.html" in [template.name for template in response.templates]
+    assert "animations/scorpion.html" in [
+        template.name for template in response.templates
+    ]
+    content = response.content.decode()
+    assert "Scorpion" in content
+    assert 'id="scorpionStage"' in content
+    assert "art/scorpion/scorpion.css" in content
+    assert "art/scorpion/scorpion.js" in content

@@ -1,0 +1,41 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'art/scorpion/scorpion.css' %}">
+
+<main class="page-shell">
+  <section class="hero" aria-labelledby="pageTitle">
+    <div class="hero-copy">
+      <p class="kicker">Paper puppet study</p>
+      <h1 id="pageTitle" style="text-align: left;">Scorpion</h1>
+      <p class="lede">
+        A layered paper-style scorpion assembled from the provided parts, with legs, claws,
+        and tail rotating from their marked pivots.
+      </p>
+    </div>
+
+    <div class="stage-panel">
+      <div class="stage-toolbar" aria-label="Animation controls">
+        <button class="icon-button" id="toggleMotion" type="button" aria-pressed="true" title="Pause animation">
+          <span class="pause-icon" aria-hidden="true"></span>
+          <span class="sr-only">Pause animation</span>
+        </button>
+        <label class="speed-control" for="speedRange">
+          <span>Speed</span>
+          <input id="speedRange" type="range" min="0.4" max="1.8" step="0.1" value="1">
+        </label>
+        <label class="pivot-toggle" for="pivotToggle">
+          <input id="pivotToggle" type="checkbox">
+          <span>Pivots</span>
+        </label>
+      </div>
+
+      <div class="scorpion-viewport" aria-label="Animated scorpion">
+        <div class="scorpion-stage" id="scorpionStage" data-asset-base="{% static 'art/' %}">
+          <div class="paper-texture" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="{% static 'art/scorpion/scorpion.js' %}"></script>
