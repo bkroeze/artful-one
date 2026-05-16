@@ -21,28 +21,44 @@ def delete_scorpion_animation(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0013_entry_photo_entry_picture_size'),
-        ('sketches', '0002_sketch_visible'),
+        ("blog", "0013_entry_photo_entry_picture_size"),
+        ("sketches", "0002_sketch_visible"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Animation',
+            name="Animation",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('slug', models.SlugField(max_length=255, unique=True)),
-                ('is_draft', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('thumbnail', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='animations', to='blog.photo')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("slug", models.SlugField(max_length=255, unique=True)),
+                ("is_draft", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "thumbnail",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="animations",
+                        to="blog.photo",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Animation',
-                'verbose_name_plural': 'Animations',
-                'ordering': ['name'],
+                "verbose_name": "Animation",
+                "verbose_name_plural": "Animations",
+                "ordering": ["name"],
             },
         ),
         migrations.RunPython(create_scorpion_animation, delete_scorpion_animation),

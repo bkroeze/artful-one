@@ -61,7 +61,9 @@ def test_animation_detail_route_renders_scorpion_partial(client):
 
     assert response.status_code == 200
     assert "animation_detail.html" in [template.name for template in response.templates]
-    assert "animations/scorpion.html" in [template.name for template in response.templates]
+    assert "animations/scorpion.html" in [
+        template.name for template in response.templates
+    ]
     content = response.content.decode()
     assert "Scorpion" in content
     assert 'id="scorpionStage"' in content
