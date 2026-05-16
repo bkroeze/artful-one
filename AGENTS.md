@@ -195,6 +195,7 @@ Animations are template-backed media records loaded by slug convention:
 - `Animation.slug` maps to `templates/animations/<slug>.html`
 - Detail pages live at `/animations/<slug>` and render through `sketches/templates/animation_detail.html`
 - `/art/` lists non-draft animations with existing templates before sketches
+- `Animation.thumbnail` can reference a `Photo` used as the `/art/` card preview
 - Animation assets may live under `static/art/<slug>/`
 
 ### Middleware

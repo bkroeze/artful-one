@@ -61,6 +61,7 @@ The `/art/` landing page lists non-draft `Animation` records with existing templ
 
 - `Animation.slug` maps to `templates/animations/<slug>.html`; missing templates are treated as not publishable.
 - Animation detail pages render through `/animations/<slug>` using `sketches/templates/animation_detail.html`.
+- Animations can reference a `Photo` thumbnail, which `/art/` uses as the animation card image.
 - Animation-specific assets may live under `static/art/<slug>/`.
 
 ## Contact Form
