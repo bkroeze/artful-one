@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # Use Python 3.13 slim image
 FROM python:3.13-slim
 
@@ -25,7 +27,11 @@ RUN pip install uv
 COPY pyproject.toml uv.lock ./
 
 # Install dependencies
-RUN uv sync --frozen
+RUN --mount=type=secret,id=GITHUB_DEPLOY_TOKEN,required=true \
+    GITHUB_DEPLOY_TOKEN="$(cat /run/secrets/GITHUB_DEPLOY_TOKEN)" \
+    && git config --global url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/" \
+    && uv sync --frozen \
+    && git config --global --unset-all url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf
 
 # Copy project
 COPY . .

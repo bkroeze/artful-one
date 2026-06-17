@@ -1,3 +1,5 @@
+set dotenv-load := true
+
 default:
   uv run manage.py runserver 0.0.0.0:8003
 
@@ -33,8 +35,8 @@ icons *args:
   uv run python -m rpg_chargen.icons.cli {{args}}
 
 fly-deploy:
-    flyctl deploy --app artful-one --remote-only
+    : "${GITHUB_DEPLOY_TOKEN:?Set GITHUB_DEPLOY_TOKEN in .env before deploying}"
+    flyctl deploy --app artful-one --remote-only --build-secret GITHUB_DEPLOY_TOKEN="${GITHUB_DEPLOY_TOKEN}"
 
 fly-logs:
     fly logs --app artful-one
-
