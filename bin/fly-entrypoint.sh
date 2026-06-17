@@ -2,12 +2,12 @@
 set -euo pipefail
 
 if [ "$(id -u)" = "0" ]; then
-  mkdir -p /data/staticfiles /data/filedrop_files /data/backups
+  mkdir -p /data/staticfiles /data/media /data/filedrop_files /data/backups
   chown -R appuser:appuser /data
   exec gosu appuser "$0"
 fi
 
-mkdir -p /data/staticfiles /data/filedrop_files /data/backups
+mkdir -p /data/staticfiles /data/media /data/filedrop_files /data/backups
 
 ./.venv/bin/python manage.py migrate --noinput
 ./.venv/bin/python manage.py collectstatic --noinput

@@ -49,4 +49,6 @@ tmp/
 .bg-shell/
 
 media/**
+data/**
+bak/**
 
