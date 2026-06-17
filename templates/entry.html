@@ -6,6 +6,23 @@
 
 {% block extrahead %}
 {{ block.super }}
+<meta name="twitter:card" content="summary">{% if entry.card_image %}
+<meta name="twitter:image"
+  content="{% if entry.card_image %}{{ entry.card_image }}{% else %}https://artful.one/card{{ request.path }}{% endif %}">
+{% else %}
+<meta name="twitter:card" content="summary">{% endif %}
+<meta name="twitter:creator" content="@bkroeze">
+<meta property="og:url" content="https://artful.one{{ request.path }}">
+<meta property="og:title" content="{% block card_title %}{{ entry.title|typography }}{% endblock %}">{% if entry.card_image %}
+<meta property="og:image"
+  content="{% if entry.card_image %}{{ entry.card_image }}{% else %}https://artful.one/card{{ request.path }}{% endif %}">
+{% endif %}
+<meta property="og:type" content="article">
+<meta property="og:description" content="{% block card_description %}{% spaceless %}{% if entry.is_markdown %}{{ entry.body|markdownify|xhtml|remove_context_paragraph|typography|xhtml2html|striptags|truncatewords:30|force_escape }}{% else %}{{ entry.body|xhtml|remove_context_paragraph|typography|striptags|truncatewords:30|force_escape }}{% endif %}{% endspaceless %}{% endblock %}">
+<meta property="og:updated_time" content="{{ entry.created_unixtimestamp }}">
+{% if entry.is_draft %}
+<meta name="robots" content="noindex">
+{% endif %}
 {{ entry.extra_head_html|default:""|safe }}
 <style>
 .entry-photo {
@@ -29,9 +46,6 @@
 }
 </style>
 {% endblock %}
-
-{% block card_title %}{{ entry.title|typography }}{% endblock %}
-{% block card_description %}{% spaceless %}{% if entry.is_markdown %}{{ entry.body|markdownify|xhtml|remove_context_paragraph|typography|xhtml2html|striptags|truncatewords:30|force_escape }}{% else %}{{ entry.body|xhtml|remove_context_paragraph|typography|striptags|truncatewords:30|force_escape }}{% endif %}{% endspaceless %}{% endblock %}
 
 {% block primary %}
 <div data-permalink-context="{{ entry.get_absolute_url }}">

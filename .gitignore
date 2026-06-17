@@ -47,3 +47,6 @@ tmp/
 
 # ── GSD baseline (auto-generated) ──
 .bg-shell/
+
+media/**
+

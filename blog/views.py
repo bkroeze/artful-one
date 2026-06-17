@@ -726,11 +726,13 @@ def write(request):
 @staff_member_required
 def tools(request):
     if request.POST.get("purge_all"):
-        cf = cloudflare.CloudFlare(
-            email=settings.CLOUDFLARE_EMAIL, token=settings.CLOUDFLARE_TOKEN
+        cf = cloudflare.Cloudflare(
+            api_email=settings.CLOUDFLARE_EMAIL,
+            api_token=settings.CLOUDFLARE_TOKEN,
         )
-        cf.zones.purge_cache.delete(
-            settings.CLOUDFLARE_ZONE_ID, data={"purge_everything": True}
+        cf.cache.purge(
+            zone_id=settings.CLOUDFLARE_ZONE_ID,
+            purge_everything=True,
         )
         return Redirect(request.path + "?msg=Cache+purged")
     return render(

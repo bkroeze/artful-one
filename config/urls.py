@@ -21,6 +21,8 @@ import json
 from proxy.views import proxy_view
 from pictures.conf import get_settings
 import logging
+from django.conf.urls.static import static
+from django.views.static import serve as serve_static
 
 handler404 = "blog.views.custom_404"
 logger = logging.getLogger("blog")
@@ -120,6 +122,7 @@ urlpatterns = [
     path("monthly/", include("monthly.urls")),
     path("filedrop/", include("filedrop.urls")),
     path("borders/", include("pixelborders.urls")),
+    path("sigils/", include("sigils.urls")),
     re_path(r"^$", blog_views.index),
     re_path(r"^(\d{4})/$", blog_views.archive_year),
     re_path(r"^(\d{4})/(\w{3})/$", blog_views.archive_month),
@@ -192,17 +195,22 @@ urlpatterns = [
     path("tags-autocomplete/", tag_views.tags_autocomplete),
 ]
 
+urlpatterns += [
+    re_path(
+        r"^media/(?P<path>.*)$",
+        serve_static,
+        {"document_root": settings.MEDIA_ROOT},
+    ),
+]
+
 if settings.DEBUG:
     # In development, serve static files locally
-    from django.conf.urls.static import static
-
     logger.info(f"STATIC_URL: {settings.STATIC_URL}")
     logger.info(f"STATIC_ROOT: {settings.STATIC_ROOT}")
     logger.info(f"MEDIA_URL: {settings.MEDIA_URL}")
     logger.info(f"MEDIA_ROOT: {settings.MEDIA_ROOT}")
 
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     # Add debug toolbar if available
     try:
