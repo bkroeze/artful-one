@@ -20,6 +20,9 @@
                         <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
                     </div>
                 </div>
+                {% if request.user.is_authenticated %}
+                <a class="item" href="/sigils/">Sigils</a>
+                {% endif %}
                 <a class="item hidden-lg" href="/search/">
                   <i class="search link icon"></i>
                 </a>
