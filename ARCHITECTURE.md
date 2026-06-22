@@ -19,7 +19,7 @@ Artful.One is a Django personal blog site. It manages multiple content types (en
 - `templates/` — Shared and app templates.
 - `static/` — Source assets.
 - `staticfiles/` — Collected/static build output.
-- `photos/` — Image/media storage (`.jpg`, `.avif`, etc.).
+- `photos/` — Checked-in legacy/static photo assets collected into static files.
 - `README.md` — onboarding documentation.
 
 ## Data Model Conventions
@@ -93,9 +93,9 @@ All content supports `is_draft`.
 ## Static, Media, and Images
 
 - `STATIC_ROOT` defaults to `staticfiles/`; Fly sets it to `/data/staticfiles`. `STATIC_URL` = `/static/`.
-- `MEDIA_ROOT` defaults to project root; Fly sets it to `/data`. `MEDIA_URL` = `/`.
+- `MEDIA_ROOT` defaults to `media/`; Fly sets it to `/data/media`. `MEDIA_URL` = `/media/`.
 - Static served with WhiteNoise (compressed).
-- Photos are generated via `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities. Entries may reference an uploaded `Photo` and pass `picture_size` as the rendered container width.
+- Uploaded photos are generated under `MEDIA_ROOT/photos/` by `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities. Entries may reference an uploaded `Photo` and pass `picture_size` as the rendered container width.
 
 ## Middleware/Helpers to Know
 

@@ -3,6 +3,7 @@ import json
 import re
 import uuid
 import xml.etree.ElementTree as ET
+from pathlib import Path
 from unittest import mock
 
 import pytest
@@ -182,7 +183,9 @@ class TestBlog:
         assert "<td>Bruce</td>" in decoded_content
         assert "| Person | Calories |" not in decoded_content
 
-    def test_entry_photo_renders_floated_picture(self, client):
+    def test_entry_photo_renders_floated_picture(self, client, settings, tmp_path):
+        settings.MEDIA_ROOT = tmp_path
+        settings.MEDIA_URL = "/media/"
         photo = Photo.objects.create(
             title="Kiln Shelf",
             image=SimpleUploadedFile(
@@ -195,6 +198,12 @@ class TestBlog:
                 content_type="image/gif",
             ),
         )
+        photo_path = Path(photo.image.path)
+        assert photo.image.name.startswith("photos/")
+        assert photo.image.url.startswith("/media/photos/")
+        assert photo_path.is_relative_to(tmp_path)
+        assert photo_path.is_file()
+
         entry = EntryFactory(photo=photo, picture_size=320)
 
         response = client.get(entry.get_absolute_url())

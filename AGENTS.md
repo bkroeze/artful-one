@@ -77,7 +77,7 @@ uv run manage.py import_blog_xml --xmldir <path>
 - `monthly/` - Monthly archives functionality
 - `feedstats/` - Feed subscriber tracking
 - Pixel border editor - Provided by the external `pixel-borders` dependency, with site-level template overrides under `templates/pixelborders/`
-- `photos/` - Photo storage directory (contains AVIF/JPG files)
+- `photos/` - Checked-in legacy/static photo assets (AVIF/JPG files)
 - `templates/` - Django templates
 - `static/` - Static assets (CSS, JS)
 - `staticfiles/` - Collected static files for production
@@ -142,11 +142,11 @@ Test markers:
 
 - `STATIC_ROOT`: defaults to `staticfiles/`; Fly uses `/data/staticfiles`
 - `STATIC_URL`: `/static/`
-- `MEDIA_ROOT`: defaults to project base directory; Fly uses `/data`
-- `MEDIA_URL`: `/`
+- `MEDIA_ROOT`: defaults to `media/`; Fly uses `/data/media`
+- `MEDIA_URL`: `/media/`
 - Uses WhiteNoise for static file serving with compression
 
-Photos are stored in the `photos/` directory with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Entries can reference uploaded photos and use `picture_size` as the rendered container width.
+Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Entries can reference uploaded photos and use `picture_size` as the rendered container width.
 
 ## Feeds and Syndication
 
@@ -213,7 +213,7 @@ Key environment variables (loaded via python-dotenv):
 - `ALLOWED_HOSTS` - Comma-separated host allowlist
 - `CSRF_TRUSTED_ORIGINS` - Comma-separated list
 - `STATIC_ROOT` - Static collection directory (defaults to `staticfiles/`)
-- `MEDIA_ROOT` - Media file root (defaults to project root)
+- `MEDIA_ROOT` - Media file root (defaults to `media/`)
 - `FILEDROP_BASE_DIR` - Filedrop storage directory (defaults to `filedrop_files/`)
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
 - `SESSION_COOKIE_SECURE` - Require secure session cookies in production
