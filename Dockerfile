@@ -28,22 +28,8 @@ RUN pip install uv
 # Copy dependency files
 COPY pyproject.toml uv.lock ./
 
-# Install dependencies (supporting optional GITHUB_DEPLOY_TOKEN)
-RUN --mount=type=secret,id=GITHUB_DEPLOY_TOKEN,required=false \
-    if [ -f /run/secrets/GITHUB_DEPLOY_TOKEN ]; then \
-        GITHUB_DEPLOY_TOKEN="$(cat /run/secrets/GITHUB_DEPLOY_TOKEN)" \
-        && GIT_CONFIG_GLOBAL="$(mktemp)" \
-        && export GIT_CONFIG_GLOBAL \
-        && git config --global url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/" \
-        && uv sync --frozen; \
-        install_status="$?"; \
-        rm -f "${GIT_CONFIG_GLOBAL:-}"; \
-        cleanup_status="$?"; \
-        if [ "$cleanup_status" -ne 0 ]; then exit "$cleanup_status"; fi; \
-        exit "$install_status"; \
-    else \
-        uv sync --frozen; \
-    fi
+# Install dependencies
+RUN uv sync --frozen
 
 # Copy project
 COPY . .

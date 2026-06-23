@@ -1,6 +1,6 @@
 # Single Server Deployment Runbook
 
-The default `Dockerfile` is the Single Server image. It installs dependencies with `uv`, optionally uses a BuildKit secret named `GITHUB_DEPLOY_TOKEN` when private GitHub dependencies require it, collects static files during the image build, and starts through `bin/singleserver-entrypoint.sh`.
+The default `Dockerfile` is the Single Server image. It installs dependencies with `uv`, collects static files during the image build, and starts through `bin/singleserver-entrypoint.sh`.
 
 ## App Setup
 
@@ -37,6 +37,8 @@ ssh <host> 'singleserver env set artful-one FILEDROP_BASE_DIR=/storage/filedrop_
 ```
 
 Set Mailgun, Cloudflare, OpenRouter, Sentry, and other optional provider secrets only when those features are enabled. The image already sets `STATIC_ROOT=/app/staticfiles` and `MEDIA_ROOT=/storage/media`; the explicit `MEDIA_ROOT` env value keeps the deployment config visible on the host.
+
+`singleserver env set` configures the runtime container, not the Docker build that runs `uv sync --frozen`. Do not set `GITHUB_DEPLOY_TOKEN` for this image. Git dependencies in `pyproject.toml` must be fetchable by the build without extra credentials, or they should be published to a package index or vendored into the app repository.
 
 ## Data Cutover
 
