@@ -14,6 +14,12 @@ nix develop
 
 This will provide you with a shell that has Python, Node.js, bun, and all the project dependencies available.
 
+## Deployment
+
+The default `Dockerfile` targets Single Server. It runs `bin/singleserver-entrypoint.sh`, expects persistent uploaded media at `/storage/media`, and serves Gunicorn on `PORT` (default `8000`). See `docs/singleserver-deployment.md`.
+
+Fly.io deployments use `fly.toml`, which selects `Dockerfile.flyio` and stores SQLite, static output, media, filedrop files, and backups on the `/data` volume. See `docs/flyio-deployment.md`.
+
 ## Contact Form
 
 The site contact form saves submissions and sends email through Mailgun when configured.

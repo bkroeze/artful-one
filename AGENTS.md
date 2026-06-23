@@ -81,6 +81,8 @@ uv run manage.py import_blog_xml --xmldir <path>
 - `templates/` - Django templates
 - `static/` - Static assets (CSS, JS)
 - `staticfiles/` - Collected static files for production
+- `Dockerfile` - Default Single Server container image
+- `Dockerfile.flyio` - Fly.io container image selected by `fly.toml`
 
 ### Content Types
 All blog content inherits from `BaseModel` which provides:
@@ -111,7 +113,7 @@ Settings are in `config/settings.py` with environment variable support via `.env
 
 ### Key Settings
 - Uses SQLite by default (`artful-one.db`)
-- `DATABASE_URL` can point to PostgreSQL or a mounted SQLite path such as Fly's `/data/artful-one.db`
+- `DATABASE_URL` can point to PostgreSQL or a mounted SQLite path such as Fly's `/data/artful-one.db` or Single Server's `/storage/artful-one.db`
 - Static files served by WhiteNoise with compression
 - Debug toolbar enabled in DEBUG mode
 - django-pictures for responsive images
@@ -142,11 +144,11 @@ Test markers:
 
 - `STATIC_ROOT`: defaults to `staticfiles/`; Fly uses `/data/staticfiles`
 - `STATIC_URL`: `/static/`
-- `MEDIA_ROOT`: defaults to `media/`; Fly uses `/data/media`
+- `MEDIA_ROOT`: defaults to `media/`; Fly uses `/data/media`; Single Server uses `/storage/media`
 - `MEDIA_URL`: `/media/`
 - Uses WhiteNoise for static file serving with compression
 
-Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Entries can reference uploaded photos and use `picture_size` as the rendered container width.
+Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Migration `0014_alter_photo_image` copies existing `Photo.image` files from collected static output or checked-in `photos/` into `MEDIA_ROOT` during deployment. Entries can reference uploaded photos and use `picture_size` as the rendered container width.
 
 ## Feeds and Syndication
 
@@ -217,8 +219,8 @@ Key environment variables (loaded via python-dotenv):
 - `FILEDROP_BASE_DIR` - Filedrop storage directory (defaults to `filedrop_files/`)
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
 - `SESSION_COOKIE_SECURE` - Require secure session cookies in production
-- `PORT` - Bind port for the Fly/runtime entrypoint (defaults to 8000)
-- `WEB_CONCURRENCY` - Gunicorn worker count for Fly/runtime entrypoint (defaults to 3)
+- `PORT` - Bind port for container entrypoints (defaults to 8000)
+- `WEB_CONCURRENCY` - Gunicorn worker count for container entrypoints (Fly defaults to 1, Single Server defaults to 2 when unset)
 - `STAGING` - Staging environment flag
 - `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL` - Contact form Mailgun delivery
 - `CONTACT_EMAIL` - Contact form recipient email
