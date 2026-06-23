@@ -13,6 +13,7 @@ mkdir -p /storage/media /app/staticfiles
 
 # Run database migrations
 ./.venv/bin/python manage.py migrate --noinput
+./.venv/bin/python manage.py collectstatic --noinput
 
 # Start Gunicorn
 exec ./.venv/bin/gunicorn config.wsgi:application \

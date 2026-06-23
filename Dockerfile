@@ -32,10 +32,14 @@ COPY pyproject.toml uv.lock ./
 RUN --mount=type=secret,id=GITHUB_DEPLOY_TOKEN,required=false \
     if [ -f /run/secrets/GITHUB_DEPLOY_TOKEN ]; then \
         GITHUB_DEPLOY_TOKEN="$(cat /run/secrets/GITHUB_DEPLOY_TOKEN)" \
-        && git config --global url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/"; \
+        && git config --global url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/" \
+        && uv sync --frozen; \
+        install_status="$?"; \
+        git config --global --unset-all url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf || true; \
+        exit "$install_status"; \
+    else \
+        uv sync --frozen; \
     fi \
-    && uv sync --frozen \
-    && git config --global --unset-all url."https://x-access-token:${GITHUB_DEPLOY_TOKEN}@github.com/".insteadOf || true
 
 # Copy project
 COPY . .

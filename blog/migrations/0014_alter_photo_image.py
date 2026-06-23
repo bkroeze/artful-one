@@ -11,6 +11,27 @@ from django.db import migrations
 def copy_existing_photo_files_to_media(apps, schema_editor):
     Photo = apps.get_model("blog", "Photo")
 
+    def absolute_setting_path(setting_name):
+        value = getattr(settings, setting_name, None)
+        if not value:
+            return None
+        path = Path(value)
+        if path.is_absolute():
+            return path
+        return Path(settings.BASE_DIR) / path
+
+    media_root = absolute_setting_path("MEDIA_ROOT")
+    if media_root is None:
+        return
+    source_roots = [
+        root
+        for root in (
+            absolute_setting_path("STATIC_ROOT"),
+            absolute_setting_path("BASE_DIR"),
+        )
+        if root is not None
+    ]
+
     def copy_missing_tree(source, target):
         if source.is_file():
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -39,10 +60,11 @@ def copy_existing_photo_files_to_media(apps, schema_editor):
         if relative_path.is_absolute() or ".." in relative_path.parts:
             continue
 
-        source_path = Path(settings.BASE_DIR) / relative_path
-        media_path = Path(settings.MEDIA_ROOT) / relative_path
-        copy_missing_tree(source_path, media_path)
-        copy_missing_tree(source_path.with_suffix(""), media_path.with_suffix(""))
+        media_path = media_root / relative_path
+        for source_root in dict.fromkeys(source_roots):
+            source_path = source_root / relative_path
+            copy_missing_tree(source_path, media_path)
+            copy_missing_tree(source_path.with_suffix(""), media_path.with_suffix(""))
 
 
 class Migration(migrations.Migration):
