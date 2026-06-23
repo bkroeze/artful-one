@@ -2,7 +2,8 @@
 
 This app runs on Fly.io as `artful-one`, with Cloudflare proxying `artful.one`.
 The production machine is intentionally single-instance because it uses SQLite on
-a Fly volume.
+a Fly volume. Fly builds use `Dockerfile.flyio`; the default `Dockerfile` is for
+Single Server.
 
 ## Initial Setup
 
@@ -36,10 +37,12 @@ fly secrets set --app artful-one \
   SENTRY_DSN='replace-me'
 ```
 
-Deploy the app once so Fly creates the machine:
+Deploy the app once so Fly creates the machine. `Dockerfile.flyio` requires the
+`GITHUB_DEPLOY_TOKEN` build secret during dependency installation:
 
 ```bash
-fly deploy --app artful-one --remote-only
+fly deploy --app artful-one --remote-only \
+  --build-secret GITHUB_DEPLOY_TOKEN="${GITHUB_DEPLOY_TOKEN}"
 ```
 
 ## Data Cutover
@@ -63,6 +66,17 @@ fly ssh sftp put --app artful-one artful-one-pre-fly.db /data/artful-one-pre-fly
 fly ssh console --app artful-one -C \
   "sqlite3 /data/artful-one.db \".restore '/data/artful-one-pre-fly.db'\" && rm /data/artful-one-pre-fly.db"
 ```
+
+If the current deployment has uploaded media outside the repository, copy that
+media tree to `/data/media` before restart:
+
+```bash
+fly ssh console --app artful-one -C "mkdir -p /data"
+fly ssh sftp put --recursive --app artful-one media /data
+```
+
+Photo migration `0014_alter_photo_image` copies older `Photo.image` files from
+`/data/staticfiles` or checked-in `photos/` into `/data/media`.
 
 Restart the app. The entrypoint creates volume directories, runs migrations, and
 collects static files into `/data/staticfiles`.

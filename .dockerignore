@@ -30,6 +30,7 @@ htmlcov/
 .cache
 node_modules/
 staticfiles/
+media/
 *.db
 .DS_Store
 .tickets/

@@ -43,7 +43,7 @@ Concise conventions for working in this Django repository.
 - **Do** leave `feedstats.utils.count_subscribers` wrapping feed views.
 - **Do** respect static/media settings:
   - static: `STATIC_URL=/static/`, `STATIC_ROOT` defaults to `staticfiles/` and may be overridden by environment
-  - media: `MEDIA_ROOT` defaults to project base and may be overridden by environment, `MEDIA_URL=/`
+  - media: `MEDIA_ROOT` defaults to `media/` and may be overridden by environment (`/data/media` on Fly, `/storage/media` on Single Server), `MEDIA_URL=/media/`
 - **Don't** invent alternate feed/search URLs for existing routes.
 
 ## Testing style

@@ -14,8 +14,6 @@ from django.utils.html import escape, strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from markdown import markdown
-from django.conf import settings
-from django.contrib.staticfiles.storage import StaticFilesStorage
 from pictures.models import PictureField
 
 tag_re = re.compile("^[a-z0-9]+$")
@@ -472,10 +470,6 @@ class Photo(models.Model):
         width_field="width",
         height_field="height",
         aspect_ratios=[None, "1/1", "3/2", "16/9"],
-        storage=StaticFilesStorage(
-            location=settings.STATIC_ROOT,
-            base_url=settings.STATIC_URL,
-        ),
         blank=True,
         null=True,
     )

@@ -2,7 +2,7 @@ app = "artful-one"
 primary_region = "lax"
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = "Dockerfile.flyio"
 
 [env]
   DJANGO_DEBUG = "false"

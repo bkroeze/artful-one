@@ -7,6 +7,7 @@ services:
       - DJANGO_DEBUG=${DJANGO_DEBUG:-false}
       - DJANGO_SECRET=${DJANGO_SECRET}
       - DATABASE_URL=${DATABASE_URL:-sqlite:///artful-one.db}
+      - MEDIA_ROOT=/app/media
       - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
       - SESSION_COOKIE_DOMAIN=${SESSION_COOKIE_DOMAIN}
       - SESSION_COOKIE_SECURE=${SESSION_COOKIE_SECURE:-true}
@@ -20,7 +21,6 @@ services:
     volumes:
       - ./artful-one.db:/app/artful-one.db
       - ./media:/app/media
-      - ./photos:/app/photos
       - ./staticfiles:/app/staticfiles
       - ./etc/config:/home/appuser/.config
     restart: unless-stopped
@@ -29,5 +29,3 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    dns:
-      - ${DNS_SERVER:-10.0.10.50}
