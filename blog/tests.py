@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest import mock
 
 import pytest
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
 from django.utils.text import slugify
@@ -610,6 +611,13 @@ class TestBlog:
     def test_health_check(self, client):
         response = client.get("/health/")
         assert response.status_code == 200
-        data = json.loads(response.content)
-        assert data["status"] == "ok"
-        assert "timestamp" in data
+        assert response.content == b"ok\n"
+        assert response.headers["Content-Type"] == "text/plain"
+
+    def test_health_check_middleware_is_first(self):
+        assert settings.MIDDLEWARE[0] == "config.healthcheck.HealthCheckMiddleware"
+
+    def test_health_check_requires_exact_trailing_slash_path(self, client):
+        response = client.get("/health")
+        assert response.status_code == 404
+        assert response.content != b"ok\n"
