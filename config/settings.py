@@ -91,6 +91,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "config.healthcheck.HealthCheckMiddleware",
     "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -189,10 +190,7 @@ ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", ["*"])
 STATIC_ROOT = os.environ.get("STATIC_ROOT", os.path.join(BASE_DIR, "staticfiles"))
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/"),
-    ("photos", os.path.join(BASE_DIR, "photos")),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"),)
 
 # Media files (user-uploaded content)
 MEDIA_URL = "/media/"

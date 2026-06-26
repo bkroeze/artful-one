@@ -5,6 +5,10 @@ The production machine is intentionally single-instance because it uses SQLite o
 a Fly volume. Fly builds use `Dockerfile.flyio`; the default `Dockerfile` is for
 Single Server.
 
+Fly checks the exact `/health/` path. The first Django middleware returns
+`text/plain` `ok\n` for that path before normal host routing, redirects, auth, or
+URL resolution.
+
 ## Initial Setup
 
 Create the app and volume:
@@ -75,8 +79,8 @@ fly ssh console --app artful-one -C "mkdir -p /data"
 fly ssh sftp put --recursive --app artful-one media /data
 ```
 
-Photo migration `0014_alter_photo_image` copies older `Photo.image` files from
-`/data/staticfiles` or checked-in `photos/` into `/data/media`.
+Photo migration `0014_alter_photo_image` only updates the field type; it does
+not copy older `Photo.image` files from static output or the repository.
 
 Restart the app. The entrypoint creates volume directories, runs migrations, and
 collects static files into `/data/staticfiles`.

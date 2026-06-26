@@ -72,6 +72,7 @@ uv run manage.py import_blog_xml --xmldir <path>
   - `settings.py` - Main settings with environment-based configuration
   - `urls.py` - URL routing (includes django-hosts for subdomain support)
   - `hosts.py` - Subdomain routing configuration
+  - `healthcheck.py` - First-position middleware for the exact `/health/` deployment probe
 - `blog/` - Core blog application
   - All content types inherit from `BaseModel` (created, tags, slug, metadata, series, is_draft)
 - `monthly/` - Monthly archives functionality
@@ -148,7 +149,7 @@ Test markers:
 - `MEDIA_URL`: `/media/`
 - Uses WhiteNoise for static file serving with compression
 
-Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Migration `0014_alter_photo_image` copies existing `Photo.image` files from collected static output or checked-in `photos/` into `MEDIA_ROOT` during deployment. Entries can reference uploaded photos and use `picture_size` as the rendered container width.
+Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Migration `0014_alter_photo_image` only updates the field type; existing media must be copied into `MEDIA_ROOT` during deployment cutover. Entries can reference uploaded photos and use `picture_size` as the rendered container width.
 
 ## Feeds and Syndication
 
@@ -201,6 +202,7 @@ Animations are template-backed media records loaded by slug convention:
 - Animation assets may live under `static/art/<slug>/`
 
 ### Middleware
+- `config.healthcheck.HealthCheckMiddleware` - First middleware; returns `text/plain` `ok\n` for the exact `/health/` path before host routing, redirects, auth, and URL resolution
 - `django_htmx.middleware.HtmxMiddleware` - Adds `request.htmx` for HTMX fragment responses
 - `blog.middleware.AmpersandRedirectMiddleware` - Custom URL handling
 - WhiteNoise for static files
