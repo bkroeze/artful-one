@@ -10,6 +10,7 @@ Artful.One is a Django personal blog site. It manages multiple content types (en
   - `settings.py`
   - `urls.py` (including django-hosts support)
   - `hosts.py`
+  - `healthcheck.py`
   - `wsgi.py`
 - `blog/` — Core models, views, feeds, templates context, and content behavior.
 - `sketches/` — Live code sketches and template-backed animations.
@@ -101,6 +102,7 @@ All content supports `is_draft`.
 
 ## Middleware/Helpers to Know
 
+- `config.healthcheck.HealthCheckMiddleware` must stay first in `MIDDLEWARE`; it short-circuits the exact `/health/` path with a `text/plain` `ok\n` response before host routing, redirects, auth, or URL resolution.
 - `django_htmx.middleware.HtmxMiddleware` adds `request.htmx`; use it for HTMX fragment responses instead of manual HTMX header parsing.
 - `blog.middleware.AmpersandRedirectMiddleware`
 - `blog.context_processors.all`

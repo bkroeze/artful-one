@@ -17,6 +17,10 @@ ssh <host> 'singleserver add https://github.com/<owner>/<repo> \
 
 Use `singleserver edit artful-one ...` instead when the app already exists.
 
+The healthcheck path is exact and must include the trailing slash. `/health/`
+returns `text/plain` `ok\n` from the first Django middleware before normal host
+routing, redirects, auth, or URL resolution.
+
 ## Persistent Storage and Env
 
 Enable persistent storage at `/storage` before the first production deploy:

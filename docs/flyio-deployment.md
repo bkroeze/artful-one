@@ -5,6 +5,10 @@ The production machine is intentionally single-instance because it uses SQLite o
 a Fly volume. Fly builds use `Dockerfile.flyio`; the default `Dockerfile` is for
 Single Server.
 
+Fly checks the exact `/health/` path. The first Django middleware returns
+`text/plain` `ok\n` for that path before normal host routing, redirects, auth, or
+URL resolution.
+
 ## Initial Setup
 
 Create the app and volume:

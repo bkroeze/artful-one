@@ -72,6 +72,7 @@ uv run manage.py import_blog_xml --xmldir <path>
   - `settings.py` - Main settings with environment-based configuration
   - `urls.py` - URL routing (includes django-hosts for subdomain support)
   - `hosts.py` - Subdomain routing configuration
+  - `healthcheck.py` - First-position middleware for the exact `/health/` deployment probe
 - `blog/` - Core blog application
   - All content types inherit from `BaseModel` (created, tags, slug, metadata, series, is_draft)
 - `monthly/` - Monthly archives functionality
@@ -201,6 +202,7 @@ Animations are template-backed media records loaded by slug convention:
 - Animation assets may live under `static/art/<slug>/`
 
 ### Middleware
+- `config.healthcheck.HealthCheckMiddleware` - First middleware; returns `text/plain` `ok\n` for the exact `/health/` path before host routing, redirects, auth, and URL resolution
 - `django_htmx.middleware.HtmxMiddleware` - Adds `request.htmx` for HTMX fragment responses
 - `blog.middleware.AmpersandRedirectMiddleware` - Custom URL handling
 - WhiteNoise for static files
