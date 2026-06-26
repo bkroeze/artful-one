@@ -97,7 +97,7 @@ All content supports `is_draft`.
 - `STATIC_ROOT` defaults to `staticfiles/`; Fly sets it to `/data/staticfiles`; the Single Server image sets it to `/app/staticfiles`. `STATIC_URL` = `/static/`.
 - `MEDIA_ROOT` defaults to `media/`; Fly sets it to `/data/media`; the Single Server image sets it to `/storage/media`. `MEDIA_URL` = `/media/`.
 - Static served with WhiteNoise (compressed).
-- Uploaded photos are generated under `MEDIA_ROOT/photos/` by `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities. Migration `0014_alter_photo_image` moves existing `Photo.image` files from collected static output or checked-in `photos/` into `MEDIA_ROOT`. Entries may reference an uploaded `Photo` and pass `picture_size` as the rendered container width.
+- Uploaded photos are generated under `MEDIA_ROOT/photos/` by `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities. Migration `0014_alter_photo_image` only updates the field type; existing media must be copied into `MEDIA_ROOT` during deployment cutover. Entries may reference an uploaded `Photo` and pass `picture_size` as the rendered container width.
 
 ## Middleware/Helpers to Know
 

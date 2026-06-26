@@ -148,7 +148,7 @@ Test markers:
 - `MEDIA_URL`: `/media/`
 - Uses WhiteNoise for static file serving with compression
 
-Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Migration `0014_alter_photo_image` copies existing `Photo.image` files from collected static output or checked-in `photos/` into `MEDIA_ROOT` during deployment. Entries can reference uploaded photos and use `picture_size` as the rendered container width.
+Uploaded photos are stored under `MEDIA_ROOT/photos/` with django-pictures handling responsive image generation (AVIF format, multiple breakpoints and pixel densities). Migration `0014_alter_photo_image` only updates the field type; existing media must be copied into `MEDIA_ROOT` during deployment cutover. Entries can reference uploaded photos and use `picture_size` as the rendered container width.
 
 ## Feeds and Syndication
 

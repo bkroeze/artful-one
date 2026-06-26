@@ -75,8 +75,8 @@ fly ssh console --app artful-one -C "mkdir -p /data"
 fly ssh sftp put --recursive --app artful-one media /data
 ```
 
-Photo migration `0014_alter_photo_image` copies older `Photo.image` files from
-`/data/staticfiles` or checked-in `photos/` into `/data/media`.
+Photo migration `0014_alter_photo_image` only updates the field type; it does
+not copy older `Photo.image` files from static output or the repository.
 
 Restart the app. The entrypoint creates volume directories, runs migrations, and
 collects static files into `/data/staticfiles`.

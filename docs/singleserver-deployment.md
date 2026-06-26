@@ -51,7 +51,7 @@ sqlite3 artful-one.db ".backup 'artful-one-pre-singleserver.db'"
 scp artful-one-pre-singleserver.db <host>:/srv/storage/artful-one/artful-one.db
 ```
 
-Copy any existing uploaded media into `/storage/media`. Photo migration `0014_alter_photo_image` copies older `Photo.image` files from collected static output or checked-in `photos/` into `MEDIA_ROOT/photos/`, but media that only exists outside the repository still needs to be copied during cutover.
+Copy existing uploaded media into `/storage/media` during cutover. Photo migration `0014_alter_photo_image` only updates the field type; it does not copy older `Photo.image` files from static output or the repository.
 
 ## Deploy and Verify
 
