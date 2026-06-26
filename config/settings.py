@@ -192,7 +192,6 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"),
-    ("photos", os.path.join(BASE_DIR, "photos")),
 )
 
 # Media files (user-uploaded content)
