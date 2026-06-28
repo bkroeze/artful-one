@@ -2,14 +2,14 @@
 set -euo pipefail
 
 # If running as root, make sure persistent directories are owned by appuser
-if [ "$(id -u)" = "0" ]; then
-  mkdir -p /storage/media /app/staticfiles
-  chown -R appuser:appuser /app /storage/media
-  exec gosu appuser "$0" "$@"
-fi
+#if [ "$(id -u)" = "0" ]; then
+#  mkdir -p /storage/media /app/staticfiles
+#  chown -R appuser:appuser /app /storage/media
+#  exec gosu appuser "$0" "$@"
+#fi
 
 # We are running as appuser now
-mkdir -p /storage/media /app/staticfiles
+#mkdir -p /storage/media /app/staticfiles
 
 # Run database migrations
 # ./.venv/bin/python manage.py migrate --noinput
