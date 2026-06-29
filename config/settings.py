@@ -1,4 +1,5 @@
 import os
+import sys
 import dj_database_url
 from dotenv import load_dotenv
 
@@ -292,3 +293,7 @@ TASKS = {
         "QUEUES": ["pictures"],
     }
 }
+
+# Disable migrations only for the problematic 'sigils' app during tests
+if "test" in sys.argv or any("pytest" in arg for arg in sys.argv):
+    MIGRATION_MODULES = {"sigils": None}

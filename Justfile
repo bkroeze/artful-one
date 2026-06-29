@@ -1,5 +1,11 @@
 set dotenv-load := true
 
+IMAGE_REGISTRY := "ghcr.io"
+IMAGE_OWNER := "bkroeze"
+IMAGE_NAME := "artful-one"
+IMAGE_TAG := "latest"
+IMAGE := IMAGE_REGISTRY + "/" + IMAGE_OWNER + "/" + IMAGE_NAME + ":" + IMAGE_TAG
+
 default:
   uv run manage.py runserver 0.0.0.0:8003
 
@@ -48,3 +54,17 @@ fly-deploy-db:
 
 fly-logs:
     fly logs --app artful-one
+
+# Build Docker image locally
+docker-build:
+    docker build -t {{IMAGE}} .
+
+# Run tests and checks inside the Docker container to verify the build
+docker-test:
+    docker run --rm -e DJANGO_SECRET=test-secret-key-for-checks-and-verification -e DATABASE_URL=sqlite:///:memory: {{IMAGE}} uv run manage.py check
+    docker run --rm -e DJANGO_SECRET=test-secret-key-for-checks-and-verification -e DATABASE_URL=sqlite:///:memory: {{IMAGE}} uv run pytest
+
+# Push the Docker image to GHCR (requires `docker login ghcr.io`)
+docker-push:
+    docker push {{IMAGE}}
+

@@ -20,6 +20,8 @@ The default `Dockerfile` targets Single Server. It runs `bin/singleserver-entryp
 
 Fly.io deployments use `fly.toml`, which selects `Dockerfile.flyio` and stores SQLite, static output, media, filedrop files, and backups on the `/data` volume. See `docs/flyio-deployment.md`.
 
+For the one-time production database transition from SQLite to PostgreSQL, see `docs/postgresql-production-transition.md`.
+
 Both deployment targets use the exact `/health/` path for health checks. The first Django middleware returns `text/plain` `ok\n` before normal host routing, redirects, auth, or URL resolution.
 
 ## Contact Form
