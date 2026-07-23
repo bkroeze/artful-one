@@ -16,6 +16,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
+    wget \
     git \
     gosu \
     sqlite3 \
@@ -49,7 +50,7 @@ RUN chmod +x /app/bin/singleserver-entrypoint.sh \
     && chown -R appuser:appuser /app /storage/media
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8001
 
 # Run migrations, then start gunicorn
 CMD ["/app/bin/singleserver-entrypoint.sh"]

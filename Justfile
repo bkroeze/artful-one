@@ -1,5 +1,7 @@
 set dotenv-load := true
 
+openrouter_key := env_var_or_default("OPENROUTER_API_KEY", "")
+port := env_var_or_default("ARTFUL_PORT", "8001")
 IMAGE_REGISTRY := "ghcr.io"
 IMAGE_OWNER := "bkroeze"
 IMAGE_NAME := "artful-one"
@@ -68,3 +70,10 @@ docker-test:
 docker-push:
     docker push {{IMAGE}}
 
+# Run the Docker image on ARTFUL_PORT, defaulting to 8080.
+docker-run:
+    docker run --rm --env OPENROUTER_API_KEY={{openrouter_key}} -p {{port}}:{{port}} {{IMAGE}}
+
+# Start an interactive bash shell in the Docker image.
+docker-bash:
+    docker run --rm -it --entrypoint /bin/bash {{IMAGE}}
