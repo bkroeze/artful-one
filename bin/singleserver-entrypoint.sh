@@ -9,7 +9,7 @@ set -euo pipefail
 #fi
 
 # We are running as appuser now
-mkdir -p /storage/media /app/staticfiles
+mkdir -p /storage/media /storage/sketchy-media /app/staticfiles
 
 # Run database migrations
 if [ ! -f /storage/MIGRATE.lock ]

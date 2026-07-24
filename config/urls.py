@@ -160,6 +160,7 @@ urlpatterns = [
     path("animations/<slug:slug>/", sketch_views.animation_detail),
     re_path(r"^photo-tags/(.*?)/$", blog_views.photo_tag_detail),
     re_path(r"^photos/(.*?)/$", blog_views.photo_detail),
+    path("sketchy/", include("sketches.working_urls")),
     path("sketch/", include("sketches.urls")),
     re_path(r"^atom/entries/$", count_subscribers(feeds.Entries().__call__)),
     re_path(r"^atom/links/$", count_subscribers(feeds.Blogmarks().__call__)),
