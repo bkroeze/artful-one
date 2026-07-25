@@ -498,10 +498,7 @@ def _compact_list(
 ) -> dict[str, Any]:
     return {
         "count": payload["count"],
-        key: [
-            {field: item.get(field) for field in fields}
-            for item in payload[key]
-        ],
+        key: [{field: item.get(field) for field in fields} for item in payload[key]],
     }
 
 
@@ -660,7 +657,9 @@ def _list_sketches(state: State, *, full: bool, home: bool) -> None:
             f"Run `{state.command} create --help` to create a sketch.",
         ]
     elif not full:
-        output["help"] = f"Run `{state.command} list --full` to see complete API fields."
+        output["help"] = (
+            f"Run `{state.command} list --full` to see complete API fields."
+        )
     _emit(output)
 
 

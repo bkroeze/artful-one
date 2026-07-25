@@ -16,9 +16,9 @@ This will provide you with a shell that has Python, Node.js, bun, and all the pr
 
 ## Deployment
 
-The default `Dockerfile` targets Single Server. It runs `bin/singleserver-entrypoint.sh`, expects persistent uploaded media at `/storage/media`, and serves Gunicorn on `PORT` (default `8000`). See `docs/singleserver-deployment.md`.
+The default `Dockerfile` targets Single Server. It runs `bin/singleserver-entrypoint.sh`, expects persistent public media at `/storage/media` and private temporary sketch media at `/storage/sketchy-media`, and serves Gunicorn on `PORT` (default `8001`). See `docs/singleserver-deployment.md`.
 
-Fly.io deployments use `fly.toml`, which selects `Dockerfile.flyio` and stores SQLite, static output, media, filedrop files, and backups on the `/data` volume. See `docs/flyio-deployment.md`.
+Fly.io deployments use `fly.toml`, which selects `Dockerfile.flyio` and stores SQLite, static output, public media, private temporary sketch media, filedrop files, and backups on the `/data` volume. See `docs/flyio-deployment.md`.
 
 For the one-time production database transition from SQLite to PostgreSQL, see `docs/postgresql-production-transition.md`.
 

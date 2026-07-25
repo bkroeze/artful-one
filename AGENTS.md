@@ -193,6 +193,9 @@ Sketches are JS/P5 artifacts loaded by naming convention:
 - Each sketch module should use the same slug as its DOM id, e.g. `const NAME = "lotus"; new p5(sketch, document.getElementById(NAME))`
 - The detail template loads `/static/js/p5/p5.min.js` first, then the compiled `/static/art/<slug>.js`
 
+Private `WorkingSketch` drafts are a separate, owner-scoped workflow under
+`/sketchy/`; use the repository-local guidance in `skills/sketchy/SKILL.md`.
+
 ### Animation Loading
 Animations are template-backed media records loaded by slug convention:
 - `Animation.slug` maps to `templates/animations/<slug>.html`
@@ -218,10 +221,11 @@ Key environment variables (loaded via python-dotenv):
 - `CSRF_TRUSTED_ORIGINS` - Comma-separated list
 - `STATIC_ROOT` - Static collection directory (defaults to `staticfiles/`)
 - `MEDIA_ROOT` - Media file root (defaults to `media/`)
+- `SKETCHY_MEDIA_ROOT` - Private temporary sketch media root (defaults beside `MEDIA_ROOT` in `sketchy-media/`)
 - `FILEDROP_BASE_DIR` - Filedrop storage directory (defaults to `filedrop_files/`)
 - `SESSION_COOKIE_DOMAIN` - Cookie domain
 - `SESSION_COOKIE_SECURE` - Require secure session cookies in production
-- `PORT` - Bind port for container entrypoints (defaults to 8000)
+- `PORT` - Bind port for container entrypoints (Fly defaults to 8000; Single Server defaults to 8001)
 - `WEB_CONCURRENCY` - Gunicorn worker count for container entrypoints (Fly defaults to 1, Single Server defaults to 2 when unset)
 - `STAGING` - Staging environment flag
 - `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_API_URL`, `MAILGUN_FROM_EMAIL` - Contact form Mailgun delivery

@@ -13,7 +13,7 @@ Artful.One is a Django personal blog site. It manages multiple content types (en
   - `healthcheck.py`
   - `wsgi.py`
 - `blog/` — Core models, views, feeds, templates context, and content behavior.
-- `sketches/` — Live code sketches and template-backed animations.
+- `sketches/` — Published code sketches, template-backed animations, and private working sketches.
 - `monthly/` — Monthly archive app.
 - `feedstats/` — Feed subscriber tracking and analytics.
 - Pixel border editor — Provided by the external `pixel-borders` dependency and mounted into the site.
@@ -53,6 +53,7 @@ Markdown rendering is centralized through the shared `markdownify` filters in `b
 - Short aliases for quick access: `/e/{id}/`, `/b/{id}/`, `/q/{id}/`, `/n/{id}/`.
 - Pixel border editor routes live under `/borders/`.
 - Art landing route: `/art/`; animation detail pages: `/animations/{slug}`.
+- Private working-sketch pages and bearer-token APIs live under `/sketchy/`.
 
 ## Pixel Borders
 
@@ -66,6 +67,19 @@ The `/art/` landing page lists non-draft `Animation` records with existing templ
 - Animation detail pages render through `/animations/<slug>` using `sketches/templates/animation_detail.html`.
 - Animations can reference a `Photo` thumbnail, which `/art/` uses as the animation card image.
 - Animation-specific assets may live under `static/art/<slug>/`.
+
+## Private Working Sketches
+
+`WorkingSketch` records are private, owner-scoped drafts managed through the
+repository-local `bin/sketchy` client. Bearer credentials are issued as
+`SketchToken` records; only the full raw token is a credential, while the stored
+prefix is an administrative identifier. Staff users can inspect all working
+sketches.
+
+Temporary uploads are stored separately from public media as
+`TemporarySketchMedia` records. They default to a seven-day lifetime, are
+purged during media API activity, and can be removed explicitly with
+`uv run manage.py purge_expired_sketch_media`.
 
 ## Contact Form
 
@@ -97,6 +111,7 @@ All content supports `is_draft`.
 
 - `STATIC_ROOT` defaults to `staticfiles/`; Fly sets it to `/data/staticfiles`; the Single Server image sets it to `/app/staticfiles`. `STATIC_URL` = `/static/`.
 - `MEDIA_ROOT` defaults to `media/`; Fly sets it to `/data/media`; the Single Server image sets it to `/storage/media`. `MEDIA_URL` = `/media/`.
+- `SKETCHY_MEDIA_ROOT` holds private temporary sketch uploads outside the public media tree. It defaults beside `MEDIA_ROOT` in `sketchy-media/`; Fly sets `/data/sketchy-media`, and Single Server uses `/storage/sketchy-media`.
 - Static served with WhiteNoise (compressed).
 - Uploaded photos are generated under `MEDIA_ROOT/photos/` by `django-pictures` with responsive outputs (including AVIF) and multiple ratios/densities. Migration `0014_alter_photo_image` only updates the field type; existing media must be copied into `MEDIA_ROOT` during deployment cutover. Entries may reference an uploaded `Photo` and pass `picture_size` as the rendered container width.
 
