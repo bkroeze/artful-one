@@ -77,24 +77,37 @@ def portable_path(path: Path) -> str:
 @contextmanager
 def sketchy_server(
     responses: dict[tuple[str, str], tuple[int, Any]],
-) -> Iterator[tuple[str, list[dict[str, str]]]]:
-    requests: list[dict[str, str]] = []
+) -> Iterator[tuple[str, list[dict[str, Any]]]]:
+    requests: list[dict[str, Any]] = []
 
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self) -> None:
+            self.respond()
+
+        def do_POST(self) -> None:
+            self.respond()
+
+        def do_PATCH(self) -> None:
             self.respond()
 
         def do_DELETE(self) -> None:
             self.respond()
 
         def respond(self) -> None:
-            requests.append(
-                {
-                    "method": self.command,
-                    "path": self.path,
-                    "authorization": self.headers.get("Authorization", ""),
-                }
-            )
+            request: dict[str, Any] = {
+                "method": self.command,
+                "path": self.path,
+                "authorization": self.headers.get("Authorization", ""),
+            }
+            content_length = int(self.headers.get("Content-Length", "0"))
+            if content_length:
+                body = self.rfile.read(content_length)
+                content_type = self.headers.get("Content-Type", "")
+                request["content_type"] = content_type
+                request["body"] = body
+                if content_type == "application/json":
+                    request["json"] = json.loads(body)
+            requests.append(request)
             status, payload = responses.get(
                 (self.command, self.path),
                 (500, {"detail": f"Unexpected request: {self.command} {self.path}"}),
@@ -199,6 +212,96 @@ def test_delete_404_is_a_successful_noop_but_get_404_is_an_error(
     assert b"Sketch not found." in fetched.stdout
     assert b"status: 404" in fetched.stdout
     assert [request["method"] for request in requests] == ["DELETE", "GET"]
+
+
+def test_mutation_commands_send_json_and_multipart_and_map_http_errors(
+    cli_env: dict[str, str], tmp_path: Path
+) -> None:
+    media_id = "123e4567-e89b-12d3-a456-426614174000"
+    responses = {
+        ("POST", "/sketchy/api/sketches/"): (
+            201,
+            {"sketch": {"slug": "orbit", "title": "Orbit", "sketch_type": "d3"}},
+        ),
+        ("PATCH", "/sketchy/api/sketches/orbit%20draft/"): (
+            409,
+            {"detail": "That slug is already in use."},
+        ),
+        ("POST", "/sketchy/api/media/"): (
+            201,
+            {"media": {"id": media_id, "original_name": "texture.png"}},
+        ),
+    }
+    upload = tmp_path / "texture.png"
+    upload.write_bytes(b"\x89PNG\r\nsketchy-test")
+
+    with sketchy_server(responses) as (site, requests):
+        created = run_sketchy(
+            cli_env,
+            "create",
+            "--slug",
+            "orbit",
+            "--title",
+            "Orbit",
+            "--type",
+            "d3",
+            "--startup-js",
+            "drawOrbit()",
+            site=site,
+        )
+        updated = run_sketchy(
+            cli_env,
+            "update",
+            "orbit draft",
+            "--new-slug",
+            "orbit",
+            "--title",
+            "Revised Orbit",
+            site=site,
+        )
+        uploaded = run_sketchy(
+            cli_env,
+            "media",
+            "upload",
+            str(upload),
+            "--sketch",
+            "orbit",
+            "--expires-in-hours",
+            "24",
+            site=site,
+        )
+
+    assert created.returncode == 0
+    assert updated.returncode == 1
+    assert b"That slug is already in use." in updated.stdout
+    assert b"status: 409" in updated.stdout
+    assert uploaded.returncode == 0
+    assert f"sketchy-media://{media_id}".encode() in uploaded.stdout
+
+    assert requests[0]["path"] == "/sketchy/api/sketches/"
+    assert requests[0]["json"] == {
+        "slug": "orbit",
+        "title": "Orbit",
+        "sketch_type": "d3",
+        "startup_js": "drawOrbit()",
+    }
+    assert requests[1]["path"] == "/sketchy/api/sketches/orbit%20draft/"
+    assert requests[1]["json"] == {
+        "slug": "orbit",
+        "title": "Revised Orbit",
+    }
+    assert requests[2]["path"] == "/sketchy/api/media/"
+    assert requests[2]["content_type"].startswith("multipart/form-data; boundary=")
+    multipart_body = requests[2]["body"]
+    assert b'name="sketch"\r\n\r\norbit' in multipart_body
+    assert b'name="expires_in_hours"\r\n\r\n24' in multipart_body
+    assert b'name="file"; filename="texture.png"' in multipart_body
+    assert b"Content-Type: image/png" in multipart_body
+    assert b"\x89PNG\r\nsketchy-test" in multipart_body
+    assert all(
+        request["authorization"] == "Bearer deterministic-test-token"
+        for request in requests
+    )
 
 
 def test_create_help_keeps_each_example_on_its_own_line(
