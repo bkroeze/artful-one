@@ -9,6 +9,7 @@ node_modules/
 
 # DB
 artful-one.db
+*.dump
 
 # Virtual environments
 .venv

@@ -37,10 +37,11 @@ ssh <host> 'singleserver env set artful-one ALLOWED_HOSTS=artful.one'
 ssh <host> 'singleserver env set artful-one CSRF_TRUSTED_ORIGINS=https://artful.one'
 ssh <host> 'singleserver env set artful-one DATABASE_URL=sqlite:////storage/artful-one.db'
 ssh <host> 'singleserver env set artful-one MEDIA_ROOT=/storage/media'
+ssh <host> 'singleserver env set artful-one SKETCHY_MEDIA_ROOT=/storage/sketchy-media'
 ssh <host> 'singleserver env set artful-one FILEDROP_BASE_DIR=/storage/filedrop_files'
 ```
 
-Set Mailgun, Cloudflare, OpenRouter, Sentry, and other optional provider secrets only when those features are enabled. The image already sets `STATIC_ROOT=/app/staticfiles` and `MEDIA_ROOT=/storage/media`; the explicit `MEDIA_ROOT` env value keeps the deployment config visible on the host.
+Set Mailgun, Cloudflare, OpenRouter, Sentry, and other optional provider secrets only when those features are enabled. The image already sets `STATIC_ROOT=/app/staticfiles` and `MEDIA_ROOT=/storage/media`; Django consequently defaults `SKETCHY_MEDIA_ROOT` to `/storage/sketchy-media`. The explicit media env values keep the deployment config visible on the host and keep private temporary sketch uploads outside the public media tree.
 
 `singleserver env set` configures the runtime container, not the Docker build that runs `uv sync --frozen`. Do not set `GITHUB_DEPLOY_TOKEN` for this image. Git dependencies in `pyproject.toml` must be fetchable by the build without extra credentials, or they should be published to a package index or vendored into the app repository.
 

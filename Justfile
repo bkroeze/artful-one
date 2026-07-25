@@ -33,6 +33,15 @@ check:
   uv run manage.py check
   uv run ruff check
 
+backup_db:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  : "${DATABASE_URL:?Set DATABASE_URL in .env}"
+  backup="artful-one-$(date -u +%Y%m%dT%H%M%SZ).dump"
+  pg_dump --format=custom --file="$backup" "$DATABASE_URL"
+  printf 'Created %s\n' "$backup"
+
+
 compile-sketches:
   uv run manage.py compile_sketches
 

@@ -9,15 +9,17 @@ set -euo pipefail
 #fi
 
 # We are running as appuser now
-mkdir -p /storage/media /app/staticfiles
+mkdir -p /storage/media /storage/sketchy-media /app/staticfiles
 
 # Run database migrations
-if [ ! -f /storage/MIGRATE.lock ]
+migration_version=2
+migration_lock="/storage/MIGRATE.v${migration_version}.lock"
+if [ ! -f "$migration_lock" ]
 then
-  echo "One-time migrate setup"
+  echo "Running migration setup version ${migration_version}"
   ./.venv/bin/python manage.py migrate --noinput
   ./.venv/bin/python manage.py collectstatic --noinput
-  touch /storage/MIGRATE.lock
+  touch "$migration_lock"
 fi
 
 : "${OPENROUTER_API_KEY:?OPENROUTER_API_KEY must be set}"

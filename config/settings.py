@@ -191,13 +191,16 @@ ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", ["*"])
 STATIC_ROOT = os.environ.get("STATIC_ROOT", os.path.join(BASE_DIR, "staticfiles"))
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/"),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"),)
 
 # Media files (user-uploaded content)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.environ.get("MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
+# Private working-sketch uploads must not live under the public MEDIA_ROOT.
+SKETCHY_MEDIA_ROOT = os.environ.get(
+    "SKETCHY_MEDIA_ROOT",
+    os.path.join(os.path.dirname(MEDIA_ROOT), "sketchy-media"),
+)
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

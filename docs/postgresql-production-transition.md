@@ -109,11 +109,13 @@ for model in apps.get_models():
 PY
 ```
 
-Also copy uploaded files and filedrop data if they live outside the database:
+Also copy uploaded files and filedrop data if they live outside the database.
+Private temporary sketch uploads live outside the public media tree:
 
 ```bash
 # Examples; adjust paths for the active platform.
 rsync -a /data/media/ "${EXPORT_DIR}/media/"
+rsync -a /data/sketchy-media/ "${EXPORT_DIR}/sketchy-media/"
 rsync -a /data/filedrop_files/ "${EXPORT_DIR}/filedrop_files/"
 ```
 
@@ -175,10 +177,12 @@ Keep storage paths appropriate to the deployment target:
 # Fly.io examples
 STATIC_ROOT='/data/staticfiles'
 MEDIA_ROOT='/data/media'
+SKETCHY_MEDIA_ROOT='/data/sketchy-media'
 FILEDROP_BASE_DIR='/data/filedrop_files'
 
 # Single Server examples
 MEDIA_ROOT='/storage/media'
+SKETCHY_MEDIA_ROOT='/storage/sketchy-media'
 FILEDROP_BASE_DIR='/storage/filedrop_files'
 ```
 
@@ -277,7 +281,8 @@ Some differences are acceptable for regenerated framework tables such as content
 - `monthly.Newsletter`
 - `filedrop.Drop`, `filedrop.Token`, and `filedrop.DownloadLog`
 - `rpg.RpgTable` and `rpg.RpgTableAlias`
-- `sketches.Sketch` and `sketches.Animation`
+- `sketches.Sketch`, `sketches.Animation`, `sketches.WorkingSketch`,
+  `sketches.SketchToken`, and `sketches.TemporarySketchMedia`
 
 Run application checks:
 

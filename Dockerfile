@@ -46,8 +46,8 @@ RUN DJANGO_SECRET=build-time-dummy-secret \
 # Create a non-root user
 RUN chmod +x /app/bin/singleserver-entrypoint.sh \
     && useradd -m appuser \
-    && mkdir -p /storage/media \
-    && chown -R appuser:appuser /app /storage/media
+    && mkdir -p /storage/media /storage/sketchy-media /app/sketchy-media \
+    && chown -R appuser:appuser /app /storage
 
 # Expose port
 EXPOSE 8001

@@ -9,6 +9,9 @@ Fly checks the exact `/health/` path. The first Django middleware returns
 `text/plain` `ok\n` for that path before normal host routing, redirects, auth, or
 URL resolution.
 
+`fly.toml` keeps public uploads in `/data/media` and private temporary sketch
+uploads in `/data/sketchy-media` on the mounted volume.
+
 ## Initial Setup
 
 Create the app and volume:

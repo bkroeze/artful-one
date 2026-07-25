@@ -1,0 +1,1086 @@
+#!/usr/bin/env -S uv run --quiet --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "click==8.1.8",
+#   "py-toon-format>=0.1",
+#   "requests>=2.32,<3",
+#   "typer==0.16.1",
+# ]
+# ///
+
+"""Agent-friendly client for private working sketches at artful.one."""
+
+from __future__ import annotations
+
+import mimetypes
+import os
+import shlex
+import shutil
+import sys
+import uuid
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
+from typing import Any
+from urllib.parse import quote, urlsplit
+
+import click
+import requests
+import typer
+from py_toon_format import encode
+
+DEFAULT_SITE = "https://artful.one"
+API_ROOT = "/sketchy/api"
+PREVIEW_CHARACTERS = 500
+DESCRIPTION = "Manage private working sketches and their media through the Sketchy API."
+ALREADY_ABSENT = object()
+SKILL_MARKDOWN = """---
+name: sketchy
+description: Use when creating, inspecting, updating, or deleting private working sketches, or when uploading and managing their temporary media through Sketchy.
+---
+
+# Sketchy
+
+Use Sketchy for private, owner-scoped working sketches and their temporary media. It is appropriate when the task involves a D3, Processing.js, or raw JavaScript/HTML sketch; inspecting live sketch state; or providing uploaded assets to a sketch.
+
+## Invocation and authentication
+
+Run the repository-local executable from the repository root. Do not assume a global installation:
+
+```sh
+./bin/sketchy --help
+```
+
+Set `SKETCHY_TOKEN` to the **full raw token** returned when the token was issued:
+
+```sh
+export SKETCHY_TOKEN='<full-raw-token>'
+```
+
+The 16-character token prefix is only an identifier for administration and logs. It is not a bearer credential and must not be used as `SKETCHY_TOKEN`.
+
+The default site is `https://artful.one`. Override it with `SKETCHY_URL` or with the global `--site` option. `--site` must precede the subcommand:
+
+```sh
+SKETCHY_URL=https://example.com ./bin/sketchy list
+./bin/sketchy --site http://localhost:8000 list
+```
+
+Commands are non-interactive and return structured TOON, except `skill`, which returns raw Markdown.
+
+## Sketch CRUD
+
+List compact sketch summaries, or request the complete list schema:
+
+```sh
+./bin/sketchy list
+./bin/sketchy list --full
+```
+
+Inspect one sketch. Use `--full` when untruncated JavaScript and HTML are required:
+
+```sh
+./bin/sketchy get <slug>
+./bin/sketchy get <slug> --full
+```
+
+Create a sketch with `d3`, `processing`, or `raw` type:
+
+```sh
+./bin/sketchy create --slug <slug> --title "<title>" --type d3
+```
+
+For substantial JavaScript or HTML, write UTF-8 files and pass their paths instead of fighting shell quoting:
+
+```sh
+./bin/sketchy create --slug <slug> --title "<title>" --type raw \\
+  --startup-js-file ./sketch.js --div-html-file ./sketch.html
+./bin/sketchy update <slug> \\
+  --startup-js-file ./sketch.js --div-html-file ./sketch.html
+```
+
+Update only supplied fields. Rename with `--new-slug`:
+
+```sh
+./bin/sketchy update <slug> --title "<new-title>"
+./bin/sketchy update <slug> --new-slug <new-slug> --type d3
+```
+
+Deletes never prompt:
+
+```sh
+./bin/sketchy delete <slug>
+```
+
+Deleting an already-absent sketch is a successful no-op.
+
+## Media
+
+Upload a file, optionally associating it with a sketch or setting a lifetime:
+
+```sh
+./bin/sketchy media upload ./image.png --sketch <slug>
+./bin/sketchy media upload ./preview.webp --expires-in-hours 24
+```
+
+Uploads return a stable `sketchy-media://<uuid>` reference. Put that reference in sketch JavaScript or HTML when the sketch needs the asset; do not substitute the temporary signed URL.
+
+List compact media summaries or the complete API schema, and inspect by UUID or reference:
+
+```sh
+./bin/sketchy media list
+./bin/sketchy media list --full
+./bin/sketchy media get sketchy-media://<uuid>
+```
+
+Media deletes also never prompt, and deleting already-absent media is a successful no-op:
+
+```sh
+./bin/sketchy media delete sketchy-media://<uuid>
+```
+"""
+
+
+class SketchType(str, Enum):
+    d3 = "d3"
+    processing = "processing"
+    raw = "raw"
+
+
+class CliFailure(Exception):
+    def __init__(
+        self,
+        message: str,
+        *,
+        code: int,
+        kind: str,
+        help_text: str | None = None,
+        **details: Any,
+    ):
+        super().__init__(message)
+        self.code = code
+        self.payload: dict[str, Any] = {"error": {"type": kind, "message": message}}
+        self.payload["error"].update(details)
+        if help_text:
+            self.payload["help"] = help_text
+
+
+@dataclass
+class State:
+    site_override: str | None = None
+
+    @property
+    def command(self) -> str:
+        command = _portable_command()
+        if self.site_override is None:
+            return command
+        return f"{command} --site {shlex.quote(self.site_override)}"
+
+
+class Client:
+    def __init__(self, site: str, token: str):
+        parsed = urlsplit(site)
+        if (
+            parsed.scheme not in {"http", "https"}
+            or not parsed.netloc
+            or parsed.query
+            or parsed.fragment
+        ):
+            raise CliFailure(
+                f"Invalid site URL: {site!r}",
+                code=2,
+                kind="usage",
+                help_text=f"Use an absolute http:// or https:// URL, for example `{_portable_command()} --site http://localhost:8000 list`.",
+            )
+        self.base_url = site.rstrip("/")
+        self.session = requests.Session()
+        self.session.headers.update(
+            {
+                "Accept": "application/json",
+                "Authorization": f"Bearer {token}",
+                "User-Agent": "sketchy-axi/1",
+            }
+        )
+
+    @classmethod
+    def from_state(cls, state: State) -> Client:
+        token = os.environ.get("SKETCHY_TOKEN", "").strip()
+        if not token:
+            raise CliFailure(
+                "SKETCHY_TOKEN is required.",
+                code=2,
+                kind="usage",
+                help_text="Set it non-interactively, for example `export SKETCHY_TOKEN='<token>'`, then run the command again.",
+            )
+        site = state.site_override or os.environ.get("SKETCHY_URL", DEFAULT_SITE)
+        return cls(site.strip(), token)
+
+    def request(
+        self,
+        method: str,
+        path: str,
+        *,
+        json: dict[str, Any] | None = None,
+        files: dict[str, Any] | None = None,
+        data: dict[str, str] | None = None,
+        not_found_ok: bool = False,
+    ) -> Any:
+        url = f"{self.base_url}{API_ROOT}/{path.lstrip('/')}"
+        try:
+            response = self.session.request(
+                method,
+                url,
+                json=json,
+                files=files,
+                data=data,
+                timeout=(5, 30),
+            )
+        except requests.Timeout as exc:
+            raise CliFailure(
+                f"The request to {self.base_url} timed out.",
+                code=1,
+                kind="network",
+                help_text="Check that the site is reachable, then retry the command.",
+            ) from exc
+        except requests.ConnectionError as exc:
+            raise CliFailure(
+                f"Could not connect to {self.base_url}.",
+                code=1,
+                kind="network",
+                help_text="Check SKETCHY_URL or --site and verify that the site is reachable.",
+            ) from exc
+        except requests.RequestException as exc:
+            raise CliFailure(
+                f"The request to {self.base_url} failed before a response was received.",
+                code=1,
+                kind="network",
+                help_text="Check the site URL and network connection, then retry the command.",
+            ) from exc
+
+        if response.status_code == 404 and not_found_ok:
+            return ALREADY_ABSENT
+        if not response.ok:
+            self._raise_http_error(response)
+        if response.status_code == 204 or not response.content:
+            return None
+        try:
+            return response.json()
+        except ValueError as exc:
+            raise CliFailure(
+                "The server returned a successful response that was not JSON.",
+                code=1,
+                kind="invalid_response",
+                status=response.status_code,
+                help_text="Verify that --site or SKETCHY_URL points to a compatible Sketchy server.",
+            ) from exc
+
+    @staticmethod
+    def _raise_http_error(response: requests.Response) -> None:
+        status = response.status_code
+        message: str | None = None
+        try:
+            body = response.json()
+        except ValueError:
+            body = None
+        if isinstance(body, dict):
+            for key in ("detail", "message"):
+                if isinstance(body.get(key), str) and body[key].strip():
+                    message = body[key].strip()
+                    break
+            error_value = body.get("error")
+            if message is None and isinstance(error_value, str) and error_value.strip():
+                message = error_value.strip()
+            if message is None and isinstance(error_value, dict):
+                for key in ("message", "detail"):
+                    if (
+                        isinstance(error_value.get(key), str)
+                        and error_value[key].strip()
+                    ):
+                        message = error_value[key].strip()
+                        break
+        if message is None:
+            message = {
+                400: "The server rejected the request.",
+                401: "Authentication failed.",
+                403: "This token is not allowed to perform that action.",
+                404: "The requested resource was not found.",
+                409: "The requested change conflicts with an existing resource.",
+                413: "The upload is larger than the server allows.",
+                429: "The server is rate-limiting requests.",
+            }.get(status, "The server could not complete the request.")
+        help_text = {
+            400: "Review the command values and retry; use the command's `--help` for accepted inputs.",
+            401: "Set SKETCHY_TOKEN to a valid bearer token and retry.",
+            403: "Use a token with access to this resource or choose a resource owned by the token's user.",
+            404: "Check the slug or media ID and verify --site or SKETCHY_URL.",
+            409: "Choose a different slug or fetch the existing sketch before updating it.",
+            413: "Upload a smaller file.",
+            429: "Wait briefly, then retry the command.",
+        }.get(
+            status,
+            "Retry later; if the error persists, verify the server and site URL.",
+        )
+        raise CliFailure(
+            message, code=1, kind="http", status=status, help_text=help_text
+        )
+
+
+app = typer.Typer(
+    add_completion=False,
+    no_args_is_help=False,
+    pretty_exceptions_enable=False,
+    rich_markup_mode=None,
+    context_settings={"help_option_names": ["-h", "--help"], "show_default": True},
+    help=DESCRIPTION,
+)
+media_app = typer.Typer(
+    add_completion=False,
+    no_args_is_help=False,
+    pretty_exceptions_enable=False,
+    rich_markup_mode=None,
+    context_settings={"help_option_names": ["-h", "--help"], "show_default": True},
+    help="Manage owner-scoped media used by working sketches.",
+)
+app.add_typer(media_app, name="media")
+
+
+def _state(ctx: typer.Context) -> State:
+    value = ctx.find_root().obj
+    if not isinstance(value, State):
+        raise CliFailure("CLI state is unavailable.", code=1, kind="internal")
+    return value
+
+
+def _emit(value: Any) -> None:
+    sys.stdout.write(encode(value))
+
+
+def _collapse_home(path: Path) -> str:
+    resolved = str(path.resolve())
+    home = str(Path.home())
+    if resolved == home:
+        return "~"
+    if resolved.startswith(f"{home}/"):
+        return f"~/{resolved[len(home) + 1 :]}"
+    return resolved
+
+
+def _shell_path(path: Path) -> str:
+    collapsed = _collapse_home(path)
+    if collapsed.startswith("~/"):
+        return f"~/{shlex.quote(collapsed[2:])}"
+    return shlex.quote(collapsed)
+
+
+def _executable_path() -> Path:
+    argument = Path(sys.argv[0]).expanduser()
+    if not argument.is_absolute() and len(argument.parts) == 1:
+        resolved = shutil.which(sys.argv[0])
+        if resolved is not None:
+            argument = Path(resolved)
+    return argument.resolve()
+
+
+def _portable_command() -> str:
+    executable = _executable_path()
+    path_command = shutil.which("sketchy")
+    if path_command is not None and Path(path_command).resolve() == executable:
+        return "sketchy"
+    return _shell_path(executable)
+
+
+def _truncate(value: Any) -> tuple[Any, int]:
+    truncated = 0
+
+    def visit(item: Any) -> Any:
+        nonlocal truncated
+        if isinstance(item, str) and len(item) > PREVIEW_CHARACTERS:
+            truncated += 1
+            return f"{item[:PREVIEW_CHARACTERS]}... [truncated: {len(item)} characters total]"
+        if isinstance(item, list):
+            return [visit(child) for child in item]
+        if isinstance(item, dict):
+            return {key: visit(child) for key, child in item.items()}
+        return item
+
+    return visit(value), truncated
+
+
+def _render(value: Any, *, full: bool, full_hint: str | None = None) -> None:
+    if full:
+        _emit(value)
+        return
+    preview, truncated = _truncate(value)
+    if truncated and full_hint:
+        if isinstance(preview, dict):
+            preview = dict(preview)
+            help_key = "help" if "help" not in preview else "sketchy_help"
+            preview[help_key] = (
+                f"{full_hint} ({truncated} long field{'s' if truncated != 1 else ''} truncated.)"
+            )
+        else:
+            preview = {"data": preview, "help": full_hint}
+    _emit(preview)
+
+
+def _read_text(literal: str | None, file_path: Path | None, label: str) -> str | None:
+    if literal is not None and file_path is not None:
+        raise CliFailure(
+            f"Use either --{label} or --{label}-file, not both.",
+            code=2,
+            kind="usage",
+            help_text=f"Pass literal content with `--{label} TEXT` or read it from a file with `--{label}-file PATH`.",
+        )
+    if file_path is None:
+        return literal
+    try:
+        if not file_path.is_file():
+            raise OSError("not a regular file")
+        return file_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise CliFailure(
+            f"Could not read UTF-8 text from {file_path}.",
+            code=2,
+            kind="usage",
+            help_text=f"Check that --{label}-file points to a readable UTF-8 text file.",
+        ) from exc
+
+
+def _require_object(value: Any, operation: str) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        raise CliFailure(
+            f"The server returned an invalid {operation} response.",
+            code=1,
+            kind="invalid_response",
+            help_text="Verify that --site or SKETCHY_URL points to a compatible Sketchy server.",
+        )
+    return value
+
+
+def _validate_list(value: Any, key: str) -> dict[str, Any]:
+    payload = _require_object(value, f"{key} list")
+    items = payload.get(key)
+    count = payload.get("count")
+    if (
+        not isinstance(items, list)
+        or not all(isinstance(item, dict) for item in items)
+        or not isinstance(count, int)
+        or isinstance(count, bool)
+    ):
+        raise CliFailure(
+            f"The server returned an invalid {key} list response.",
+            code=1,
+            kind="invalid_response",
+            help_text="Verify that --site or SKETCHY_URL points to a compatible Sketchy server.",
+        )
+    flattened_items: list[dict[str, Any]] = []
+    for item in items:
+        owner = item.get("owner")
+        if not isinstance(owner, dict):
+            flattened_items.append(item)
+            continue
+        flattened = {
+            field: field_value
+            for field, field_value in item.items()
+            if field != "owner"
+        }
+        flattened["owner_id"] = owner.get("id")
+        flattened["owner_username"] = owner.get("username")
+        flattened_items.append(flattened)
+    result = dict(payload)
+    result[key] = flattened_items
+    return result
+
+
+def _compact_list(
+    payload: dict[str, Any], key: str, fields: tuple[str, ...]
+) -> dict[str, Any]:
+    return {
+        "count": payload["count"],
+        key: [{field: item.get(field) for field in fields} for item in payload[key]],
+    }
+
+
+def _sketch_slug(value: dict[str, Any], fallback: str) -> str:
+    sketch = value.get("sketch")
+    if isinstance(sketch, dict) and isinstance(sketch.get("slug"), str):
+        return sketch["slug"]
+    return fallback
+
+
+def _parse_media_id(value: str) -> str:
+    candidate = value.removeprefix("sketchy-media://")
+    try:
+        return str(uuid.UUID(candidate))
+    except ValueError as exc:
+        raise CliFailure(
+            f"Invalid media ID or reference: {value!r}",
+            code=2,
+            kind="usage",
+            help_text="Use a UUID or a reference such as `sketchy-media://123e4567-e89b-12d3-a456-426614174000`.",
+        ) from exc
+
+
+def _add_media_reference(value: Any) -> dict[str, Any]:
+    payload = _require_object(value, "media upload")
+    media = payload.get("media")
+    if not isinstance(media, dict):
+        raise CliFailure(
+            "The server returned an invalid media upload response.",
+            code=1,
+            kind="invalid_response",
+            help_text="Verify that --site or SKETCHY_URL points to a compatible Sketchy server.",
+        )
+    identifier = media.get("id") or media.get("uuid")
+    if not isinstance(identifier, str):
+        raise CliFailure(
+            "The media upload response did not include a UUID.",
+            code=1,
+            kind="invalid_response",
+            help_text="Verify that --site or SKETCHY_URL points to a compatible Sketchy server.",
+        )
+    try:
+        identifier = str(uuid.UUID(identifier))
+    except ValueError as exc:
+        raise CliFailure(
+            "The media upload response included an invalid UUID.",
+            code=1,
+            kind="invalid_response",
+            help_text="Verify that --site or SKETCHY_URL points to a compatible Sketchy server.",
+        ) from exc
+    result = dict(payload)
+    result["media"] = dict(media)
+    result["media"]["reference"] = f"sketchy-media://{identifier}"
+    return result
+
+
+@app.command()
+def skill(
+    ctx: typer.Context,
+    check: bool = typer.Option(
+        False,
+        "--check",
+        help="Verify that the committed generated skill matches the canonical content.",
+    ),
+) -> None:
+    """Print the canonical installable Agent Skill without authentication.
+
+    \b
+    Examples:
+      sketchy skill
+      sketchy skill > skills/sketchy/SKILL.md
+      sketchy skill --check
+    """
+    if not check:
+        sys.stdout.write(SKILL_MARKDOWN)
+        return
+    state = _state(ctx)
+    skill_path = Path(__file__).resolve().parent.parent / "skills/sketchy/SKILL.md"
+    try:
+        committed = skill_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise CliFailure(
+            f"Could not read the generated skill at {_collapse_home(skill_path)}.",
+            code=1,
+            kind="skill_check",
+            path=_collapse_home(skill_path),
+            help_text=f"Generate it with `{state.command} skill > {_shell_path(skill_path)}`.",
+        ) from exc
+    if committed != SKILL_MARKDOWN:
+        raise CliFailure(
+            "The committed Sketchy skill is stale.",
+            code=1,
+            kind="skill_check",
+            path=_collapse_home(skill_path),
+            help_text=f"Regenerate it with `{state.command} skill > {_shell_path(skill_path)}`, then commit the result.",
+        )
+    _emit(
+        {
+            "skill": {
+                "path": _collapse_home(skill_path),
+                "status": "current",
+            }
+        }
+    )
+
+
+@app.callback(invoke_without_command=True)
+def root(
+    ctx: typer.Context,
+    site: str | None = typer.Option(
+        None,
+        "--site",
+        help=f"Override SKETCHY_URL (default: {DEFAULT_SITE}). Must precede the subcommand.",
+        metavar="URL",
+    ),
+) -> None:
+    """Manage private working sketches without prompts or unstructured output.
+
+    Run with no subcommand to show the live sketch list.
+
+    \b
+    Examples:
+      sketchy
+      sketchy --site http://localhost:8000 list
+      SKETCHY_URL=https://example.com sketchy get orbit --full
+    """
+    state = State(site_override=site)
+    ctx.obj = state
+    if ctx.invoked_subcommand is None:
+        _list_sketches(state, full=False, home=True)
+
+
+def _list_sketches(state: State, *, full: bool, home: bool) -> None:
+    value = Client.from_state(state).request("GET", "sketches/")
+    payload = _validate_list(value, "sketches")
+    output = (
+        payload
+        if full
+        else _compact_list(
+            payload, "sketches", ("slug", "title", "sketch_type", "updated_at")
+        )
+    )
+    if home:
+        output = {
+            "bin": _collapse_home(_executable_path()),
+            "description": DESCRIPTION,
+            **output,
+        }
+    if not full and output["count"] == 0:
+        output["status"] = "No sketches found; the empty list is definitive."
+        output["help"] = f"Run `{state.command} create --help` to create a sketch."
+    elif home:
+        output["help"] = [
+            f"Run `{state.command} get <slug> --full` to inspect a sketch.",
+            f"Run `{state.command} list --full` to see complete API fields.",
+            f"Run `{state.command} create --help` to create a sketch.",
+        ]
+    elif not full:
+        output["help"] = (
+            f"Run `{state.command} list --full` to see complete API fields."
+        )
+    _emit(output)
+
+
+@app.command("list")
+def list_sketches(
+    ctx: typer.Context,
+    full: bool = typer.Option(
+        False, "--full", help="Return all API fields without truncating long strings."
+    ),
+) -> None:
+    """List every visible sketch with a definitive count.
+
+    \b
+    Examples:
+      sketchy list
+      sketchy list --full
+      sketchy --site http://localhost:8000 list --full
+    """
+    _list_sketches(_state(ctx), full=full, home=False)
+
+
+@app.command()
+def get(
+    ctx: typer.Context,
+    slug: str = typer.Argument(..., help="Current sketch slug."),
+    full: bool = typer.Option(
+        False, "--full", help="Return all API fields without truncating long strings."
+    ),
+) -> None:
+    """Get one sketch by slug.
+
+    \b
+    Examples:
+      sketchy get orbit
+      sketchy get orbit --full
+      sketchy --site http://localhost:8000 get orbit --full
+    """
+    state = _state(ctx)
+    value = Client.from_state(state).request("GET", f"sketches/{quote(slug, safe='')}/")
+    payload = _require_object(value, "sketch detail")
+    _render(
+        payload,
+        full=full,
+        full_hint=f"Run `{state.command} get {shlex.quote(slug)} --full` to see complete values.",
+    )
+
+
+@app.command()
+def create(
+    ctx: typer.Context,
+    slug: str = typer.Option(..., "--slug", help="Unique sketch slug.", metavar="SLUG"),
+    title: str = typer.Option(
+        ..., "--title", help="Human-readable sketch title.", metavar="TITLE"
+    ),
+    sketch_type: SketchType = typer.Option(
+        ..., "--type", help="Sketch type: d3, processing, or raw.", metavar="TYPE"
+    ),
+    startup_js: str | None = typer.Option(
+        None, "--startup-js", help="Literal startup JavaScript.", metavar="TEXT"
+    ),
+    startup_js_file: Path | None = typer.Option(
+        None,
+        "--startup-js-file",
+        help="Read startup JavaScript from a UTF-8 file.",
+        metavar="PATH",
+    ),
+    div_html: str | None = typer.Option(
+        None, "--div-html", help="Literal sketch container HTML.", metavar="HTML"
+    ),
+    div_html_file: Path | None = typer.Option(
+        None,
+        "--div-html-file",
+        help="Read sketch container HTML from a UTF-8 file.",
+        metavar="PATH",
+    ),
+) -> None:
+    """Create a sketch; content may be literal or loaded from files.
+
+    \b
+    Examples:
+      sketchy create --slug orbit --title "Orbit" --type d3 --startup-js-file orbit.js
+      sketchy create --slug canvas --title "Canvas" --type raw --div-html '<canvas></canvas>'
+      sketchy create --slug demo --title "Demo" --type processing --startup-js-file demo.js --div-html-file demo.html
+    """
+    state = _state(ctx)
+    startup = _read_text(startup_js, startup_js_file, "startup-js")
+    markup = _read_text(div_html, div_html_file, "div-html")
+    body: dict[str, Any] = {
+        "slug": slug,
+        "title": title,
+        "sketch_type": sketch_type.value,
+    }
+    if startup is not None:
+        body["startup_js"] = startup
+    if markup is not None:
+        body["div_html"] = markup
+    value = Client.from_state(state).request("POST", "sketches/", json=body)
+    payload = _require_object(value, "sketch creation")
+    created_slug = _sketch_slug(payload, slug)
+    _render(
+        payload,
+        full=False,
+        full_hint=f"Run `{state.command} get {shlex.quote(created_slug)} --full` to see complete values.",
+    )
+
+
+@app.command()
+def update(
+    ctx: typer.Context,
+    slug: str = typer.Argument(..., help="Current sketch slug."),
+    new_slug: str | None = typer.Option(
+        None, "--new-slug", help="Replace the current slug.", metavar="SLUG"
+    ),
+    title: str | None = typer.Option(
+        None, "--title", help="Replace the title.", metavar="TITLE"
+    ),
+    sketch_type: SketchType | None = typer.Option(
+        None, "--type", help="Replace the type: d3, processing, or raw.", metavar="TYPE"
+    ),
+    startup_js: str | None = typer.Option(
+        None,
+        "--startup-js",
+        help="Replace startup JavaScript with literal text.",
+        metavar="TEXT",
+    ),
+    startup_js_file: Path | None = typer.Option(
+        None,
+        "--startup-js-file",
+        help="Replace startup JavaScript from a UTF-8 file.",
+        metavar="PATH",
+    ),
+    div_html: str | None = typer.Option(
+        None,
+        "--div-html",
+        help="Replace sketch container HTML with literal text.",
+        metavar="HTML",
+    ),
+    div_html_file: Path | None = typer.Option(
+        None,
+        "--div-html-file",
+        help="Replace sketch container HTML from a UTF-8 file.",
+        metavar="PATH",
+    ),
+) -> None:
+    """Update only the supplied fields of an existing sketch.
+
+    \b
+    Examples:
+      sketchy update orbit --title "New Orbit"
+      sketchy update orbit --new-slug orbit-2 --type d3 --startup-js-file orbit.js
+      sketchy update canvas --div-html '<canvas id="art"></canvas>'
+    """
+    state = _state(ctx)
+    startup = _read_text(startup_js, startup_js_file, "startup-js")
+    markup = _read_text(div_html, div_html_file, "div-html")
+    body: dict[str, Any] = {}
+    if new_slug is not None:
+        body["slug"] = new_slug
+    if title is not None:
+        body["title"] = title
+    if sketch_type is not None:
+        body["sketch_type"] = sketch_type.value
+    if startup is not None:
+        body["startup_js"] = startup
+    if markup is not None:
+        body["div_html"] = markup
+    if not body:
+        raise CliFailure(
+            "No updates were supplied.",
+            code=2,
+            kind="usage",
+            help_text=f"Run `{state.command} update --help` and pass at least one update option.",
+        )
+    value = Client.from_state(state).request(
+        "PATCH", f"sketches/{quote(slug, safe='')}/", json=body
+    )
+    payload = _require_object(value, "sketch update")
+    updated_slug = _sketch_slug(payload, new_slug or slug)
+    _render(
+        payload,
+        full=False,
+        full_hint=f"Run `{state.command} get {shlex.quote(updated_slug)} --full` to see complete values.",
+    )
+
+
+@app.command()
+def delete(
+    ctx: typer.Context,
+    slug: str = typer.Argument(..., help="Sketch slug to delete."),
+) -> None:
+    """Delete a sketch immediately without prompting.
+
+    \b
+    Examples:
+      sketchy delete orbit
+      sketchy --site http://localhost:8000 delete orbit
+    """
+    state = _state(ctx)
+    value = Client.from_state(state).request(
+        "DELETE", f"sketches/{quote(slug, safe='')}/", not_found_ok=True
+    )
+    if value is ALREADY_ABSENT:
+        _emit(
+            {
+                "absent": {"slug": slug},
+                "status": "Sketch was already absent; no-op.",
+            }
+        )
+        return
+    _emit(value if isinstance(value, dict) else {"deleted": {"slug": slug}})
+
+
+@media_app.callback(invoke_without_command=True)
+def media_root(ctx: typer.Context) -> None:
+    """Manage owner-scoped media without prompts.
+
+    Run with no subcommand to show the compact media list.
+    """
+    if ctx.invoked_subcommand is None:
+        _list_media(_state(ctx), full=False)
+
+
+def _list_media(state: State, *, full: bool) -> None:
+    value = Client.from_state(state).request("GET", "media/")
+    payload = _validate_list(value, "media")
+    output = (
+        payload
+        if full
+        else _compact_list(
+            payload,
+            "media",
+            ("id", "reference", "original_name", "sketch", "expires_at", "size"),
+        )
+    )
+    if not full and output["count"] == 0:
+        output["status"] = "No media found; the empty list is definitive."
+    elif not full:
+        output["help"] = (
+            f"Run `{state.command} media list --full` to see complete API fields."
+        )
+    _emit(output)
+
+
+@media_app.command("list")
+def media_list(
+    ctx: typer.Context,
+    full: bool = typer.Option(
+        False, "--full", help="Return the complete API schema for every media object."
+    ),
+) -> None:
+    """List every visible media object with a definitive count.
+
+    \b
+    Examples:
+      sketchy media list
+      sketchy media list --full
+      sketchy --site http://localhost:8000 media list
+    """
+    _list_media(_state(ctx), full=full)
+
+
+@media_app.command("upload")
+def media_upload(
+    ctx: typer.Context,
+    file: Path = typer.Argument(..., help="File to upload."),
+    sketch: str | None = typer.Option(
+        None,
+        "--sketch",
+        help="Optional sketch slug to associate with the upload.",
+        metavar="SLUG",
+    ),
+    expires_in_hours: int | None = typer.Option(
+        None,
+        "--expires-in-hours",
+        min=1,
+        max=720,
+        help="Optional lifetime from 1 to 720 hours (default: server policy).",
+        metavar="HOURS",
+    ),
+) -> None:
+    """Upload media and return its stable sketchy-media:// reference.
+
+    \b
+    Examples:
+      sketchy media upload texture.png
+      sketchy media upload audio.ogg --sketch orbit
+      sketchy media upload preview.webp --expires-in-hours 24
+    """
+    state = _state(ctx)
+    if not file.is_file():
+        raise CliFailure(
+            f"Upload file does not exist or is not a regular file: {file}",
+            code=2,
+            kind="usage",
+            help_text=f"Pass a readable file path, for example `{state.command} media upload ./image.png`.",
+        )
+    form: dict[str, str] = {}
+    if sketch is not None:
+        form["sketch"] = sketch
+    if expires_in_hours is not None:
+        form["expires_in_hours"] = str(expires_in_hours)
+    content_type = mimetypes.guess_type(file.name)[0] or "application/octet-stream"
+    try:
+        with file.open("rb") as stream:
+            value = Client.from_state(state).request(
+                "POST",
+                "media/",
+                files={"file": (file.name, stream, content_type)},
+                data=form,
+            )
+    except OSError as exc:
+        raise CliFailure(
+            f"Could not read upload file: {file}",
+            code=2,
+            kind="usage",
+            help_text="Check that the file is readable, then retry the upload.",
+        ) from exc
+    _emit(_add_media_reference(value))
+
+
+@media_app.command("get")
+def media_get(
+    ctx: typer.Context,
+    media_id: str = typer.Argument(
+        ..., help="Media UUID or sketchy-media:// reference."
+    ),
+) -> None:
+    """Get media metadata by UUID or stable reference.
+
+    \b
+    Examples:
+      sketchy media get 123e4567-e89b-12d3-a456-426614174000
+      sketchy media get sketchy-media://123e4567-e89b-12d3-a456-426614174000
+    """
+    identifier = _parse_media_id(media_id)
+    value = Client.from_state(_state(ctx)).request("GET", f"media/{identifier}/")
+    _emit(_require_object(value, "media detail"))
+
+
+@media_app.command("delete")
+def media_delete(
+    ctx: typer.Context,
+    media_id: str = typer.Argument(
+        ..., help="Media UUID or sketchy-media:// reference."
+    ),
+) -> None:
+    """Delete media immediately without prompting.
+
+    \b
+    Examples:
+      sketchy media delete 123e4567-e89b-12d3-a456-426614174000
+      sketchy media delete sketchy-media://123e4567-e89b-12d3-a456-426614174000
+    """
+    identifier = _parse_media_id(media_id)
+    value = Client.from_state(_state(ctx)).request(
+        "DELETE", f"media/{identifier}/", not_found_ok=True
+    )
+    if value is ALREADY_ABSENT:
+        _emit(
+            {
+                "absent": {
+                    "id": identifier,
+                    "reference": f"sketchy-media://{identifier}",
+                },
+                "status": "Media was already absent; no-op.",
+            }
+        )
+        return
+    _emit(
+        value
+        if isinstance(value, dict)
+        else {
+            "deleted": {"id": identifier, "reference": f"sketchy-media://{identifier}"}
+        }
+    )
+
+
+def _usage_help(exc: click.UsageError) -> str:
+    context = exc.ctx
+    if context is not None:
+        command_parts = context.command_path.split(" ", 1)
+        suffix = f" {command_parts[1]}" if len(command_parts) == 2 else ""
+        return (
+            f"Run `{_portable_command()}{suffix} --help` for accepted arguments "
+            "and examples."
+        )
+    return f"Run `{_portable_command()} --help` for accepted arguments and examples."
+
+
+def main() -> int:
+    try:
+        app(standalone_mode=False)
+        return 0
+    except CliFailure as exc:
+        _emit(exc.payload)
+        return exc.code
+    except click.UsageError as exc:
+        _emit(
+            {
+                "error": {"type": "usage", "message": exc.format_message()},
+                "help": _usage_help(exc),
+            }
+        )
+        return 2
+    except click.exceptions.Exit as exc:
+        return exc.exit_code
+    except KeyboardInterrupt:
+        _emit({"error": {"type": "runtime", "message": "Command cancelled."}})
+        return 1
+    except Exception:
+        _emit(
+            {
+                "error": {
+                    "type": "internal",
+                    "message": "The command could not complete because of an unexpected internal error.",
+                },
+                "help": "Retry once; if the error persists, report the command and its structured output.",
+            }
+        )
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
