@@ -40,58 +40,6 @@
   font-weight: 400;
   font-style: normal;
 }
-.swiss-home .pusher {
-  background: var(--paper);
-}
-.swiss-home #primary {
-  max-width: none;
-  width: 100%;
-  margin: 0;
-}
-.swiss-home .swiss-canvas {
-  max-width: 1440px;
-  min-height: 100vh;
-  margin: auto;
-  padding: 26px 5vw 90px;
-  position: relative;
-  overflow: hidden;
-}
-.swiss-home .swiss-nav {
-  align-items: center;
-  border-bottom: 2px solid var(--ink);
-  display: flex;
-  justify-content: space-between;
-  padding: 0 0 18px;
-}
-.swiss-home .swiss-logo {
-  color: var(--ink);
-  font-family: "MegrimLocal", sans-serif;
-  font-size: clamp(1.7rem, 3.5vw, 3rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.8;
-  text-decoration: none;
-  text-transform: none;
-}
-.swiss-home .swiss-logo span {
-  color: var(--blue);
-}
-.swiss-home .swiss-nav nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(12px, 2vw, 34px);
-}
-.swiss-home .swiss-nav nav a {
-  color: var(--ink);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-.swiss-home .swiss-nav nav a:hover {
-  color: var(--blue);
-}
 .swiss-home .swiss-hero {
   display: grid;
   gap: clamp(30px, 6vw, 90px);
