@@ -1,113 +1,72 @@
 {% extends "base.html" %}
-
-{% block html_class %}class="artistic"{% endblock %}
-{% block body_class %}class="pushable"{% endblock %}
-
+{% block html_class %}class="swiss-site"{% endblock %}
+{% block body_class %}class="swiss-body"{% endblock %}
 {% block body %}
-{% load blog_tags %}
-<div class="pusher">
-    <div class="ui vertical center aligned segment" style="margin-bottom: 1rem;">
-        <div class="ui container frm-black-square-outer-2line">
-            <div class="ui large secondary pointing menu top">
-                <a class="item title-font" style="font-weight: bold;" href="/">Artful.One</a>
-                <a class="item" href="/about/">About</a>
-                <a class="item" href="/art/">Art</a>
-                <div class="ui dropdown item">
-                    Coding <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="{% url 'pixelborders:editor' %}">Pixel Border Editor</a>
-                        <a class="item" href="{% url 'rpg:names' %}">Name Maker</a>
-                        <a class="item" href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
-                    </div>
-                </div>
-                {% if request.user.is_authenticated %}
-                <a class="item" href="/sigils/">Sigils</a>
-                {% endif %}
-                <a class="item hidden-lg" href="/search/">
-                  <i class="search link icon"></i>
-                </a>
-                <div class="right item hidden-sm">
-                    <form action="/search/" method="GET">
-                        <div class="ui icon input">
-                            <input 
-                               type="search" 
-                               placeholder="Search..." 
-                               name="q" 
-                               value=""
-                               style="padding: 2px 1em; font-size: .8em;"
-                            >
-                            <i class="search link icon"></i>
+    {% load blog_tags %}
+    <div class="pusher">
+        <div class="swiss-canvas">
+            <header class="swiss-nav">
+                <a class="swiss-logo linear-bands" href="/" aria-label="Artful.One home">Artful<span>.One</span></a>
+                <nav class="swiss-nav-links" aria-label="Primary navigation">
+                    <a href="/about/">About</a>
+                    <a href="/art/">Art</a>
+                    <details class="swiss-nav-menu">
+                        <summary>Coding</summary>
+                        <div class="swiss-nav-submenu">
+                            <a href="{% url 'pixelborders:editor' %}">Pixel Border Editor</a>
+                            <a href="{% url 'rpg:names' %}">Name Maker</a>
+                            <a href="{% url 'rpg_chargen:supers' %}">Names &amp; Backstory</a>
                         </div>
+                    </details>
+                    <a href="/contact/">Contact</a>
+                    {% if request.user.is_authenticated %}
+                        <a href="/sigils/">Sigils</a>
+                    {% endif %}
+                    <a class="swiss-search-link" href="/search/">Search</a>
+                    <form class="swiss-search-form"
+                          action="/search/"
+                          method="get"
+                          role="search">
+                        <label class="swiss-visually-hidden" for="site-search">Search the site</label>
+                        <input id="site-search" type="search" name="q" placeholder="Search">
+                        <button type="submit">Go</button>
                     </form>
-                </div>
-           </div>
-        </div>
-    </div>
-    <div id="primary" class="ui container">
-        {% block primary %}{% endblock %}
-    </div>
-    <div id="secondary" {% block secondary_class %}class="ui container"{% endblock %}>
-        {% block secondary %}{% endblock %}
-    </div>
-    <div id="thirdsection" class="ui container"></div>
-
-    {% block footer %}
-    <div class="ui vertical footer segment" style="margin-top: 1rem;">
-        <div class="ui container">
-            <div class="ui large secondary pointing menu bottom">
-                <a class="item">&copy; Bruce Kroeze</a>
-                {% for year in years_with_content %}<a class="item" href="/{{ year|date:"Y" }}/">{{ year|date:"Y" }}</a>
-                {% endfor %}
-                <a class="right item" href="/atom/everything/" title="Atom Feed">
-                    <i class="rss icon"></i> Atom Feed
-                </a>
+                </nav>
+            </header>
+            <main id="primary" class="site-content">
+                {% block primary %}{% endblock %}
+            </main>
+            <div id="secondary"
+                 {% block secondary_class %}
+                 class="site-content site-secondary"
+                 {% endblock %}>
+                {% block secondary %}{% endblock %}
             </div>
+            <div id="thirdsection" class="site-content"></div>
+            {% block footer %}
+                <footer class="swiss-footer">
+                    <p class="swiss-footer-credit">
+                        <span>Art / code / field notes</span>
+                        &copy; Bruce Kroeze
+                    </p>
+                    {% if years_with_content %}
+                        <nav class="swiss-footer-years" aria-label="Archive by year">
+                            {% for year in years_with_content %}
+                                <a href="/{{ year|date:"Y" }}/">{{ year|date:"Y" }}</a>
+                            {% endfor %}
+                        </nav>
+                    {% endif %}
+                    <a class="swiss-footer-feed" href="/atom/everything/" title="Atom Feed">Atom feed <span aria-hidden="true">↗</span></a>
+                </footer>
+            {% endblock footer %}
         </div>
     </div>
-    {% endblock footer %}
-</div>
-
-<style>
-/* Mobile responsive menu styles */
-@media only screen and (max-width: 767px) {
-    .masthead .ui.menu .toc.item {
-        display: block !important;
-    }
-    .masthead .ui.menu > .item:not(.toc):not(:first-child),
-    .masthead .ui.menu > .right.item {
-        display: none !important;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .masthead .ui.menu .toc.item {
-        display: none !important;
-    }
-}
-</style>
-
-<script>
+    <script>
 $(document).ready(function() {
-    // Create sidebar
-    $('.ui.sidebar')
-        .sidebar('attach events', '.toc.item');
-
-    // Initialize dropdowns
+    // Keep Fomantic dropdown widgets in page content functional.
     $('.ui.dropdown').dropdown();
 
-    // Show fixed menu on scroll
-    $('.masthead')
-        .visibility({
-            once: false,
-            onBottomPassed: function() {
-                $('.fixed.menu').transition('fade in');
-            },
-            onBottomPassedReverse: function() {
-                $('.fixed.menu').transition('fade out');
-            }
-        });
-
-    // Make search icon submit the form
+    // Make search icons in existing Fomantic forms submit their form.
     $('.ui.icon.input .search.icon').on('click', function() {
         $(this).closest('form').submit();
     });
@@ -115,5 +74,5 @@ $(document).ready(function() {
   // no extras
   {% endblock onDomReady %}
 });
-</script>
+    </script>
 {% endblock body %}

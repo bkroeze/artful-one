@@ -9,7 +9,7 @@ IMAGE_TAG := "latest"
 IMAGE := IMAGE_REGISTRY + "/" + IMAGE_OWNER + "/" + IMAGE_NAME + ":" + IMAGE_TAG
 
 default:
-  uv run manage.py runserver 0.0.0.0:8003
+  DJANGO_DEBUG=true uv run manage.py runserver 0.0.0.0:8003
 
 static:
   uv run manage.py collectstatic --noinput

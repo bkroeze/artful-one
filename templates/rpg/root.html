@@ -1,19 +1,17 @@
-{% extends "base.html" %}{% load static %}
+{% extends "site_page.html" %}{% load static %}
 
 {% block title %}RPG Tools{% endblock %}
 
-{% block body %}
-<div class="ui container" style="margin-top: 2rem; margin-bottom: 2rem;">
-  <h1 class="ui header">RPG Tools</h1>
-
+{% block primary %}
+<section class="tool-index">
+  <p class="eyebrow">TOOLS / GENERATORS</p>
+  <h1>RPG Tools</h1>
   <div class="ui segments">
     <div class="ui segment">
       <h2 class="ui header">Name Generator</h2>
       <p>Generate names for your RPG characters, places, and more using the name generator.</p>
-      <a href="{% url 'rpg:names' %}" class="ui button primary">
-        Generate Names
-      </a>
+      <a href="{% url 'rpg:names' %}" class="ui button primary">Generate Names</a>
     </div>
   </div>
-</div>
+</section>
 {% endblock %}
