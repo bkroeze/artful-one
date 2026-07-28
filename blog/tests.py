@@ -55,14 +55,19 @@ class TestBlog:
         assert "Artful.one" in decoded_content
         assert "Full-Stack-Development" in decoded_content
         assert "32 years" in decoded_content
-        assert "<video" in decoded_content
-        assert 'class="contact-animation frm-sparkle"' in decoded_content
-        assert 'width="400" height="400"' in decoded_content
-        assert "autoplay muted loop playsinline" in decoded_content
-        assert 'preload="metadata"' in decoded_content
-        assert 'aria-hidden="true"' in decoded_content
-        assert 'src="/static/contact/animation.mp4"' in decoded_content
-        assert 'type="video/mp4"' in decoded_content
+        assert "<video" not in decoded_content
+        assert (
+            'id="contact-retro-futurism" class="contact-animation" role="img"'
+            in decoded_content
+        )
+        assert (
+            'aria-label="Retro-futurist contact signal assembled from geometric forms"'
+            in decoded_content
+        )
+        assert '<svg viewBox="0 0 400 400"' in decoded_content
+        assert "BUREAU DE LIAISON" in decoded_content
+        assert 'href="/static/contact/retro-futurism.css"' in decoded_content
+        assert 'src="/static/contact/retro-futurism.js"' in decoded_content
         assert 'class="contact-submit frm-lined-bamboo"' in decoded_content
         assert 'type="submit"' in decoded_content
         assert 'hx-post="/contact/"' in decoded_content

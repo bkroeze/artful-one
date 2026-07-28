@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Pixel Border Creator{% endblock %}
-{% block body_class %}class="pushable" data-authenticated="{% if request.user.is_authenticated %}true{% else %}false{% endif %}"{% endblock %}
+{% block body_class %}class="swiss-body pixel-border-editor" data-authenticated="{% if request.user.is_authenticated %}true{% else %}false{% endif %}"{% endblock %}
 
 {% block extrahead %}
   <link rel="stylesheet" href="{% static 'pixelborders/app.css' %}?v=6">

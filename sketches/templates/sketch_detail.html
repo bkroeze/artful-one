@@ -1,4 +1,4 @@
-{% extends "site_page.html" %}{% load static %}
+{% extends "site_page.html" %}{% load sketch_tags %}
 
 {% load pictures %}
 {% load blog_tags %}
@@ -45,12 +45,10 @@
 
     <div id="canvas-container">
       <div class="frm-corner-weave">
-        <div id="{{ sketch.slug }}" data-height="600" data-width="800"></div>
+        {% include_sketch sketch.slug width=800 height=600 %}
       </div>
     </div>
 
-    <script src="{% static 'js/p5/p5.min.js' %}"></script>
-    <script src="{% static script_url %}"></script>
 </div>  
 {% endblock %}
 

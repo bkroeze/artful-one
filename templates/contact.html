@@ -5,6 +5,8 @@
 
 {% block extrahead %}
   {% include "includes/htmx.html" %}
+  <link rel="stylesheet" href="{% static 'contact/retro-futurism.css' %}">
+  <script defer src="{% static 'contact/retro-futurism.js' %}"></script>
 {% endblock %}
 
 {% block primary %}
@@ -20,11 +22,7 @@
         <p>32 years</p>
         <p>Portland, Ore.</p>
       </div>
-      <div style="text-align: center;">
-      <video class="contact-animation frm-sparkle" width="400" height="400" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-        <source src="{% static 'contact/animation.mp4' %}" type="video/mp4">
-      </video>
-      </div>
+      {% include "includes/contact_animation.html" %}
     </div>
     <div class="column">
       {% include "includes/contact_form.html" %}
