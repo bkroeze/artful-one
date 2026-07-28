@@ -28,17 +28,6 @@
   mask-position: 0 var(--offset);
   animation: offset-loop 10s infinite alternate;
 }
-/* Base style is now completely unified around the 'FIELD' theme palette and typography rules */
-.swiss-home {
-  --paper: #e3eee7;
-  --ink: #082f2b;
-  --blue: #087f70;
-  --green: #b5d336;
-  --red: #f05a3e;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: Arial, Helvetica, sans-serif;
-}
 @font-face {
   font-family: "MegrimLocal";
   src: url("/static/Megrim-Heavy.ttf") format("truetype");
@@ -59,7 +48,7 @@
   width: 100%;
   margin: 0;
 }
-.swiss-canvas {
+.swiss-home .swiss-canvas {
   max-width: 1440px;
   min-height: 100vh;
   margin: auto;
@@ -67,41 +56,32 @@
   position: relative;
   overflow: hidden;
 }
-.swiss-nav {
+.swiss-home .swiss-nav {
   align-items: center;
   border-bottom: 2px solid var(--ink);
   display: flex;
   justify-content: space-between;
   padding: 0 0 18px;
 }
-.swiss-logo {
+.swiss-home .swiss-logo {
   color: var(--ink);
-  font-family: "Antic Didone", Georgia, serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 900;
-  letter-spacing: -0.09em;
-  line-height: 0.8;
-  text-decoration: none;
-}
-.swiss-logo span {
-  color: var(--blue);
-}
-.swiss-logo {
   font-family: "MegrimLocal", sans-serif;
+  font-size: clamp(1.7rem, 3.5vw, 3rem);
   font-weight: 900;
   letter-spacing: -0.05em;
+  line-height: 0.8;
+  text-decoration: none;
   text-transform: none;
-  font-size: clamp(1.7rem, 3.5vw, 3rem);
 }
-.swiss-logo span {
+.swiss-home .swiss-logo span {
   color: var(--blue);
 }
-.swiss-nav nav {
+.swiss-home .swiss-nav nav {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(12px, 2vw, 34px);
 }
-.swiss-nav nav a {
+.swiss-home .swiss-nav nav a {
   color: var(--ink);
   font-size: 0.7rem;
   font-weight: 700;
@@ -109,45 +89,38 @@
   text-decoration: none;
   text-transform: uppercase;
 }
-.swiss-nav nav a:hover {
+.swiss-home .swiss-nav nav a:hover {
   color: var(--blue);
 }
-.swiss-hero {
+.swiss-home .swiss-hero {
   display: grid;
   gap: clamp(30px, 6vw, 90px);
   grid-template-columns: 60px minmax(280px, 1fr) minmax(280px, 0.9fr);
   padding: clamp(65px, 11vw, 150px) 0 120px;
 }
-.hero-index,
-.section-marker {
+.swiss-home .hero-index,
+.swiss-home .section-marker {
   color: var(--blue);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 1.6;
 }
-.hero-index span,
-.section-marker span:last-child {
-  color: #65717a;
+.swiss-home .hero-index span,
+.swiss-home .section-marker span:last-child {
+  color: var(--color-muted);
   display: block;
   font-size: 0.55rem;
   writing-mode: vertical-rl;
   margin-top: 16px;
 }
-.eyebrow {
-  color: var(--green);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  margin: 0 0 27px;
-}
-.hero-copy {
+.swiss-home .hero-copy {
   text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-.hero-copy h1 {
+.swiss-home .hero-copy h1 {
   font-family: "MegrimLocal", sans-serif;
   font-weight: 900;
   letter-spacing: -0.05em;
@@ -157,26 +130,26 @@
   width: 100%;
   text-align: right;
 }
-.hero-copy h1 .hero-artful {
+.swiss-home .hero-copy h1 .hero-artful {
   display: block;
 }
-.hero-copy h1 .hero-one {
+.swiss-home .hero-copy h1 .hero-one {
   color: var(--blue);
   font-weight: 900;
   display: block;
   margin-left: 0;
   padding-right: 0.5rem;
 }
-.hero-copy .hero-deck {
+.swiss-home .hero-copy .hero-deck {
   margin-left: auto;
 }
-.hero-deck {
+.swiss-home .hero-deck {
   font-size: clamp(1.15rem, 2vw, 1.65rem);
   line-height: 1.18;
   max-width: 480px;
   margin: 0 0 17px;
 }
-.swiss-cta {
+.swiss-home .swiss-cta {
   border-bottom: 2px solid var(--ink);
   color: var(--ink);
   display: inline-flex;
@@ -190,7 +163,7 @@
   text-transform: uppercase;
   width: 210px;
 }
-.geometric-plate {
+.swiss-home .geometric-plate {
   align-self: center;
   aspect-ratio: 1;
   background: var(--ink);
@@ -199,15 +172,15 @@
   position: relative;
   width: 100%;
 }
-.plate-grid {
+.swiss-home .plate-grid {
   background-image:
-    linear-gradient(#11202b22 1px, transparent 1px),
-    linear-gradient(90deg, #11202b22 1px, transparent 1px);
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
   background-size: 10% 10%;
   inset: 10%;
   position: absolute;
 }
-.plate-circle {
+.swiss-home .plate-circle {
   background: var(--green);
   border-radius: 50%;
   height: 52%;
@@ -216,7 +189,7 @@
   top: 22%;
   width: 52%;
 }
-.plate-bar {
+.swiss-home .plate-bar {
   background: var(--blue);
   height: 13%;
   position: absolute;
@@ -225,7 +198,7 @@
   transform: rotate(-34deg);
   width: 85%;
 }
-.plate-square {
+.swiss-home .plate-square {
   background: var(--red);
   bottom: 13%;
   height: 23%;
@@ -233,7 +206,7 @@
   right: 16%;
   width: 23%;
 }
-.geometric-plate figcaption {
+.swiss-home .geometric-plate figcaption {
   bottom: 12px;
   display: flex;
   font-size: 0.55rem;
@@ -244,71 +217,71 @@
   position: absolute;
   right: 12px;
 }
-.swiss-writing {
-  border-top: 2px solid var(--ink);
+.swiss-home .swiss-writing {
+  border-top: var(--rule-heavy);
   display: grid;
   gap: 30px;
   grid-template-columns: 60px 1fr 2fr;
   padding-top: 23px;
 }
-.writing-heading h2 {
-  font-family: "Megrim", sans-serif;
-  font-weight: 400;
+.swiss-home .writing-heading h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
   font-size: clamp(2.7rem, 5vw, 5rem);
   letter-spacing: -0.07em;
   line-height: 0.8;
   margin: 0 0 18px;
 }
-.writing-heading p {
+.swiss-home .writing-heading p {
   font-size: 0.85rem;
   max-width: 250px;
 }
-.writing-list {
-  border-left: 1px solid #11202b55;
+.swiss-home .writing-list {
+  border-left: 1px solid var(--color-rule);
   padding-left: 26px;
 }
-.writing-list .item-stripe,
-.writing-list .item-stripe-bottom {
-  border-bottom: 1px solid #11202b55;
+.swiss-home .writing-list .item-stripe,
+.swiss-home .writing-list .item-stripe-bottom {
+  border-bottom: 1px solid var(--color-rule);
   padding: 0 0 18px;
   margin: 0 0 18px;
 }
-.writing-list .ui.header {
+.swiss-home .writing-list .ui.header {
   color: var(--blue);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   margin: 0 0 10px;
 }
-.writing-list a {
+.swiss-home .writing-list a {
   color: var(--ink);
 }
-.writing-list .header {
+.swiss-home .writing-list .header {
   font-size: 1.25rem;
   font-weight: 700;
 }
-.writing-list .description p {
+.swiss-home .writing-list .description p {
   font-size: 0.9rem;
   line-height: 1.4;
 }
-.writing-list .meta {
-  color: #65717a;
+.swiss-home .writing-list .meta {
+  color: var(--color-muted);
   font-size: 0.65rem;
 }
 @media (max-width: 800px) {
-  .swiss-hero,
-  .swiss-writing {
+  .swiss-home .swiss-hero,
+  .swiss-home .swiss-writing {
     grid-template-columns: 1fr;
   }
-  .hero-index span,
-  .section-marker span:last-child {
+  .swiss-home .hero-index span,
+  .swiss-home .section-marker span:last-child {
     display: inline;
     margin-left: 10px;
     writing-mode: initial;
   }
-  .geometric-plate {
+  .swiss-home .geometric-plate {
     max-width: 480px;
   }
-  .writing-list {
+  .swiss-home .writing-list {
     border-left: 0;
     padding-left: 0;
   }
@@ -359,22 +332,35 @@ html.swiss-site {
   font-family: var(--font-body);
 }
 
-.swiss-site body,
-.swiss-site .pusher {
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-body);
+.swiss-site .eyebrow {
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin: 0 0 27px;
 }
 
 .swiss-site body {
+  background: var(--color-paper) !important;
+  color: var(--color-ink);
+  font-family: var(--font-body);
   margin: 0;
 }
 
 .swiss-site .pusher {
+  background: var(--color-paper) !important;
+  color: var(--color-ink);
+  font-family: var(--font-body);
   min-height: 100vh;
 }
 
 .swiss-site .swiss-canvas {
+  background-image: linear-gradient(
+    90deg,
+    transparent calc(100% - 1px),
+    var(--color-grid) 1px
+  );
+  background-size: 25% 100%;
   box-sizing: border-box;
   margin: 0 auto;
   max-width: var(--site-width);
@@ -421,8 +407,7 @@ html.swiss-site {
 .swiss-site .swiss-nav-links > a,
 .swiss-site .swiss-nav-menu > summary,
 .swiss-site .swiss-search-form button,
-.swiss-site .swiss-footer a,
-.swiss-site .swiss-footer-credit {
+.swiss-site .swiss-footer a {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--font-size-label);
@@ -431,12 +416,6 @@ html.swiss-site {
   line-height: 1.4;
   text-decoration: none;
   text-transform: uppercase;
-}
-
-.swiss-site .swiss-nav-links > a,
-.swiss-site .swiss-nav-menu > summary,
-.swiss-site .swiss-search-form button,
-.swiss-site .swiss-footer a {
   transition:
     color var(--transition-fast),
     background-color var(--transition-fast);
@@ -560,7 +539,9 @@ html.swiss-site {
 }
 
 .swiss-site #secondary.site-content {
+  border-top: var(--rule-heavy);
   padding-bottom: var(--space-8);
+  padding-top: var(--space-5);
 }
 
 .swiss-site #secondary.site-content:not(:has(*)),
@@ -591,36 +572,70 @@ html.swiss-site {
 }
 
 .swiss-site .ui.segment:not(.basic),
-.swiss-site .ui.segments,
-.swiss-site .ui.card {
+.swiss-site .ui.segments {
   background: var(--color-surface);
-  border-color: var(--color-rule);
+  border: var(--rule-thin);
   border-radius: 0;
   box-shadow: none;
   color: var(--color-ink);
+}
+
+.swiss-site .ui.card {
+  background: var(--color-surface);
+  border: var(--rule-thin);
+  border-radius: 0;
+  border-top: 4px solid var(--color-lime);
+  box-shadow: none;
+  color: var(--color-ink);
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
 }
 
 .swiss-site .ui.form input,
 .swiss-site .ui.form textarea,
-.swiss-site .ui.form select {
-  background: var(--color-surface);
-  border: var(--rule-thin);
+.swiss-site .ui.form select,
+.swiss-site .contact-form input,
+.swiss-site .contact-form textarea {
+  background: var(--color-surface) !important;
+  border: var(--rule-thin) !important;
+  border-bottom: 2px solid var(--color-ink) !important;
   border-radius: 0;
-  color: var(--color-ink);
-  font-family: var(--font-body);
+  color: var(--color-ink) !important;
+  font-family: var(--font-body) !important;
 }
 
-.swiss-site .ui.button {
-  background: var(--color-ink);
-  border-radius: 0;
+.swiss-site .ui.form input:focus,
+.swiss-site .ui.form textarea:focus,
+.swiss-site .contact-form input:focus,
+.swiss-site .contact-form textarea:focus {
+  border-bottom-color: var(--color-teal) !important;
+}
+
+.swiss-site .ui.button,
+.swiss-site .contact-submit,
+.swiss-site .engage-button,
+.swiss-site .search-submit {
+  background: var(--color-ink) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none;
-  color: var(--color-paper);
-  font-family: var(--font-body);
+  color: var(--color-paper) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--font-size-label) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em;
+  min-height: 2.75rem;
+  padding: var(--space-3) var(--space-5);
+  text-transform: uppercase;
 }
 
-.swiss-site .ui.button:hover {
-  background: var(--color-teal);
-  color: var(--color-paper);
+.swiss-site .ui.button:hover,
+.swiss-site .contact-submit:hover,
+.swiss-site .engage-button:hover,
+.swiss-site .search-submit:hover {
+  background: var(--color-teal) !important;
+  color: var(--color-paper) !important;
 }
 
 .swiss-site a:focus-visible,
@@ -644,9 +659,17 @@ html.swiss-site {
 }
 
 .swiss-site .swiss-footer-credit {
+  color: var(--color-ink);
   display: grid;
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 700;
   gap: var(--space-1);
+  letter-spacing: 0.1em;
+  line-height: 1.4;
   margin: 0;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .swiss-site .swiss-footer-credit span {
@@ -670,31 +693,6 @@ html.swiss-site {
   padding-bottom: 0;
   padding-top: 0;
   width: 100%;
-}
-
-.swiss-home .hero-index span,
-.swiss-home .section-marker span:last-child,
-.swiss-home .writing-list .meta {
-  color: var(--color-muted);
-}
-
-.swiss-home .plate-grid {
-  background-image:
-    linear-gradient(var(--color-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
-}
-
-.swiss-home .swiss-writing {
-  border-top: var(--rule-heavy);
-}
-
-.swiss-home .writing-list {
-  border-left-color: var(--color-rule);
-}
-
-.swiss-home .writing-list .item-stripe,
-.swiss-home .writing-list .item-stripe-bottom {
-  border-bottom-color: var(--color-rule);
 }
 
 @media (max-width: 64rem) {
@@ -1531,21 +1529,7 @@ body .entry h3 {
   border-image-repeat: round;
 }
 
-/* Final Swiss content layer: intentionally last so legacy page styles cannot
-   reintroduce the previous ornamental theme. */
-.swiss-site body,
-.swiss-site .pusher {
-  background: var(--color-paper) !important;
-}
-
-.swiss-site .swiss-canvas {
-  background-image: linear-gradient(
-    90deg,
-    transparent calc(100% - 1px),
-    var(--color-grid) 1px
-  );
-  background-size: 25% 100%;
-}
+/* Swiss content components */
 
 .swiss-site:not(.swiss-home) #primary.site-content {
   border-bottom: var(--rule-thin);
@@ -1559,12 +1543,6 @@ body .entry h3 {
   font-weight: 700;
   letter-spacing: 0.16em;
   margin-bottom: var(--space-5);
-}
-
-.swiss-site #primary.site-content,
-.swiss-site #secondary.site-content,
-.swiss-site #thirdsection.site-content {
-  max-width: var(--content-width);
 }
 
 .swiss-site #primary h1,
@@ -1581,9 +1559,7 @@ body .entry h3 {
 }
 
 .swiss-site #primary h2:not(:first-child),
-.swiss-site #primary h3,
-.swiss-site #secondary h2,
-.swiss-site #secondary h3 {
+.swiss-site #secondary h2 {
   line-height: 1;
 }
 
@@ -1596,6 +1572,7 @@ body .entry h3 {
 .swiss-site #primary h3,
 .swiss-site #secondary h3 {
   color: var(--color-teal);
+  line-height: 1;
 }
 
 .swiss-site #primary h4,
@@ -1680,22 +1657,9 @@ body .entry h3 {
   cursor: pointer;
 }
 
-.swiss-site .ui.segment:not(.basic),
-.swiss-site .ui.segments,
-.swiss-site .ui.card {
-  border: var(--rule-thin);
-}
-
 .swiss-site .ui.segments > .segment,
 .swiss-site .ui.card > .content {
   border-color: var(--color-rule);
-}
-
-.swiss-site .ui.card {
-  border-top: 4px solid var(--color-lime);
-  margin: 0;
-  overflow: hidden;
-  width: 100%;
 }
 
 .swiss-site .ui.card > .content > .header,
@@ -1765,11 +1729,6 @@ body .entry h3 {
   margin-top: var(--space-8);
 }
 
-.swiss-site #secondary.site-content {
-  border-top: var(--rule-heavy);
-  padding-top: var(--space-5);
-}
-
 .swiss-site #secondary > .ui.segments,
 .swiss-site #secondary > .metabox {
   display: grid;
@@ -1789,49 +1748,6 @@ body .entry h3 {
   font-weight: 800 !important;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.swiss-site .ui.form input,
-.swiss-site .ui.form textarea,
-.swiss-site .ui.form select,
-.swiss-site .contact-form input,
-.swiss-site .contact-form textarea {
-  background: var(--color-surface) !important;
-  border: var(--rule-thin) !important;
-  border-bottom: 2px solid var(--color-ink) !important;
-  color: var(--color-ink) !important;
-  font-family: var(--font-body) !important;
-}
-
-.swiss-site .ui.form input:focus,
-.swiss-site .ui.form textarea:focus,
-.swiss-site .contact-form input:focus,
-.swiss-site .contact-form textarea:focus {
-  border-bottom-color: var(--color-teal) !important;
-}
-
-.swiss-site .ui.button,
-.swiss-site .contact-submit,
-.swiss-site .engage-button,
-.swiss-site .search-submit {
-  background: var(--color-ink) !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  color: var(--color-paper) !important;
-  font-family: var(--font-body) !important;
-  font-size: var(--font-size-label) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.1em;
-  min-height: 2.75rem;
-  padding: var(--space-3) var(--space-5);
-  text-transform: uppercase;
-}
-
-.swiss-site .ui.button:hover,
-.swiss-site .contact-submit:hover,
-.swiss-site .engage-button:hover,
-.swiss-site .search-submit:hover {
-  background: var(--color-teal) !important;
 }
 
 .swiss-site .contact-statements {
@@ -1928,16 +1844,4 @@ body .entry h3 {
   .swiss-site #secondary > .metabox {
     grid-template-columns: 1fr;
   }
-}
-
-/* Megrim Heavy is reserved for the site name and landing-page hero title. */
-.swiss-site .writing-heading h2 {
-  font-family: var(--font-display);
-  font-weight: 800;
-}
-
-.swiss-home #primary .hero-copy h1,
-.swiss-home #primary .hero-copy h1 .hero-one {
-  font-family: var(--font-site-name);
-  font-weight: 900;
 }
